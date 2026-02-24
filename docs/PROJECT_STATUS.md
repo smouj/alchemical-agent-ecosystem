@@ -4,10 +4,10 @@ _Auto-generated from repository state. Do not edit manually._
 
 ## Metadata
 
-- Generated: **2026-02-24 19:37:01 UTC**
+- Generated: **2026-02-24 19:38:22 UTC**
 - Branch: **main**
-- HEAD: **8478dda**
-- Last commit: **8478dda feat(gateway+ui): enable agent-interactive chat, fix sidebar navigation, and reduce SSE polling load (2026-02-24)**
+- HEAD: **7d3c140**
+- Last commit: **7d3c140 ops(ux): add desktop shortcut launcher for gateway/dashboard (2026-02-24)**
 
 ## Repository Metrics
 
