@@ -43,11 +43,9 @@ Combina:
 - [🖥️ Capacidades del dashboard](#️-capacidades-del-dashboard)
 - [🔌 Superficie API](#-superficie-api)
 - [🚀 Instalación](#-instalación)
-- [🛠️ Comandos CLI](#️-comandos-cli)
 - [📦 Perfiles RAM](#-perfiles-ram)
 - [🔒 Modelo de seguridad](#-modelo-de-seguridad)
 - [📚 Mapa de documentación](#-mapa-de-documentación)
-- [🔄 Update y rollback](#-update-y-rollback)
 - [📁 Estructura del proyecto](#-estructura-del-proyecto)
 - [📌 Limitaciones actuales](#-limitaciones-actuales)
 - [📜 Licencia](#-licencia)
@@ -257,38 +255,29 @@ cd /mnt/d/alchemical-agent-ecosystem
 
 ---
 
-## 🛠️ Comandos CLI
+## ⚡ Comandos esenciales (mínimo)
 
 ```bash
-./scripts/alchemical doctor
-./scripts/alchemical setup-hooks
-./scripts/alchemical scan-secrets
-./scripts/alchemical up
-./scripts/alchemical up-2g
-./scripts/alchemical up-4g
-./scripts/alchemical up-8g
-./scripts/alchemical status
-./scripts/alchemical logs velktharion
+# 1) instalar
+./install.sh --wizard
+
+# 2) iniciar (ruta rápida)
+./scripts/alchemical up-fast
+
+# 3) abrir dashboard
 ./scripts/alchemical dashboard
-./scripts/alchemical update
-./scripts/alchemical update-safe
-./scripts/alchemical rollback
 
-# mantenimiento project/repo
-bash ops/project-maintenance.sh
-
-# sincronizar items del project con issues del repo (default seguro: link-only)
-bash ops/sync-project-with-repo.sh
-
-# seed del roadmap (solo explícito)
-bash ops/sync-project-with-repo.sh seed
-
-# limpieza de ruido/duplicados + relink de issues abiertas
-bash ops/project-tidy.sh
+# 4) health check rápido
+curl -fsS http://localhost/gateway/health
 ```
+
+Para catálogo completo de comandos, rituales de mantenimiento y automatización del project:
+- `docs/CLI_REFERENCE.md`
+- `docs/OPERATIONS_RUNBOOK.md`
 
 ---
 
+## 📦 Perfiles RAM
 ## 📦 Perfiles RAM
 
 El wizard detecta RAM del host y sugiere perfil.
@@ -321,6 +310,8 @@ El wizard detecta RAM del host y sugiere perfil.
 - [`docs/README.md`](./docs/README.md) — índice y política de documentación
 - [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) — arquitectura técnica
 - [`docs/API_REFERENCE.md`](./docs/API_REFERENCE.md) — APIs de gateway + dashboard
+- [`docs/INSTALLATION.md`](./docs/INSTALLATION.md) — instalación/arranque por perfiles y bootstrap orientado a rendimiento
+- [`docs/CLI_REFERENCE.md`](./docs/CLI_REFERENCE.md) — catálogo completo de comandos (movido fuera del README)
 - [`docs/OPERATIONS_RUNBOOK.md`](./docs/OPERATIONS_RUNBOOK.md) — runbook operativo (update/rollback)
 - [`docs/ALCHEMICAL_ECOSYSTEM_ROADMAP.md`](./docs/ALCHEMICAL_ECOSYSTEM_ROADMAP.md) — roadmap
 - [`docs/INTEGRATION_WORKPLAN.md`](./docs/INTEGRATION_WORKPLAN.md) — plan de integración
@@ -333,40 +324,25 @@ El wizard detecta RAM del host y sugiere perfil.
 
 ## 🔄 Update y rollback
 
-### Update rápido
+Usa el runbook operativo como fuente única:
+- `docs/OPERATIONS_RUNBOOK.md`
 
-```bash
-./scripts/alchemical update
-```
-
-### Update seguro (recomendado)
+Ruta más común y segura:
 
 ```bash
 ./scripts/alchemical update-safe
+./scripts/alchemical rollback   # solo si hace falta
 ```
 
-Incluye lock, backup, checks, deploy y smoke-tests.
-
-### Rollback
+Para el ritual de higiene de project/repo:
 
 ```bash
-./scripts/alchemical rollback
-
-# mantenimiento project/repo
-bash ops/project-maintenance.sh
-
-# sincronizar items del project con issues del repo (default seguro: link-only)
-bash ops/sync-project-with-repo.sh
-
-# seed del roadmap (solo explícito)
-bash ops/sync-project-with-repo.sh seed
-
-# limpieza de ruido/duplicados + relink de issues abiertas
-bash ops/project-tidy.sh
+bash ops/ritual-sync.sh
 ```
 
 ---
 
+## 📁 Estructura del proyecto
 ## 📁 Estructura del proyecto
 
 | Ruta | Propósito |

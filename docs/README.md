@@ -4,11 +4,13 @@ This folder contains the canonical technical and operational documentation for *
 
 ## Core documents
 
+- `INSTALLATION.md` — current install/start flows and speed-first bootstrap
+- `CLI_REFERENCE.md` — full command catalog (README now keeps only essentials)
 - `ARCHITECTURE.md` — canonical architecture map (layers, flows, security boundaries, invariants)
+- `API_REFERENCE.md` — gateway and dashboard API endpoints
+- `OPERATIONS_RUNBOOK.md` — day-2 operations (update, rollback, project hygiene)
 - `ALCHEMICAL_ECOSYSTEM_ROADMAP.md` — roadmap by phases
 - `INTEGRATION_WORKPLAN.md` — integration plan and execution sequence
-- `API_REFERENCE.md` — gateway and dashboard API endpoints
-- `OPERATIONS_RUNBOOK.md` — day-2 operations (update, rollback, health checks)
 - `PROJECT_STATUS.md` — auto-generated repo status snapshot (services/skills/apis/commit)
 
 ## Documentation policy
