@@ -55,31 +55,78 @@ It combines:
 
 ## 🏗️ Architecture
 
-```text
-                         ┌──────────────────────────────────┐
-                         │   Next.js Dashboard (Control)   │
-                         │   - Health / Actions / SSE UI   │
-                         └───────────────┬──────────────────┘
-                                         │
-                                         │ HTTP + SSE
-                                         ▼
-┌──────────────────────────────────────────────────────────────────────────┐
-│                                CADDY :80                                │
-└───────────────┬──────────────────────────────────────────────────────────┘
-                │
-                ├── /gateway/*      → alchemical-gateway
-                └── /<service>/*    → execution services (7401..7410)
+### High-level topology (2026 format)
 
-┌────────────────────────────────────────┐   ┌─────────────────────────────┐
-│         alchemical-gateway             │   │      execution services      │
-│ - auth token + role checks             │   │   FastAPI services 7401-7410│
-│ - agents/connectors registries         │   │   for tool-specific actions  │
-│ - chat/events persistence (SQLite)     │   └─────────────────────────────┘
-│ - jobs queue with retry                │
-└────────────────────────────────────────┘
+```mermaid
+flowchart TB
+  U[Operator / API Client] --> D[Alchemical Dashboard
+Next.js Control Plane]
+  U --> C[Caddy Reverse Proxy :80]
 
-             Shared stack: Redis · ChromaDB · Ollama
+  D -->|SSE / REST| C
+
+  subgraph Core[Core Platform]
+    C --> G[alchemical-gateway
+FastAPI + SQLite + Queue Worker]
+    G --> R[(Redis)]
+    G --> V[(ChromaDB)]
+    G --> O[(Ollama)]
+  end
+
+  subgraph Runtime[Execution Backends :7401-7410]
+    S1[velktharion]
+    S2[synapsara]
+    S3[kryonexus]
+    S4[noctumbra-mail]
+    S5[temporaeth]
+    S6[vaeloryn-conclave]
+    S7[ignivox]
+    S8[auralith]
+    S9[resonvyr]
+    S10[fluxenrath]
+  end
+
+  G -->|dispatch| S1
+  G -->|dispatch| S2
+  G -->|dispatch| S3
+  G -->|dispatch| S4
+  G -->|dispatch| S5
+  G -->|dispatch| S6
+  G -->|dispatch| S7
+  G -->|dispatch| S8
+  G -->|dispatch| S9
+  G -->|dispatch| S10
 ```
+
+### Layered architecture view
+
+```text
+┌──────────────────────────────────────────────────────────────┐
+│ L4 — Experience Layer                                       │
+│ Dashboard UI (Next.js): control, chat, logs, canvas, config │
+├──────────────────────────────────────────────────────────────┤
+│ L3 — Orchestration Layer                                    │
+│ Gateway (FastAPI): auth, RBAC, agents registry, connectors, │
+│ jobs queue, events, chat thread, planning, dispatch         │
+├──────────────────────────────────────────────────────────────┤
+│ L2 — Execution Layer                                        │
+│ FastAPI runtime services (7401..7410) targetable per agent  │
+├──────────────────────────────────────────────────────────────┤
+│ L1 — Data/Model Layer                                       │
+│ SQLite(runtime), Redis, ChromaDB, Ollama                    │
+├──────────────────────────────────────────────────────────────┤
+│ L0 — Infra Layer                                            │
+│ Docker Compose + Caddy ingress + ops scripts (update-safe)  │
+└──────────────────────────────────────────────────────────────┘
+```
+
+### Request flow (real)
+
+1. **Operator** triggers action from Dashboard or API.
+2. **Gateway** validates token/role and resolves logical agent → target backend.
+3. **Dispatch** executes against selected service endpoint.
+4. **Events + chat** are persisted and streamed via SSE.
+5. **Dashboard** renders live updates (chat, logs, status, metrics).
 
 ---
 
