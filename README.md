@@ -176,6 +176,10 @@ Current implemented features:
 | Endpoint | Method | Purpose |
 |---|---|---|
 | `/api/gateway/capabilities` | GET | Skills/tools/connectors catalog |
+| `/gateway/ready` | GET | Readiness state (agents/connectors/service targets) |
+| `/gateway/stats` | GET | Runtime counters (jobs/chat/events) |
+| `/gateway/events` | GET | Recent gateway events feed |
+| `/gateway/agents/{name}` | GET | Single logical agent detail |
 | `/api/gateway/agents` | GET/POST | Logical agent registry |
 | `/api/gateway/connectors` | GET/POST | Channel connectors registry |
 | `/api/gateway/chat-plan` | POST | Chat planning action |
@@ -198,7 +202,15 @@ Dashboard proxies inject this header from env automatically.
 
 ```bash
 cd /mnt/d/alchemical-agent-ecosystem
-./scripts/alchemical wizard
+./install.sh --wizard
+```
+
+### One-command install
+
+```bash
+./install.sh --wizard
+# or non-interactive:
+./install.sh --domain localhost --profile 4g --model phi3:mini
 ```
 
 ### Main operations
@@ -207,7 +219,7 @@ cd /mnt/d/alchemical-agent-ecosystem
 ./scripts/alchemical doctor
 ./scripts/alchemical setup-hooks
 ./scripts/alchemical scan-secrets
-./scripts/alchemical install --domain localhost --profile 4g --model phi3:mini
+./install.sh --domain localhost --profile 4g --model phi3:mini
 ./scripts/alchemical up
 ./scripts/alchemical status
 ./scripts/alchemical logs velktharion

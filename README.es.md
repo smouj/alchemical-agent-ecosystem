@@ -163,6 +163,10 @@ Ruta: `apps/alchemical-dashboard`
 | `/api/config` | GET/PUT | Configuración persistente del panel |
 | `/api/agent/[name]/dispatch` | POST | Dispatch real al agente |
 | `/api/gateway/capabilities` | GET | Catálogo de skills/tools/conectores del gateway |
+| `/gateway/ready` | GET | Estado de readiness (agentes/conectores/targets) |
+| `/gateway/stats` | GET | Contadores runtime (jobs/chat/eventos) |
+| `/gateway/events` | GET | Feed de eventos recientes del gateway |
+| `/gateway/agents/{name}` | GET | Detalle de un agente lógico |
 | `/api/gateway/chat-plan` | POST | Plan de acción del chat (objetivo + skills + tools + subagentes + canales) |
 | `/api/gateway/agents` | GET/POST | Registro de agentes/subagentes |
 | `/api/gateway/chat-thread` | GET/POST | Hilo de chat compartido entre operador y agentes |
@@ -179,7 +183,15 @@ Ruta: `apps/alchemical-dashboard`
 
 ```bash
 cd /mnt/d/alchemical-agent-ecosystem
-./scripts/alchemical wizard
+./install.sh --wizard
+```
+
+### Instalación en un comando
+
+```bash
+./install.sh --wizard
+# o no interactivo:
+./install.sh --domain localhost --profile 4g --model phi3:mini
 ```
 
 ### Comandos CLI
@@ -188,7 +200,7 @@ cd /mnt/d/alchemical-agent-ecosystem
 ./scripts/alchemical doctor
 ./scripts/alchemical setup-hooks
 ./scripts/alchemical scan-secrets
-./scripts/alchemical install --domain localhost --profile 4g --model phi3:mini
+./install.sh --domain localhost --profile 4g --model phi3:mini
 ./scripts/alchemical up
 ./scripts/alchemical up-2g
 ./scripts/alchemical up-4g

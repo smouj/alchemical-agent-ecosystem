@@ -12,7 +12,11 @@ from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
-app = FastAPI(title="alchemical-gateway")
+app = FastAPI(
+    title="alchemical-gateway",
+    version="0.2.0",
+    description="Local-first orchestration gateway for Alchemical Agent Ecosystem",
+)
 
 MAP = {
   "velktharion": "http://velktharion:7401",
@@ -398,6 +402,45 @@ async def health():
   return {"status": "ok", "service": "gateway", "db": str(DB_PATH)}
 
 
+
+
+@app.get('/ready')
+async def ready(request: Request):
+  _require_auth(request, VIEWER_ROLE)
+  with db_conn() as conn:
+    agent_count = conn.execute("SELECT COUNT(*) c FROM agents").fetchone()["c"]
+    connector_count = conn.execute("SELECT COUNT(*) c FROM connectors").fetchone()["c"]
+  return {
+    "status": "ready",
+    "agents": agent_count,
+    "connectors": connector_count,
+    "service_targets": len(MAP),
+    "timestamp": now_iso(),
+  }
+
+
+@app.get('/stats')
+async def stats(request: Request):
+  _require_auth(request, VIEWER_ROLE)
+  with db_conn() as conn:
+    jobs = conn.execute("SELECT status, COUNT(*) c FROM jobs GROUP BY status").fetchall()
+    chats = conn.execute("SELECT COUNT(*) c FROM chat_messages").fetchone()["c"]
+    events = conn.execute("SELECT COUNT(*) c FROM events").fetchone()["c"]
+  return {
+    "chat_messages": chats,
+    "events": events,
+    "jobs": {r["status"]: r["c"] for r in jobs},
+    "timestamp": now_iso(),
+  }
+
+
+@app.get('/events')
+async def list_events(request: Request, limit: int = Query(100, ge=1, le=500)):
+  _require_auth(request, VIEWER_ROLE)
+  with db_conn() as conn:
+    rows = conn.execute("SELECT id,level,source,message,ts FROM events ORDER BY id DESC LIMIT ?", (limit,)).fetchall()
+  return {"items": [dict(r) for r in rows], "count": len(rows)}
+
 @app.get('/capabilities')
 async def capabilities(request: Request):
   _require_auth(request, VIEWER_ROLE)
@@ -420,6 +463,17 @@ async def list_agents(request: Request):
   items = [row_to_agent(r) for r in rows]
   return {"items": items, "count": len(items)}
 
+
+
+
+@app.get('/agents/{name}')
+async def get_agent(name: str, request: Request):
+  _require_auth(request, VIEWER_ROLE)
+  with db_conn() as conn:
+    row = conn.execute("SELECT * FROM agents WHERE name=?", (name,)).fetchone()
+  if not row:
+    raise HTTPException(404, f"Agent not found: {name}")
+  return {"agent": row_to_agent(row)}
 
 @app.post('/agents')
 async def register_agent(payload: AgentConfig, request: Request):
