@@ -27,7 +27,17 @@ Unified, self-hosted multi-agent platform focused on **local-first execution**, 
 ## Quick Start (local)
 ```bash
 cd /mnt/d/alchemical-agent-ecosystem
-bash infra/scripts/install.sh --domain localhost
+./scripts/alchemical wizard
+```
+
+### CLI (one-command ops)
+```bash
+./scripts/alchemical doctor
+./scripts/alchemical install --domain localhost --model phi3:mini
+./scripts/alchemical up
+./scripts/alchemical status
+./scripts/alchemical logs velktharion
+./scripts/alchemical dashboard
 ```
 
 ## Planned Remote Install Command

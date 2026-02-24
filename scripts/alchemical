@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT"
+
+C_CYAN="\033[1;36m"; C_GREEN="\033[1;32m"; C_YELLOW="\033[1;33m"; C_RESET="\033[0m"
+
+banner(){
+  echo -e "${C_CYAN}"
+  echo "╔══════════════════════════════════════════════╗"
+  echo "║        ALCHEMICAL AGENT ECOSYSTEM CLI       ║"
+  echo "╚══════════════════════════════════════════════╝"
+  echo -e "${C_RESET}"
+}
+
+help(){
+  cat <<TXT
+Usage: ./scripts/alchemical <command> [options]
+
+Commands:
+  wizard                   Wizard premium de instalación (recomendado)
+  install [opts]           Instala stack (pasa opciones a infra/scripts/install.sh)
+  up                       Levanta servicios
+  down                     Detiene servicios
+  restart                  Reinicia servicios
+  status                   Estado de servicios
+  logs [service]           Logs en vivo (opcional: servicio)
+  dashboard                Arranca dashboard (apps/alchemical-dashboard)
+  doctor                   Chequeo rápido de entorno
+
+Examples:
+  ./scripts/alchemical wizard
+  ./scripts/alchemical install --domain localhost --model phi3:mini
+  ./scripts/alchemical dashboard
+TXT
+}
+
+doctor(){
+  echo -e "${C_CYAN}Preflight${C_RESET}"
+  command -v docker >/dev/null && echo -e "${C_GREEN}✓ docker${C_RESET}" || echo "✗ docker missing"
+  docker compose version >/dev/null 2>&1 && echo -e "${C_GREEN}✓ docker compose${C_RESET}" || echo "✗ docker compose missing"
+  command -v node >/dev/null && echo -e "${C_GREEN}✓ node${C_RESET}" || echo -e "${C_YELLOW}• node missing (solo necesario para dashboard)${C_RESET}"
+}
+
+wizard(){
+  banner
+  echo "Iniciando wizard elegante..."
+  bash infra/scripts/install.sh --wizard
+}
+
+case "${1:-help}" in
+  wizard) shift; wizard "$@" ;;
+  install) shift; bash infra/scripts/install.sh "$@" ;;
+  up) docker compose up -d --build ;;
+  down) docker compose down ;;
+  restart) docker compose down && docker compose up -d --build ;;
+  status) docker compose ps ;;
+  logs) shift; docker compose logs -f ${1:-} ;;
+  dashboard)
+    cd apps/alchemical-dashboard
+    if [[ ! -d node_modules ]]; then npm install; fi
+    npm run dev
+    ;;
+  doctor) doctor ;;
+  help|-h|--help) help ;;
+  *) echo "Unknown command: $1"; help; exit 1 ;;
+esac
