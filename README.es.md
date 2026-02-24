@@ -148,6 +148,10 @@ Ruta: `apps/alchemical-dashboard`
 | `/api/metrics` | GET | Uso CPU/RAM desde Docker stats |
 | `/api/config` | GET/PUT | Configuración persistente del panel |
 | `/api/agent/[name]/dispatch` | POST | Dispatch real al agente |
+| `/api/gateway/capabilities` | GET | Catálogo de skills/tools/conectores del gateway |
+| `/api/gateway/chat-plan` | POST | Plan de acción del chat (objetivo + skills + tools + subagentes + canales) |
+| `/api/gateway/agents` | GET/POST | Registro de agentes/subagentes |
+| `/api/gateway/connectors` | GET/POST | Registro de conectores (Telegram/WhatsApp/Discord/...) |
 
 ---
 

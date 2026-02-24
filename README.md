@@ -148,6 +148,10 @@ Path: `apps/alchemical-dashboard`
 | `/api/metrics` | GET | CPU/RAM usage from Docker stats |
 | `/api/config` | GET/PUT | Persistent dashboard tuning |
 | `/api/agent/[name]/dispatch` | POST | Real agent request dispatch |
+| `/api/gateway/capabilities` | GET | Skills/tools/connectors catalog from gateway |
+| `/api/gateway/chat-plan` | POST | Chat action plan (goal + skills + tools + subagents + channels) |
+| `/api/gateway/agents` | GET/POST | Agent/subagent registry |
+| `/api/gateway/connectors` | GET/POST | Connector registry (Telegram/WhatsApp/Discord/...) |
 
 ---
 

@@ -7,6 +7,7 @@ import { CreateAgentWizard } from "../components/CreateAgentWizard";
 import { AgentsTable } from "../components/AgentsTable";
 import { LogsMonitor } from "../components/LogsMonitor";
 import { SettingsPanel } from "../components/SettingsPanel";
+import { ChatWorkbench } from "../components/ChatWorkbench";
 import type { DashboardPayload } from "../lib/types";
 import type { DashboardConfig } from "../lib/config";
 
@@ -49,6 +50,7 @@ export default function Page() {
         <div className="glass-card"><AgentsTable agents={data.items} /></div>
         <div className="stack">
           <CreateAgentWizard />
+          <ChatWorkbench />
           <SettingsPanel onChange={onCfg} />
           <LogsMonitor defaultService={cfg.defaultLogService} pollMs={cfg.logsPollMs} linesCount={cfg.logsLines} />
         </div>
