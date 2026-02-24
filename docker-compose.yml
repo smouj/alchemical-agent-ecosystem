@@ -1,0 +1,112 @@
+name: alchemical-ecosystem
+services:
+  caddy:
+    image: caddy:2.9
+    container_name: alchemy-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./infra/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - velktharion
+      - synapsara
+      - kryonexus
+      - noctumbra-mail
+      - temporaeth
+      - vaeloryn-conclave
+      - ignivox
+      - auralith
+      - resonvyr
+      - fluxenrath
+    networks: [alchemical-net]
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server","--appendonly","yes"]
+    volumes:
+      - redis_data:/data
+    networks: [alchemical-net]
+
+  chromadb:
+    image: chromadb/chroma:0.5.5
+    restart: unless-stopped
+    environment:
+      - IS_PERSISTENT=TRUE
+      - ALLOW_RESET=TRUE
+    volumes:
+      - chroma_data:/chroma/chroma
+    networks: [alchemical-net]
+
+  ollama:
+    image: ollama/ollama:latest
+    restart: unless-stopped
+    volumes:
+      - ollama_data:/root/.ollama
+    networks: [alchemical-net]
+
+  velktharion:
+    build: ./services/velktharion
+    restart: unless-stopped
+    environment: [SERVICE_NAME=velktharion, PORT=7401]
+    networks: [alchemical-net]
+  synapsara:
+    build: ./services/synapsara
+    restart: unless-stopped
+    environment: [SERVICE_NAME=synapsara, PORT=7402]
+    networks: [alchemical-net]
+  kryonexus:
+    build: ./services/kryonexus
+    restart: unless-stopped
+    environment: [SERVICE_NAME=kryonexus, PORT=7403]
+    networks: [alchemical-net]
+  noctumbra-mail:
+    build: ./services/noctumbra-mail
+    restart: unless-stopped
+    environment: [SERVICE_NAME=noctumbra-mail, PORT=7404]
+    networks: [alchemical-net]
+  temporaeth:
+    build: ./services/temporaeth
+    restart: unless-stopped
+    environment: [SERVICE_NAME=temporaeth, PORT=7405]
+    networks: [alchemical-net]
+  vaeloryn-conclave:
+    build: ./services/vaeloryn-conclave
+    restart: unless-stopped
+    environment: [SERVICE_NAME=vaeloryn-conclave, PORT=7406]
+    networks: [alchemical-net]
+  ignivox:
+    build: ./services/ignivox
+    restart: unless-stopped
+    environment: [SERVICE_NAME=ignivox, PORT=7407]
+    networks: [alchemical-net]
+  auralith:
+    build: ./services/auralith
+    restart: unless-stopped
+    environment: [SERVICE_NAME=auralith, PORT=7408]
+    networks: [alchemical-net]
+  resonvyr:
+    build: ./services/resonvyr
+    restart: unless-stopped
+    environment: [SERVICE_NAME=resonvyr, PORT=7409]
+    networks: [alchemical-net]
+  fluxenrath:
+    build: ./services/fluxenrath
+    restart: unless-stopped
+    environment: [SERVICE_NAME=fluxenrath, PORT=7410]
+    networks: [alchemical-net]
+
+networks:
+  alchemical-net:
+    name: alchemical-net
+
+volumes:
+  redis_data:
+  chroma_data:
+  ollama_data:
+  caddy_data:
+  caddy_config:
