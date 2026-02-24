@@ -1,8 +1,12 @@
 from pathlib import Path
+import sys
 
-from fastapi.testclient import TestClient
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
-import gateway.app as gw
+from fastapi.testclient import TestClient  # noqa: E402
+import gateway.app as gw  # noqa: E402
 
 
 def setup_module():
