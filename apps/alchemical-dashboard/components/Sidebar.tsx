@@ -39,9 +39,12 @@ export function Sidebar() {
 
   return (
     <aside className="glass-card gradient-frame" style={{ margin: 12, padding: 14, position: "sticky", top: 12, height: "calc(100vh - 24px)" }}>
-      <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 16 }}>
-        <FlaskConical size={22} color="#22d3ee" />
-        <strong style={{ fontFamily: "'Playfair Display', serif", fontSize: 18 }}>Alchemical</strong>
+      <div style={{ display: "grid", gap: 8, marginBottom: 16 }}>
+        <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+          <FlaskConical size={22} color="#22d3ee" />
+          <strong style={{ fontFamily: "ui-sans-serif, system-ui", fontSize: 18 }}>Alchemical Gateway</strong>
+        </div>
+        <img src="/alchemical-logo.svg" alt="Alchemical logo" style={{ width: "100%", height: 30, objectFit: "contain", filter: "drop-shadow(0 2px 14px rgba(34,211,238,.25))" }} />
       </div>
       <nav style={{ display: "grid", gap: 8 }}>
         {items.map(({ label, Icon, targetId }) => (

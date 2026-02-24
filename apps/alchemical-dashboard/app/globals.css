@@ -1,24 +1,26 @@
 :root {
-  --bg-0: #060b1a;
-  --bg-1: #0b1328;
-  --panel: rgba(14, 23, 45, 0.62);
-  --text: #eaf2ff;
-  --muted: #97a6be;
+  --bg-0: #0e1014;
+  --bg-1: #171b22;
+  --panel: rgba(24, 28, 36, 0.76);
+  --text: #e8eefb;
+  --muted: #94a3b8;
   --turq: #22d3ee;
   --turq-soft: #67e8f9;
   --purple: #7c3aed;
   --purple-soft: #a78bfa;
-  --glass-border: rgba(162, 180, 214, 0.22);
+  --sky: #60a5fa;
+  --glass-border: rgba(148, 163, 184, 0.24);
 }
 
 * { box-sizing: border-box; }
 html, body {
   margin: 0;
   color: var(--text);
-  font-family: Inter, system-ui, sans-serif;
+  font-family: "Manrope", "Segoe UI", system-ui, sans-serif;
   background:
-    radial-gradient(1300px 700px at -10% -20%, rgba(124,58,237,.20), transparent 45%),
-    radial-gradient(1100px 640px at 110% 0%, rgba(34,211,238,.14), transparent 42%),
+    radial-gradient(1300px 700px at -10% -20%, rgba(124,58,237,.16), transparent 45%),
+    radial-gradient(1200px 680px at 110% 0%, rgba(34,211,238,.11), transparent 42%),
+    radial-gradient(900px 520px at 50% 120%, rgba(96,165,250,.08), transparent 50%),
     linear-gradient(160deg, var(--bg-0), var(--bg-1));
 }
 
@@ -169,6 +171,10 @@ textarea:focus-visible {
 @keyframes spin { to { --ga: 360deg; } }
 @keyframes pulse { 0%,100% { transform: scale(1); opacity:.88; } 50% { transform: scale(1.05); opacity:1; } }
 @keyframes bubbleUp { 0% { transform: translateY(0) scale(.8); opacity:0; } 18% { opacity:.8; } 100% { transform: translateY(-155px) scale(1.1); opacity:0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
 
 @media (max-width: 1240px) {
   .shell { grid-template-columns: 1fr; }
