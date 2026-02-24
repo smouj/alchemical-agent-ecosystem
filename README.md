@@ -4,14 +4,10 @@
   <img src="./assets/branding/logo.svg" alt="Alchemical Robot Logo" width="180" />
 </p>
 
-<p align="center">
-  <
-  ![License](https://img.shields.io/github/license/smouj/alchemical-agent-ecosystem)
-  ![Last Commit](https://img.shields.io/github/last-commit/smouj/alchemical-agent-ecosystem)
-  ![Docker](https://img.shields.io/badge/runtime-Docker%20Compose-2496ED)
-  ![Local AI](https://img.shields.io/badge/LLM-Local%20Only-success)
-  />
-</p>
+![License](https://img.shields.io/github/license/smouj/alchemical-agent-ecosystem)
+![Last Commit](https://img.shields.io/github/last-commit/smouj/alchemical-agent-ecosystem)
+![Docker](https://img.shields.io/badge/runtime-Docker%20Compose-2496ED)
+![Local AI](https://img.shields.io/badge/LLM-Local%20Only-success)
 
 Unified, self-hosted multi-agent platform focused on **local-first execution**, **no paid APIs**, and **low-cost operation**.
 
