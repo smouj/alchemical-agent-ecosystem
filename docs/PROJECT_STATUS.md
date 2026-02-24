@@ -4,10 +4,10 @@ _Auto-generated from repository state. Do not edit manually._
 
 ## Metadata
 
-- Generated: **2026-02-24 19:41:41 UTC**
+- Generated: **2026-02-24 19:58:59 UTC**
 - Branch: **main**
-- HEAD: **746ae04**
-- Last commit: **746ae04 docs(status): sync project snapshot after maintenance cleanup (2026-02-24)**
+- HEAD: **bd32967**
+- Last commit: **bd32967 docs(readme): overhaul dashboard capabilities section with real implemented scope and local run modes (2026-02-24)**
 
 ## Repository Metrics
 
