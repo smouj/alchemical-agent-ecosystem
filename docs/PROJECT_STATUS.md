@@ -4,10 +4,10 @@ _Auto-generated from repository state. Do not edit manually._
 
 ## Metadata
 
-- Generated: **2026-02-24 20:17:36 UTC**
+- Generated: **2026-02-24 21:06:22 UTC**
 - Branch: **main**
-- HEAD: **153bdc4**
-- Last commit: **153bdc4 feat(dashboard): introduce tabbed+accordion carbon theme layout with optimized lazy sections (2026-02-24)**
+- HEAD: **e0af1e1**
+- Last commit: **e0af1e1 feat(chat+ux): add multi-agent roundtable, advanced chat controls, and alchemical visual effects with compact app-window layout (2026-02-24)**
 
 ## Repository Metrics
 
@@ -15,8 +15,8 @@ _Auto-generated from repository state. Do not edit manually._
 |---|---:|
 | Runtime services | 10 |
 | Skills repos | 11 |
-| Dashboard API routes | 22 |
-| Gateway endpoints | 25 |
+| Dashboard API routes | 23 |
+| Gateway endpoints | 26 |
 
 ## Runtime Services (from /services)
 
