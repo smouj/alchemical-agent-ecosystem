@@ -3,13 +3,13 @@
 import { useEffect, useState } from "react";
 import { FlaskConical, LayoutDashboard, Bot, WandSparkles, Settings2, Logs, CircleHelp, type LucideIcon } from "lucide-react";
 
-const items: Array<{ label: string; Icon: LucideIcon }> = [
-  { label: "Dashboard", Icon: LayoutDashboard },
-  { label: "Agentes", Icon: Bot },
-  { label: "Crear Nuevo Agente", Icon: WandSparkles },
-  { label: "Configuración Global", Icon: Settings2 },
-  { label: "Logs & Monitoreo", Icon: Logs },
-  { label: "Ayuda", Icon: CircleHelp },
+const items: Array<{ label: string; Icon: LucideIcon; targetId: string }> = [
+  { label: "Dashboard", Icon: LayoutDashboard, targetId: "section-dashboard" },
+  { label: "Agentes", Icon: Bot, targetId: "section-agentes" },
+  { label: "Chat Gateway", Icon: WandSparkles, targetId: "section-chat" },
+  { label: "Configuración Global", Icon: Settings2, targetId: "section-settings" },
+  { label: "Logs & Monitoreo", Icon: Logs, targetId: "section-logs" },
+  { label: "Ayuda", Icon: CircleHelp, targetId: "section-ayuda" },
 ];
 
 type CoreService = { name: string; state: string; status: string; health: "healthy" | "down" | "unknown" };
@@ -29,6 +29,14 @@ export function Sidebar() {
     return () => { stop = true; clearInterval(id); };
   }, []);
 
+  const goTo = (targetId: string) => {
+    const el = document.getElementById(targetId);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      history.replaceState(null, "", `#${targetId}`);
+    }
+  };
+
   return (
     <aside className="glass-card gradient-frame" style={{ margin: 12, padding: 14, position: "sticky", top: 12, height: "calc(100vh - 24px)" }}>
       <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 16 }}>
@@ -36,8 +44,13 @@ export function Sidebar() {
         <strong style={{ fontFamily: "'Playfair Display', serif", fontSize: 18 }}>Alchemical</strong>
       </div>
       <nav style={{ display: "grid", gap: 8 }}>
-        {items.map(({ label, Icon }) => (
-          <button key={label} className="card" style={{ display: "flex", gap: 10, alignItems: "center", padding: "10px 12px", color: "#e5e7eb", background: "rgba(255,255,255,.03)", borderRadius: 12 }}>
+        {items.map(({ label, Icon, targetId }) => (
+          <button
+            key={label}
+            className="card"
+            onClick={() => goTo(targetId)}
+            style={{ display: "flex", gap: 10, alignItems: "center", padding: "10px 12px", color: "#e5e7eb", background: "rgba(255,255,255,.03)", borderRadius: 12 }}
+          >
             <Icon size={16} /> {label}
           </button>
         ))}

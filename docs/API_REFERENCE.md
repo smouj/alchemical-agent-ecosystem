@@ -27,6 +27,7 @@
 ### Chat + jobs
 - `GET /gateway/chat/thread?limit=120`
 - `POST /gateway/chat/thread`
+- `POST /gateway/chat/ask` — direct operator→agent interaction (dispatch-backed)
 - `GET /gateway/chat/stream` (SSE)
 - `GET /gateway/jobs?status=queued`
 - `GET /gateway/usage/summary` — aggregated usage/cost + recent samples
@@ -51,5 +52,6 @@
 - `GET/POST /api/gateway/agents`
 - `GET/POST /api/gateway/connectors`
 - `POST /api/gateway/chat-plan`
+- `POST /api/gateway/chat-ask`
 - `GET/POST /api/gateway/chat-thread`
 - `GET /api/gateway/chat-stream` (SSE)

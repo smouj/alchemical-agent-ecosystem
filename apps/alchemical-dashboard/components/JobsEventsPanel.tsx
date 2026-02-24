@@ -30,7 +30,7 @@ export function JobsEventsPanel() {
       setJobs((j.items ?? []).slice(0, 8));
     };
     loadJobs();
-    const id = setInterval(loadJobs, 6000);
+    const id = setInterval(loadJobs, 10000);
     return () => clearInterval(id);
   }, []);
 

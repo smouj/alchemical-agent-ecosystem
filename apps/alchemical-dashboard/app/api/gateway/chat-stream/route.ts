@@ -29,7 +29,7 @@ export async function GET() {
         }
       };
       await loop();
-      const id = setInterval(loop, 1000);
+      const id = setInterval(loop, 2000);
       // @ts-ignore
       this._id = id;
     },

@@ -23,6 +23,7 @@ export function ChatWorkbench() {
   const [tokenRef, setTokenRef] = useState("telegram_bot_token_ref");
   const [msg, setMsg] = useState("");
   const [chatText, setChatText] = useState("Actualizar estado y coordinar agentes");
+  const [chatAgent, setChatAgent] = useState("velktharion");
   const [thread, setThread] = useState<Array<{ sender: string; text: string; ts?: string; kind?: string }>>([]);
   const [conn, setConn] = useState<"connected"|"disconnected"|"connecting">("connecting");
   const esRef = useRef<EventSource | null>(null);
@@ -30,12 +31,16 @@ export function ChatWorkbench() {
   useEffect(() => {
     fetch("/api/gateway/capabilities", { cache: "no-store" })
       .then((r) => r.json())
-      .then((j) => setCaps({
-        skills: j.skills ?? [],
-        tools: j.tools ?? [],
-        connectors: j.connectors ?? [],
-        agents: j.agents ?? [],
-      }));
+      .then((j) => {
+        const next = {
+          skills: j.skills ?? [],
+          tools: j.tools ?? [],
+          connectors: j.connectors ?? [],
+          agents: j.agents ?? [],
+        };
+        setCaps(next);
+        if (next.agents?.length) setChatAgent(next.agents[0]);
+      });
   }, []);
 
   const connectStream = () => {
@@ -118,6 +123,19 @@ export function ChatWorkbench() {
     setChatText("");
   };
 
+  const askAgent = async () => {
+    if (!chatText.trim()) return;
+    setMsg(`Enviando a ${chatAgent}...`);
+    const res = await fetch("/api/gateway/chat-ask", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ agent: chatAgent, text: chatText, action: "query" }),
+    });
+    const j = await res.json().catch(() => ({}));
+    setMsg(res.ok ? `Respuesta recibida de ${chatAgent}` : `Error: ${j?.error || "chat ask failed"}`);
+    if (res.ok) setChatText("");
+  };
+
   return (
     <section className="glass-card" style={{ padding: 14 }}>
       <h3 style={{ marginTop: 0 }}>Gateway Chat Workbench (SSE)</h3>
@@ -174,9 +192,13 @@ export function ChatWorkbench() {
           <button className="card" style={{ padding: "6px 8px" }} onClick={disconnectStream}>Disconnect</button>
         </div>
       </div>
-      <div style={{ display: "flex", gap: 8 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "180px 1fr auto auto", gap: 8 }}>
+        <select value={chatAgent} onChange={(e) => setChatAgent(e.target.value)} style={field}>
+          {(caps.agents.length ? caps.agents : ["velktharion"]).map((a) => <option key={a} value={a}>{a}</option>)}
+        </select>
         <input value={chatText} onChange={(e) => setChatText(e.target.value)} placeholder="Escribe al ecosistema..." style={field} />
-        <button className="card" style={{ padding: "8px 10px" }} onClick={postChat}>Enviar</button>
+        <button className="card" style={{ padding: "8px 10px" }} onClick={postChat}>Solo hilo</button>
+        <button className="cta" style={{ padding: "8px 10px" }} onClick={askAgent}>Enviar a agente</button>
       </div>
       <div style={{ marginTop: 8, maxHeight: 220, overflow: "auto", borderRadius: 12, border: "1px solid rgba(255,255,255,.1)", background: "#020617", padding: 10 }}>
         {thread.length === 0 && <div style={{ color: "#64748b" }}>Sin mensajes todavía.</div>}

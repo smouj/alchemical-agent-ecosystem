@@ -44,23 +44,33 @@ export default function Page() {
 
   return (
     <div className="dashboard-grid">
-      <StatsHero stats={data.stats} />
-      <section className="widgets">
+      <section id="section-dashboard">
+        <StatsHero stats={data.stats} />
+      </section>
+
+      <section className="widgets" id="section-widgets">
         {data.items.slice(0, 4).map((agent) => (
           <AgentCard key={agent.name} agent={agent} />
         ))}
       </section>
+
       <section className="two-col">
-        <div className="glass-card"><AgentsTable agents={data.items} /></div>
+        <div className="glass-card" id="section-agentes"><AgentsTable agents={data.items} /></div>
         <div className="stack">
-          <CreateAgentWizard />
-          <ChatWorkbench />
-          <CanvasLab />
-          <JobsEventsPanel />
-          <UsagePanel />
-          <AdminOpsPanel />
-          <SettingsPanel onChange={onCfg} />
-          <LogsMonitor defaultService={cfg.defaultLogService} linesCount={cfg.logsLines} />
+          <section id="section-crear-agente"><CreateAgentWizard /></section>
+          <section id="section-chat"><ChatWorkbench /></section>
+          <section id="section-canvas"><CanvasLab /></section>
+          <section id="section-jobs"><JobsEventsPanel /></section>
+          <section id="section-usage"><UsagePanel /></section>
+          <section id="section-admin"><AdminOpsPanel /></section>
+          <section id="section-settings"><SettingsPanel onChange={onCfg} /></section>
+          <section id="section-logs"><LogsMonitor defaultService={cfg.defaultLogService} linesCount={cfg.logsLines} /></section>
+          <section id="section-ayuda" className="glass-card" style={{ padding: 14 }}>
+            <h3 style={{ marginTop: 0 }}>Ayuda rápida</h3>
+            <p style={{ color: "#94a3b8", marginBottom: 0 }}>
+              Usa "Chat Gateway" para hablar con un agente real, "Agentes" para estado/control y "Logs" para depurar.
+            </p>
+          </section>
         </div>
       </section>
     </div>

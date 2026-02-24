@@ -187,6 +187,12 @@ class ChatMessage(BaseModel):
   kind: str = Field(default="message")
 
 
+class ChatAskRequest(BaseModel):
+  agent: str = Field(min_length=2, max_length=64)
+  text: str = Field(min_length=1, max_length=4000)
+  action: Optional[str] = Field(default="query")
+
+
 class ConnectorSendRequest(BaseModel):
   channel: str
   target: str = Field(min_length=1, max_length=128)
@@ -888,6 +894,41 @@ async def chat_post(payload: ChatMessage, request: Request):
   est_in = max(1, len(payload.text) // 4)
   append_usage(f"chat:{payload.sender}", None, est_in, 0, 0.0)
   return {"ok": True}
+
+
+@app.post('/chat/ask')
+async def chat_ask(payload: ChatAskRequest, request: Request):
+  _require_auth(request, OPERATOR_ROLE)
+  action = payload.action or "query"
+  append_chat("operator", payload.text, "human")
+  append_chat("orchestrator", f"Ask -> {payload.agent}/{action}", "dispatch")
+
+  with db_conn() as conn:
+    row = conn.execute("SELECT * FROM agents WHERE name=?", (payload.agent,)).fetchone()
+  target = row["target_service"] if row and row["target_service"] else payload.agent
+  base = MAP.get(target)
+  if not base:
+    append_chat("orchestrator", f"Unknown target service for agent: {payload.agent}", "error")
+    raise HTTPException(404, f"Unknown agent or target service: {payload.agent}")
+
+  url = f"{base}/{action}"
+  body = {"prompt": payload.text, "query": payload.text, "message": payload.text, "input": payload.text}
+
+  async with httpx.AsyncClient(timeout=30) as cli:
+    try:
+      r = await cli.post(url, json=body)
+      result = r.json()
+      u = _extract_usage(result if isinstance(result, dict) else {})
+      if u["tokens_in"] or u["tokens_out"] or u["cost_usd"]:
+        append_usage(f"chatask:{payload.agent}/{action}", u.get("model"), int(u["tokens_in"]), int(u["tokens_out"]), float(u["cost_usd"]))
+      text = result.get("message") if isinstance(result, dict) else str(result)
+      append_chat(payload.agent, str(text)[:4000], "agent")
+      append_event("info", "chat", f"{payload.agent}/{action} -> {r.status_code}")
+      return {"ok": True, "agent": payload.agent, "action": action, "status": r.status_code, "result": result}
+    except Exception as e:
+      append_chat(payload.agent, f"chat ask failed: {e}", "error")
+      append_event("error", "chat", f"{payload.agent}/{action} failed: {e}")
+      raise HTTPException(502, f"Chat ask error: {e}")
 
 
 @app.get('/chat/stream')
