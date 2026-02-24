@@ -38,6 +38,27 @@ validate_profile() {
   esac
 }
 
+detect_host_ram_gb() {
+  if command -v free >/dev/null 2>&1; then
+    free -g | awk '/^Mem:/{print $2; exit}'
+    return 0
+  fi
+  if [[ -r /proc/meminfo ]]; then
+    awk '/MemTotal:/{printf "%d\n", $2/1024/1024; exit}' /proc/meminfo
+    return 0
+  fi
+  echo 0
+}
+
+suggest_profile_for_ram() {
+  local ram_gb="$1"
+  if (( ram_gb <= 2 )); then echo "2g";
+  elif (( ram_gb <= 4 )); then echo "4g";
+  elif (( ram_gb <= 8 )); then echo "8g";
+  elif (( ram_gb <= 16 )); then echo "16g";
+  else echo "32g"; fi
+}
+
 usage(){
   cat <<USAGE
 Usage: bash infra/scripts/install.sh [options]
@@ -72,18 +93,23 @@ if [[ -z "$OLLAMA_MODEL" ]]; then
   OLLAMA_MODEL="$(default_model_for_profile "$PROFILE")"
 fi
 
+HOST_RAM_GB="$(detect_host_ram_gb)"
+SUGGESTED_PROFILE="$(suggest_profile_for_ram "$HOST_RAM_GB")"
+
 if [[ $WIZARD -eq 1 ]]; then
   echo
   echo "🜁 Alchemical Install Wizard"
   echo "----------------------------"
   read -r -p "Dominio [localhost]: " input_domain || true
   DOMAIN="${input_domain:-$DOMAIN}"
-  read -r -p "Perfil RAM (2g|4g|8g|16g|32g) [${PROFILE}]: " input_profile || true
-  PROFILE="${input_profile:-$PROFILE}"
+  echo "Host RAM detectada: ${HOST_RAM_GB} GB"
+  echo "Perfil sugerido: ${SUGGESTED_PROFILE}"
+  read -r -p "Perfil RAM (2g|4g|8g|16g|32g) [${SUGGESTED_PROFILE}]: " input_profile || true
+  PROFILE="${input_profile:-$SUGGESTED_PROFILE}"
 
   if ! validate_profile "$PROFILE"; then
-    warn "Perfil inválido, se mantiene: $PROFILE"
-    PROFILE="4g"
+    warn "Perfil inválido, usando sugerido: ${SUGGESTED_PROFILE}"
+    PROFILE="$SUGGESTED_PROFILE"
   fi
 
   if [[ "$OLLAMA_MODEL" == "phi3:mini" || -z "$OLLAMA_MODEL" ]]; then

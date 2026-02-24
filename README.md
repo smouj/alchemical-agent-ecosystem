@@ -180,7 +180,8 @@ cd /mnt/d/alchemical-agent-ecosystem
 
 ## RAM Profiles (2G / 4G / 8G / 16G / 32G)
 
-Choose runtime footprint by host memory:
+Choose runtime footprint by host memory.
+Wizard mode now auto-detects host RAM and suggests the optimal profile at startup.
 
 | Profile | Recommended RAM | Services |
 |---|---:|---|

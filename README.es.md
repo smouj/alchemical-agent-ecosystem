@@ -180,7 +180,8 @@ cd /mnt/d/alchemical-agent-ecosystem
 
 ## Perfiles RAM (2G / 4G / 8G / 16G / 32G)
 
-Elige huella de runtime según memoria del host:
+Elige huella de runtime según memoria del host.
+El modo wizard ahora detecta automáticamente la RAM del host y sugiere el perfil óptimo al iniciar.
 
 | Perfil | RAM recomendada | Servicios |
 |---|---:|---|
