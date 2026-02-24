@@ -4,10 +4,10 @@ _Auto-generated from repository state. Do not edit manually._
 
 ## Metadata
 
-- Generated: **2026-02-24 19:58:59 UTC**
+- Generated: **2026-02-24 20:01:12 UTC**
 - Branch: **main**
-- HEAD: **bd32967**
-- Last commit: **bd32967 docs(readme): overhaul dashboard capabilities section with real implemented scope and local run modes (2026-02-24)**
+- HEAD: **cea01fe**
+- Last commit: **cea01fe chore(git): ignore local runtime artifacts and root npm lock noise (2026-02-24)**
 
 ## Repository Metrics
 
