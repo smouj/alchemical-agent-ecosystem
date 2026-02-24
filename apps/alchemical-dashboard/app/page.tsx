@@ -10,6 +10,8 @@ import { SettingsPanel } from "../components/SettingsPanel";
 import { ChatWorkbench } from "../components/ChatWorkbench";
 import { CanvasLab } from "../components/CanvasLab";
 import { JobsEventsPanel } from "../components/JobsEventsPanel";
+import { AdminOpsPanel } from "../components/AdminOpsPanel";
+import { UsagePanel } from "../components/UsagePanel";
 import type { DashboardPayload } from "../lib/types";
 import type { DashboardConfig } from "../lib/config";
 
@@ -55,6 +57,8 @@ export default function Page() {
           <ChatWorkbench />
           <CanvasLab />
           <JobsEventsPanel />
+          <UsagePanel />
+          <AdminOpsPanel />
           <SettingsPanel onChange={onCfg} />
           <LogsMonitor defaultService={cfg.defaultLogService} linesCount={cfg.logsLines} />
         </div>

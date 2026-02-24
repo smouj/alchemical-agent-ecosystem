@@ -335,6 +335,20 @@ def init_db():
       )
       """
     )
+    conn.execute(
+      """
+      CREATE TABLE IF NOT EXISTS usage_samples (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        source TEXT NOT NULL,
+        model TEXT,
+        tokens_in INTEGER NOT NULL DEFAULT 0,
+        tokens_out INTEGER NOT NULL DEFAULT 0,
+        total_tokens INTEGER NOT NULL DEFAULT 0,
+        cost_usd REAL NOT NULL DEFAULT 0,
+        ts TEXT NOT NULL
+      )
+      """
+    )
 
     admin_key = os.getenv("ALCHEMICAL_ADMIN_API_KEY", "")
     if admin_key:
@@ -392,6 +406,27 @@ def append_event(level: str, source: str, message: str):
     )
 
 
+
+
+def append_usage(source: str, model: Optional[str], tokens_in: int, tokens_out: int, cost_usd: float = 0.0):
+  total = max(0, int(tokens_in)) + max(0, int(tokens_out))
+  with db_conn() as conn:
+    conn.execute(
+      "INSERT INTO usage_samples(source,model,tokens_in,tokens_out,total_tokens,cost_usd,ts) VALUES(?,?,?,?,?,?,?)",
+      (source, model or "", max(0, int(tokens_in)), max(0, int(tokens_out)), total, float(cost_usd or 0), now_iso()),
+    )
+
+
+def _extract_usage(data: Dict[str, Any]) -> Dict[str, float]:
+  usage = data.get("usage") if isinstance(data, dict) else None
+  model = data.get("model") if isinstance(data, dict) else None
+  if isinstance(usage, dict):
+    tin = int(usage.get("input_tokens", usage.get("prompt_tokens", usage.get("tokens_in", 0))) or 0)
+    tout = int(usage.get("output_tokens", usage.get("completion_tokens", usage.get("tokens_out", 0))) or 0)
+    cost = float(usage.get("cost_usd", usage.get("cost", 0.0)) or 0.0)
+    return {"tokens_in": tin, "tokens_out": tout, "cost_usd": cost, "model": model or usage.get("model", "")}
+  return {"tokens_in": 0, "tokens_out": 0, "cost_usd": 0.0, "model": model or ""}
+
 def enqueue_job(kind: str, payload: Dict[str, Any], max_attempts: int = 5):
   ts = now_iso()
   with db_conn() as conn:
@@ -436,14 +471,29 @@ async def job_worker():
         channel = payload.get("channel")
         target = payload.get("target")
         message = payload.get("message", "")
+        delivered = False
         with db_conn() as conn:
           c = conn.execute("SELECT webhook_url,enabled FROM connectors WHERE channel=?", (channel,)).fetchone()
-        if c and int(c["enabled"]) and c["webhook_url"]:
-          async with httpx.AsyncClient(timeout=15) as cli:
-            await cli.post(c["webhook_url"], json={"target": target, "message": message, "channel": channel})
+
+        async with httpx.AsyncClient(timeout=15) as cli:
+          if channel == "telegram":
+            bot_token = os.getenv("ALCHEMICAL_TELEGRAM_BOT_TOKEN", "")
+            if bot_token and target:
+              url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+              r = await cli.post(url, json={"chat_id": target, "text": message})
+              delivered = r.is_success
+          elif channel == "discord" and c and c["webhook_url"]:
+            r = await cli.post(c["webhook_url"], json={"content": message})
+            delivered = r.is_success
+          elif c and int(c["enabled"]) and c["webhook_url"]:
+            r = await cli.post(c["webhook_url"], json={"target": target, "message": message, "channel": channel})
+            delivered = r.is_success
+
+        if delivered:
           append_event("info", "connector", f"Outbound delivered to {channel}:{target}")
         else:
-          append_event("warn", "connector", f"Connector {channel} has no webhook_url; stored only")
+          append_event("warn", "connector", f"Connector {channel} delivery fallback/store only")
+
         append_chat(f"connector:{channel}", message, "connector")
       elif job["kind"] == "connector_inbound":
         append_event("info", "connector", f"Inbound from {payload.get('channel')}:{payload.get('from')}")
@@ -510,13 +560,56 @@ async def stats(request: Request):
     jobs = conn.execute("SELECT status, COUNT(*) c FROM jobs GROUP BY status").fetchall()
     chats = conn.execute("SELECT COUNT(*) c FROM chat_messages").fetchone()["c"]
     events = conn.execute("SELECT COUNT(*) c FROM events").fetchone()["c"]
+    usage = conn.execute("SELECT COALESCE(SUM(tokens_in),0) tin, COALESCE(SUM(tokens_out),0) tout, COALESCE(SUM(total_tokens),0) t, COALESCE(SUM(cost_usd),0) c FROM usage_samples").fetchone()
   return {
     "chat_messages": chats,
     "events": events,
     "jobs": {r["status"]: r["c"] for r in jobs},
+    "usage": {"tokens_in": usage["tin"], "tokens_out": usage["tout"], "total_tokens": usage["t"], "cost_usd": usage["c"]},
     "timestamp": now_iso(),
   }
 
+
+
+
+@app.get('/usage/summary')
+async def usage_summary(request: Request, limit: int = Query(50, ge=1, le=500)):
+  _require_auth(request, VIEWER_ROLE)
+  with db_conn() as conn:
+    agg = conn.execute("SELECT COALESCE(SUM(tokens_in),0) tin, COALESCE(SUM(tokens_out),0) tout, COALESCE(SUM(total_tokens),0) t, COALESCE(SUM(cost_usd),0) c FROM usage_samples").fetchone()
+    rows = conn.execute("SELECT id,source,model,tokens_in,tokens_out,total_tokens,cost_usd,ts FROM usage_samples ORDER BY id DESC LIMIT ?", (limit,)).fetchall()
+  return {
+    "summary": {"tokens_in": agg["tin"], "tokens_out": agg["tout"], "total_tokens": agg["t"], "cost_usd": agg["c"]},
+    "items": [dict(r) for r in rows],
+  }
+
+
+@app.get('/usage/stream')
+async def usage_stream(request: Request, limit: int = 80):
+  _require_auth(request, VIEWER_ROLE)
+
+  async def event_gen():
+    last_id = -1
+    lim = max(1, min(limit, 500))
+    while True:
+      with db_conn() as conn:
+        row = conn.execute("SELECT COALESCE(MAX(id),0) m FROM usage_samples").fetchone()
+        max_id = int(row["m"])
+      if max_id != last_id:
+        with db_conn() as conn:
+          agg = conn.execute("SELECT COALESCE(SUM(tokens_in),0) tin, COALESCE(SUM(tokens_out),0) tout, COALESCE(SUM(total_tokens),0) t, COALESCE(SUM(cost_usd),0) c FROM usage_samples").fetchone()
+          rows = conn.execute("SELECT id,source,model,tokens_in,tokens_out,total_tokens,cost_usd,ts FROM usage_samples ORDER BY id DESC LIMIT ?", (lim,)).fetchall()
+        payload = json.dumps({
+          "summary": {"tokens_in": agg["tin"], "tokens_out": agg["tout"], "total_tokens": agg["t"], "cost_usd": agg["c"]},
+          "items": [dict(r) for r in rows]
+        }, ensure_ascii=False)
+        yield f"data: {payload}\n\n"
+        last_id = max_id
+      else:
+        yield ": keepalive\n\n"
+      await asyncio.sleep(1)
+
+  return StreamingResponse(event_gen(), media_type='text/event-stream')
 
 @app.get('/events')
 async def list_events(request: Request, limit: int = Query(100, ge=1, le=500)):
@@ -758,6 +851,9 @@ async def chat_thread(request: Request, limit: int = 100):
 async def chat_post(payload: ChatMessage, request: Request):
   _require_auth(request, VIEWER_ROLE)
   append_chat(payload.sender, payload.text, payload.kind)
+  # rough local estimate for message accounting
+  est_in = max(1, len(payload.text) // 4)
+  append_usage(f"chat:{payload.sender}", None, est_in, 0, 0.0)
   return {"ok": True}
 
 
@@ -804,6 +900,9 @@ async def dispatch(agent: str, action: str, payload: Dict[str, Any], request: Re
     try:
       r = await cli.post(url, json=payload)
       result = r.json()
+      u = _extract_usage(result if isinstance(result, dict) else {})
+      if u["tokens_in"] or u["tokens_out"] or u["cost_usd"]:
+        append_usage(f"dispatch:{agent}/{action}", u.get("model"), int(u["tokens_in"]), int(u["tokens_out"]), float(u["cost_usd"]))
       append_chat(agent, f"Response status={r.status_code} action={action}", "agent")
       append_event("info", "dispatch", f"{agent}/{action} -> {r.status_code}")
       return {"agent": agent, "action": action, "status": r.status_code, "result": result}
