@@ -181,12 +181,15 @@ Implemented now:
 | `/gateway/ready` | GET | Readiness + counters |
 | `/gateway/stats` | GET | Runtime stats |
 | `/gateway/events` | GET | Events feed |
+| `/gateway/events/stream` | GET (SSE) | Realtime events stream |
 | `/gateway/capabilities` | GET | Skills/tools/connectors catalog |
 | `/gateway/agents` | GET/POST | List/upsert logical agents |
 | `/gateway/agents/{name}` | GET | Agent detail |
 | `/gateway/connectors` | GET/POST | List/upsert connectors |
 | `/gateway/connectors/send` | POST | Queue outbound connector message |
 | `/gateway/connectors/webhook/{channel}` | POST | Inbound connector webhook |
+| `/gateway/auth/keys` | GET/POST | List/create API keys (admin) |
+| `/gateway/auth/keys/{id}/disable` | POST | Disable API key (admin) |
 | `/gateway/jobs` | GET | Queue/job status |
 | `/gateway/chat/thread` | GET/POST | Shared thread |
 | `/gateway/chat/stream` | GET (SSE) | Realtime thread stream |
@@ -209,6 +212,12 @@ Implemented now:
 ---
 
 ## 🚀 Installation
+
+### Remote bootstrap (single command)
+
+```bash
+bash scripts/install-remote.sh
+```
 
 ### One-command installer (recommended)
 
@@ -277,6 +286,7 @@ Wizard auto-detects host RAM and suggests profile.
 - `docs/OPERATIONS_RUNBOOK.md` — update/rollback/runbook
 - `docs/ALCHEMICAL_ECOSYSTEM_ROADMAP.md` — roadmap
 - `docs/INTEGRATION_WORKPLAN.md` — integration plan
+- `docs/RELEASE_PLAN.md` — release strategy and versioning
 
 ---
 

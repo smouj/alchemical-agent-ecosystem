@@ -4,6 +4,14 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 mkdir -p .runtime/backups
 LOCKFILE=".runtime/update.lock"
+
+notify(){
+  local status="$1"
+  local text="$2"
+  local hook="${ALCHEMICAL_NOTIFY_WEBHOOK_URL:-}"
+  [[ -z "$hook" ]] && return 0
+  curl -fsS -X POST "$hook" -H 'content-type: application/json'     -d "{"status":"${status}","text":"${text}"}" >/dev/null || true
+}
 LAST_GOOD_FILE=".runtime/last-good-commit"
 TS="$(date +%Y%m%d_%H%M%S)"
 BACKUP_DIR=".runtime/backups/$TS"
@@ -13,6 +21,7 @@ if [[ -f "$LOCKFILE" ]]; then
   exit 1
 fi
 trap 'rm -f "$LOCKFILE"' EXIT
+trap 'notify "error" "update-safe failed"' ERR
 
 touch "$LOCKFILE"
 CURRENT_COMMIT="$(git rev-parse HEAD)"
@@ -47,3 +56,4 @@ docker compose ps > "$BACKUP_DIR/compose-ps.txt"
 
 echo "[8/8] Done"
 echo "Update-safe completed at $TS"
+notify "ok" "update-safe completed at ${TS}"

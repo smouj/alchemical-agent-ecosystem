@@ -1,0 +1,32 @@
+from pathlib import Path
+
+from fastapi.testclient import TestClient
+
+import gateway.app as gw
+
+
+def setup_module():
+    gw.DB_PATH = Path('/tmp/alchemical-gateway-test.db')
+    if gw.DB_PATH.exists():
+        gw.DB_PATH.unlink()
+    gw.GATEWAY_TOKEN = ""
+    gw.init_db()
+
+
+def test_health():
+    c = TestClient(gw.app)
+    r = c.get('/health')
+    assert r.status_code == 200
+    assert r.json()['status'] == 'ok'
+
+
+def test_capabilities_and_agents():
+    c = TestClient(gw.app)
+    r = c.get('/capabilities', headers={"x-alchemy-role": "viewer"})
+    assert r.status_code == 200
+    data = r.json()
+    assert 'skills' in data and 'agents' in data
+
+    r2 = c.get('/agents', headers={"x-alchemy-role": "viewer"})
+    assert r2.status_code == 200
+    assert isinstance(r2.json().get('items'), list)

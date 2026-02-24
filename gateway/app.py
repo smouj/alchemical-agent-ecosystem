@@ -1,6 +1,7 @@
 import asyncio
 import json
 import os
+import secrets
 import sqlite3
 from contextlib import contextmanager
 from datetime import datetime, timezone
@@ -10,6 +11,7 @@ from typing import Any, Dict, List, Optional
 import httpx
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.responses import StreamingResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 app = FastAPI(
@@ -17,6 +19,7 @@ app = FastAPI(
     version="0.2.0",
     description="Local-first orchestration gateway for Alchemical Agent Ecosystem",
 )
+
 
 MAP = {
   "velktharion": "http://velktharion:7401",
@@ -39,6 +42,18 @@ GATEWAY_TOKEN = os.getenv("ALCHEMICAL_GATEWAY_TOKEN", "")
 ADMIN_ROLE = "admin"
 OPERATOR_ROLE = "operator"
 VIEWER_ROLE = "viewer"
+MAX_BODY_BYTES = int(os.getenv("ALCHEMICAL_MAX_BODY_BYTES", "262144"))
+RATE_LIMIT_PER_MIN = int(os.getenv("ALCHEMICAL_RATE_LIMIT_PER_MIN", "120"))
+ALLOWED_ORIGINS = [x.strip() for x in os.getenv("ALCHEMICAL_ALLOWED_ORIGINS", "*").split(",") if x.strip()]
+_rate_window: Dict[str, List[float]] = {}
+
+app.add_middleware(
+  CORSMiddleware,
+  allow_origins=ALLOWED_ORIGINS if ALLOWED_ORIGINS != ["*"] else ["*"],
+  allow_credentials=False,
+  allow_methods=["*"],
+  allow_headers=["*"],
+)
 
 SKILLS_CATALOG = [
   "planning",
@@ -185,16 +200,55 @@ def now_iso() -> str:
 
 
 def _require_auth(request: Request, min_role: str = VIEWER_ROLE):
+  _enforce_rate_limit(request)
+  _enforce_body_size(request)
+
+  # primary token guard
   if GATEWAY_TOKEN:
     token = request.headers.get("x-alchemy-token", "")
     if token != GATEWAY_TOKEN:
       raise HTTPException(401, "Invalid or missing gateway token")
 
-  role = request.headers.get("x-alchemy-role", OPERATOR_ROLE)
+  # role can come from API key or explicit header
+  role = None
+  api_key = request.headers.get("x-api-key", "")
+  if api_key:
+    role = _auth_role_from_db(api_key)
+    if not role:
+      raise HTTPException(401, "Invalid API key")
+  if not role:
+    role = request.headers.get("x-alchemy-role", OPERATOR_ROLE)
+
   order = {VIEWER_ROLE: 1, OPERATOR_ROLE: 2, ADMIN_ROLE: 3}
   if order.get(role, 0) < order.get(min_role, 1):
     raise HTTPException(403, f"Role '{role}' cannot access this endpoint")
 
+
+
+def _enforce_rate_limit(request: Request):
+  client = request.client.host if request.client else "unknown"
+  now = datetime.now(timezone.utc).timestamp()
+  window_start = now - 60
+  bucket = _rate_window.get(client, [])
+  bucket = [t for t in bucket if t >= window_start]
+  if len(bucket) >= RATE_LIMIT_PER_MIN:
+    raise HTTPException(429, "Rate limit exceeded")
+  bucket.append(now)
+  _rate_window[client] = bucket
+
+
+def _enforce_body_size(request: Request):
+  cl = request.headers.get("content-length")
+  if cl and cl.isdigit() and int(cl) > MAX_BODY_BYTES:
+    raise HTTPException(413, f"Payload too large. Max {MAX_BODY_BYTES} bytes")
+
+
+def _auth_role_from_db(api_key: str) -> Optional[str]:
+  with db_conn() as conn:
+    row = conn.execute("SELECT role,enabled FROM api_keys WHERE key_hash=?", (api_key,)).fetchone()
+  if not row or not int(row["enabled"]):
+    return None
+  return row["role"]
 
 def init_db():
   with db_conn() as conn:
@@ -249,6 +303,18 @@ def init_db():
     )
     conn.execute(
       """
+      CREATE TABLE IF NOT EXISTS api_keys (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        key_hash TEXT UNIQUE NOT NULL,
+        role TEXT NOT NULL,
+        enabled INTEGER NOT NULL DEFAULT 1,
+        created_at TEXT NOT NULL
+      )
+      """
+    )
+    conn.execute(
+      """
       CREATE TABLE IF NOT EXISTS jobs (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         kind TEXT NOT NULL,
@@ -263,6 +329,10 @@ def init_db():
       )
       """
     )
+
+    admin_key = os.getenv("ALCHEMICAL_ADMIN_API_KEY", "")
+    if admin_key:
+      conn.execute("INSERT OR IGNORE INTO api_keys(name,key_hash,role,enabled,created_at) VALUES(?,?,?,?,?)", ("bootstrap-admin", admin_key, "admin", 1, now_iso()))
 
     count = conn.execute("SELECT COUNT(*) c FROM agents").fetchone()["c"]
     if count == 0:
@@ -357,10 +427,18 @@ async def job_worker():
     try:
       payload = json.loads(job["payload_json"])
       if job["kind"] == "connector_outbound":
-        # Real pipeline backbone: queued + retry + status
-        # (provider-specific transport can be plugged in here)
-        append_event("info", "connector", f"Outbound queued to {payload.get('channel')}:{payload.get('target')}")
-        append_chat(f"connector:{payload.get('channel')}", payload.get("message", ""), "connector")
+        channel = payload.get("channel")
+        target = payload.get("target")
+        message = payload.get("message", "")
+        with db_conn() as conn:
+          c = conn.execute("SELECT webhook_url,enabled FROM connectors WHERE channel=?", (channel,)).fetchone()
+        if c and int(c["enabled"]) and c["webhook_url"]:
+          async with httpx.AsyncClient(timeout=15) as cli:
+            await cli.post(c["webhook_url"], json={"target": target, "message": message, "channel": channel})
+          append_event("info", "connector", f"Outbound delivered to {channel}:{target}")
+        else:
+          append_event("warn", "connector", f"Connector {channel} has no webhook_url; stored only")
+        append_chat(f"connector:{channel}", message, "connector")
       elif job["kind"] == "connector_inbound":
         append_event("info", "connector", f"Inbound from {payload.get('channel')}:{payload.get('from')}")
         append_chat(f"inbound:{payload.get('channel')}", payload.get("text", ""), "connector")
@@ -441,6 +519,30 @@ async def list_events(request: Request, limit: int = Query(100, ge=1, le=500)):
     rows = conn.execute("SELECT id,level,source,message,ts FROM events ORDER BY id DESC LIMIT ?", (limit,)).fetchall()
   return {"items": [dict(r) for r in rows], "count": len(rows)}
 
+
+@app.get('/events/stream')
+async def events_stream(request: Request, limit: int = 100):
+  _require_auth(request, VIEWER_ROLE)
+
+  async def event_gen():
+    last_id = -1
+    lim = max(1, min(limit, 500))
+    while True:
+      with db_conn() as conn:
+        row = conn.execute("SELECT COALESCE(MAX(id),0) m FROM events").fetchone()
+        max_id = int(row["m"])
+      if max_id != last_id:
+        with db_conn() as conn:
+          rows = conn.execute("SELECT id,level,source,message,ts FROM events ORDER BY id DESC LIMIT ?", (lim,)).fetchall()
+        payload = json.dumps({"items": [dict(r) for r in rows], "count": len(rows)}, ensure_ascii=False)
+        yield f"data: {payload}\n\n"
+        last_id = max_id
+      else:
+        yield ": keepalive\n\n"
+      await asyncio.sleep(1)
+
+  return StreamingResponse(event_gen(), media_type='text/event-stream')
+
 @app.get('/capabilities')
 async def capabilities(request: Request):
   _require_auth(request, VIEWER_ROLE)
@@ -515,6 +617,37 @@ async def register_agent(payload: AgentConfig, request: Request):
   append_event("info", "agents", f"Agent upserted: {payload.name}")
   return {"ok": True, "agent": payload.model_dump()}
 
+
+
+
+@app.get('/auth/keys')
+async def list_keys(request: Request):
+  _require_auth(request, ADMIN_ROLE)
+  with db_conn() as conn:
+    rows = conn.execute("SELECT id,name,role,enabled,created_at FROM api_keys ORDER BY id DESC").fetchall()
+  return {"items": [dict(r) for r in rows]}
+
+
+@app.post('/auth/keys')
+async def create_key(request: Request, name: str = Query(..., min_length=2), role: str = Query(OPERATOR_ROLE)):
+  _require_auth(request, ADMIN_ROLE)
+  if role not in [VIEWER_ROLE, OPERATOR_ROLE, ADMIN_ROLE]:
+    raise HTTPException(400, "Invalid role")
+  key_plain = secrets.token_urlsafe(32)
+  with db_conn() as conn:
+    conn.execute(
+      "INSERT INTO api_keys(name,key_hash,role,enabled,created_at) VALUES(?,?,?,?,?)",
+      (name, key_plain, role, 1, now_iso()),
+    )
+  return {"ok": True, "api_key": key_plain, "role": role, "name": name}
+
+
+@app.post('/auth/keys/{key_id}/disable')
+async def disable_key(key_id: int, request: Request):
+  _require_auth(request, ADMIN_ROLE)
+  with db_conn() as conn:
+    conn.execute("UPDATE api_keys SET enabled=0 WHERE id=?", (key_id,))
+  return {"ok": True, "id": key_id, "enabled": False}
 
 @app.get('/connectors')
 async def list_connectors(request: Request):

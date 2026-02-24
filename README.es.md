@@ -166,7 +166,10 @@ Ruta: `apps/alchemical-dashboard`
 | `/gateway/ready` | GET | Estado de readiness (agentes/conectores/targets) |
 | `/gateway/stats` | GET | Contadores runtime (jobs/chat/eventos) |
 | `/gateway/events` | GET | Feed de eventos recientes del gateway |
+| `/gateway/events/stream` | GET (SSE) | Stream de eventos en tiempo real |
 | `/gateway/agents/{name}` | GET | Detalle de un agente lógico |
+| `/gateway/auth/keys` | GET/POST | Listar/crear API keys (admin) |
+| `/gateway/auth/keys/{id}/disable` | POST | Desactivar API key (admin) |
 | `/api/gateway/chat-plan` | POST | Plan de acción del chat (objetivo + skills + tools + subagentes + canales) |
 | `/api/gateway/agents` | GET/POST | Registro de agentes/subagentes |
 | `/api/gateway/chat-thread` | GET/POST | Hilo de chat compartido entre operador y agentes |
@@ -178,6 +181,12 @@ Ruta: `apps/alchemical-dashboard`
 ---
 
 ## Instalación y operación
+
+### Bootstrap remoto (un comando)
+
+```bash
+bash scripts/install-remote.sh
+```
 
 ### Arranque rápido
 
@@ -223,6 +232,7 @@ cd /mnt/d/alchemical-agent-ecosystem
 - `docs/OPERATIONS_RUNBOOK.md` — operaciones diarias, update y rollback
 - `docs/ALCHEMICAL_ECOSYSTEM_ROADMAP.md` — roadmap por fases
 - `docs/INTEGRATION_WORKPLAN.md` — plan de integración
+- `docs/RELEASE_PLAN.md` — estrategia de releases y versionado
 
 ---
 
