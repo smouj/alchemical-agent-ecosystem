@@ -50,6 +50,60 @@ TOOLS_CATALOG = [
 CHANNEL_CONNECTORS = ["telegram", "whatsapp", "discord", "slack", "signal"]
 
 
+CORE_AGENT_TEMPLATES = [
+  {
+    "name": "alquimista-mayor",
+    "role": "Orquestador / Director / Alquimista Mayor",
+    "model": "local-default",
+    "tools": ["memory", "notifications", "logs"],
+    "skills": ["planning", "critical-reflection", "routing", "long-term-context"],
+    "enabled": True,
+    "parent": None,
+    "target_service": "velktharion",
+  },
+  {
+    "name": "investigador-analista",
+    "role": "Investigador / Analista / Buscador de Verdad",
+    "model": "local-default",
+    "tools": ["search", "http", "memory"],
+    "skills": ["fact-checking", "source-comparison", "deep-research"],
+    "enabled": True,
+    "parent": "alquimista-mayor",
+    "target_service": "synapsara",
+  },
+  {
+    "name": "ingeniero-constructor",
+    "role": "Desarrollador / Ingeniero / Constructor",
+    "model": "local-default",
+    "tools": ["shell", "docker-control", "http", "logs"],
+    "skills": ["coding", "debugging", "testing", "deployment"],
+    "enabled": True,
+    "parent": "alquimista-mayor",
+    "target_service": "ignivox",
+  },
+  {
+    "name": "creador-visual",
+    "role": "Creador Visual / Diseñador / Artista Digital",
+    "model": "local-default",
+    "tools": ["http", "memory"],
+    "skills": ["ui-ux", "branding", "image-generation", "motion"],
+    "enabled": True,
+    "parent": "alquimista-mayor",
+    "target_service": "auralith",
+  },
+  {
+    "name": "redactor-narrador",
+    "role": "Redactor / Copywriter / Narrador / Estratega de Contenido",
+    "model": "local-default",
+    "tools": ["memory", "search", "http"],
+    "skills": ["storytelling", "seo", "multilingual-writing", "editing"],
+    "enabled": True,
+    "parent": "alquimista-mayor",
+    "target_service": "resonvyr",
+  },
+]
+
+
 class AgentConfig(BaseModel):
   name: str = Field(min_length=2, max_length=64)
   role: str = Field(min_length=2, max_length=128)
@@ -58,6 +112,7 @@ class AgentConfig(BaseModel):
   skills: List[str] = Field(default_factory=list)
   enabled: bool = True
   parent: Optional[str] = None
+  target_service: Optional[str] = None
 
 
 class ConnectorConfig(BaseModel):
@@ -75,6 +130,12 @@ class ChatActionRequest(BaseModel):
   create_subagents: List[str] = Field(default_factory=list)
   channels: List[str] = Field(default_factory=list)
 
+
+
+
+def _ensure_registry_seeded():
+  if not AGENTS_REGISTRY.exists():
+    _write_json(AGENTS_REGISTRY, CORE_AGENT_TEMPLATES)
 
 def _read_json(path: Path, fallback: Any):
   if not path.exists():
@@ -100,25 +161,29 @@ async def capabilities():
     "skills": SKILLS_CATALOG,
     "tools": TOOLS_CATALOG,
     "connectors": CHANNEL_CONNECTORS,
-    "agents": list(MAP.keys()),
+    "agents": [a.get("name") for a in _read_json(AGENTS_REGISTRY, CORE_AGENT_TEMPLATES)],
+    "service_targets": list(MAP.keys()),
   }
 
 
 @app.get('/agents')
 async def list_agents():
-  data = _read_json(AGENTS_REGISTRY, [])
+  _ensure_registry_seeded()
+  data = _read_json(AGENTS_REGISTRY, CORE_AGENT_TEMPLATES)
   return {"items": data, "count": len(data)}
 
 
 @app.post('/agents')
 async def register_agent(payload: AgentConfig):
-  data = _read_json(AGENTS_REGISTRY, [])
-  filtered_tools = [t for t in payload.tools if t in TOOLS_CATALOG]
-  filtered_skills = [s for s in payload.skills if s in SKILLS_CATALOG]
+  _ensure_registry_seeded()
+  data = _read_json(AGENTS_REGISTRY, CORE_AGENT_TEMPLATES)
 
+  # skills and tools are extensible by design (not hard-coupled to fixed agent list)
   record = payload.model_dump()
-  record["tools"] = filtered_tools
-  record["skills"] = filtered_skills
+  record["tools"] = sorted(list(dict.fromkeys(payload.tools)))
+  record["skills"] = sorted(list(dict.fromkeys(payload.skills)))
+  if record.get("target_service") and record["target_service"] not in MAP:
+    raise HTTPException(400, f"Unknown target_service: {record['target_service']}")
 
   data = [x for x in data if x.get("name") != payload.name]
   data.append(record)
@@ -207,9 +272,14 @@ async def chat_post(payload: ChatMessage):
 
 @app.post('/dispatch/{agent}/{action}')
 async def dispatch(agent: str, action: str, payload: Dict[str, Any]):
-  base = MAP.get(agent)
+  _ensure_registry_seeded()
+  registry = _read_json(AGENTS_REGISTRY, CORE_AGENT_TEMPLATES)
+  reg = next((a for a in registry if a.get("name") == agent), None)
+
+  target = reg.get("target_service") if reg else agent
+  base = MAP.get(target)
   if not base:
-    raise HTTPException(404, f"Unknown agent: {agent}")
+    raise HTTPException(404, f"Unknown agent or target service: {agent}")
   url = f"{base}/{action}"
 
   thread = _load_thread()

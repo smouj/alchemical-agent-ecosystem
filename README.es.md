@@ -55,7 +55,7 @@ Está diseñada para:
 
 | Capacidad | Descripción |
 |---|---|
-| Runtime multiagente | 10 servicios especializados (puertos `7401`–`7410`) |
+| Runtime multiagente | La capa de servicios soporta 10 backends (`7401`–`7410`), mientras que los agentes lógicos son dinámicos y definidos por el usuario |
 | Stack IA local-first | Ollama + Redis + ChromaDB |
 | Reverse proxy | Caddy con descubrimiento de servicios (sin IPs hardcodeadas) |
 | Operación one-command | CLI `./scripts/alchemical` para instalar, ejecutar, logs y diagnóstico |
@@ -95,6 +95,20 @@ Está diseñada para:
 ```
 
 ---
+
+## Agentes lógicos base (seed por defecto)
+
+El gateway ahora inicializa 5 agentes lógicos base (editables):
+
+| Agente | Misión |
+|---|---|
+| Alquimista Mayor | Orquestación global, planificación y control de calidad |
+| Investigador/Analista | Research, verificación y comparación de fuentes |
+| Ingeniero/Constructor | Código, integración, debugging y entrega |
+| Creador Visual | UI/UX, branding y assets visuales |
+| Redactor/Narrador | Copywriting, storytelling y contenido SEO |
+
+> Importante: las skills/tools son capacidades adjuntas a agentes, no agentes fijos.
 
 ## Mapa de servicios
 

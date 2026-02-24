@@ -55,7 +55,7 @@ It is designed for:
 
 | Capability | Description |
 |---|---|
-| Multi-agent runtime | 10 specialized agent services (ports `7401`–`7410`) |
+| Multi-agent runtime | Service layer supports 10 backends (ports `7401`–`7410`), while logical agents are dynamic and user-defined |
 | Local-first AI stack | Ollama + Redis + ChromaDB |
 | Reverse proxy | Caddy with service discovery (no hardcoded host IPs) |
 | One-command ops | `./scripts/alchemical` CLI for install, run, logs, doctor |
@@ -95,6 +95,20 @@ It is designed for:
 ```
 
 ---
+
+## Core Logical Agents (default seed)
+
+The gateway now seeds 5 core logical agents (editable):
+
+| Agent | Mission |
+|---|---|
+| Alquimista Mayor | Global orchestration, planning, quality gate |
+| Investigador/Analista | Research, verification, source comparison |
+| Ingeniero/Constructor | Code, integration, debugging, delivery |
+| Creador Visual | UI/UX, branding, visual assets |
+| Redactor/Narrador | Copywriting, storytelling, SEO content |
+
+> Important: skills/tools are capabilities attached to agents, not fixed agents themselves.
 
 ## Services Map
 
