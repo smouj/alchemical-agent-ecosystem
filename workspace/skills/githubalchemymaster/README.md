@@ -6,7 +6,7 @@
 
 ![Language](https://img.shields.io/badge/language-Markdown%20%2B%20Python-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![CI](https://img.shields.io/github/actions/workflow/status/smouj/GitHub-Alchemy-Master/ci.yml?branch=main)
+![CI](https://img.shields.io/github/actions/workflow/status/smouj/githubalchemymaster/ci.yml?branch=main)
 
 **Specialized skill + repository toolkit to bootstrap and maintain professional-grade GitHub repositories (2026 standards).**
 
