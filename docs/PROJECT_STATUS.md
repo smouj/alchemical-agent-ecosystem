@@ -4,10 +4,10 @@ _Auto-generated from repository state. Do not edit manually._
 
 ## Metadata
 
-- Generated: **2026-02-24 23:25:26 UTC**
+- Generated: **2026-02-24 23:32:20 UTC**
 - Branch: **main**
-- HEAD: **0132292**
-- Last commit: **0132292 refactor(dashboard): load logical agents from gateway and wire sidebar tab navigation (2026-02-25)**
+- HEAD: **181e9ca**
+- Last commit: **181e9ca docs(readme): professionalize EN/ES with installation-first structure, richer architecture, comparisons, and clearer agent-runtime model (2026-02-25)**
 
 ## Repository Metrics
 
