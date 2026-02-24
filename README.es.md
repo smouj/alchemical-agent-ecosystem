@@ -260,6 +260,9 @@ cd /mnt/d/alchemical-agent-ecosystem
 ./scripts/alchemical update
 ./scripts/alchemical update-safe
 ./scripts/alchemical rollback
+
+# mantenimiento project/repo
+bash ops/project-maintenance.sh
 ```
 
 ---
@@ -302,6 +305,7 @@ El wizard detecta RAM del host y sugiere perfil.
 - [`docs/RELEASE_PLAN.md`](./docs/RELEASE_PLAN.md) — estrategia de releases y versionado
 - [`docs/BRANDING.md`](./docs/BRANDING.md) — guía de uso/exportación del logo
 - [`docs/PROJECT_STATUS.md`](./docs/PROJECT_STATUS.md) — snapshot autogenerado del estado del repositorio
+- [`docs/GO_BETA_CHECKLIST.md`](./docs/GO_BETA_CHECKLIST.md) — checklist final antes de declarar beta pública
 
 ---
 
@@ -325,6 +329,9 @@ Incluye lock, backup, checks, deploy y smoke-tests.
 
 ```bash
 ./scripts/alchemical rollback
+
+# mantenimiento project/repo
+bash ops/project-maintenance.sh
 ```
 
 ---
