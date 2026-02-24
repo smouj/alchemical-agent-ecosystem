@@ -48,7 +48,7 @@ curl -fsSL https://smouj.ai/install.sh | bash -s -- --domain your-domain.com
 ```
 
 ## Alchemical Control Panel (Dashboard)
-Nuevo frontend premium (dark-only, glassmorphism + neumorphism sutil) para operar el ecosistema multi-agente local.
+Frontend premium (dark-only, glassmorphism + neumorphism sutil) **con datos reales** del stack local (docker compose + health checks + logs), sin mocks en la UI principal.
 
 **Ruta:** `apps/alchemical-dashboard`
 
