@@ -302,6 +302,7 @@ Wizard auto-detects host RAM and suggests profile.
 - [`docs/INTEGRATION_WORKPLAN.md`](./docs/INTEGRATION_WORKPLAN.md) — integration plan
 - [`docs/RELEASE_PLAN.md`](./docs/RELEASE_PLAN.md) — release strategy and versioning
 - [`docs/BRANDING.md`](./docs/BRANDING.md) — logo usage and export guidance
+- [`docs/PROJECT_STATUS.md`](./docs/PROJECT_STATUS.md) — auto-synced repository status snapshot
 
 ---
 

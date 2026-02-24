@@ -301,6 +301,7 @@ El wizard detecta RAM del host y sugiere perfil.
 - [`docs/INTEGRATION_WORKPLAN.md`](./docs/INTEGRATION_WORKPLAN.md) — plan de integración
 - [`docs/RELEASE_PLAN.md`](./docs/RELEASE_PLAN.md) — estrategia de releases y versionado
 - [`docs/BRANDING.md`](./docs/BRANDING.md) — guía de uso/exportación del logo
+- [`docs/PROJECT_STATUS.md`](./docs/PROJECT_STATUS.md) — snapshot autogenerado del estado del repositorio
 
 ---
 

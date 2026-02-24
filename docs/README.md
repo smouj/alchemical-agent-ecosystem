@@ -9,6 +9,7 @@ This folder contains the canonical technical and operational documentation for *
 - `INTEGRATION_WORKPLAN.md` — integration plan and execution sequence
 - `API_REFERENCE.md` — gateway and dashboard API endpoints
 - `OPERATIONS_RUNBOOK.md` — day-2 operations (update, rollback, health checks)
+- `PROJECT_STATUS.md` — auto-generated repo status snapshot (services/skills/apis/commit)
 
 ## Documentation policy
 
