@@ -1,13 +1,13 @@
 <h1 align="center">⚗️ Alchemical Agent Ecosystem</h1>
 
 <p align="center">
-  <img src="./assets/branding/variants/logo-horizontal.svg" alt="Alchemical Agent Ecosystem" width="760" />
+  <img src="./assets/branding/variants/logo-horizontal.svg" alt="Alchemical Agent Ecosystem" width="780" />
 </p>
 
 <p align="center"><em>Cockpit multiagente local-first para orquestación real, control en tiempo real y operación segura.</em></p>
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=16&pause=1200&center=true&vCenter=true&width=980&lines=Orquestaci%C3%B3n+runtime+local-first;Gateway+con+RBAC+%2B+jobs+%2B+eventos;Agent+Node+Studio+para+personalizar+agentes;Chat+directo+%2B+roundtable+multi-agente;Perfiles+Docker+2g%2F4g%2F8g%2F16g%2F32g" alt="ticker funcionalidades" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=16&pause=1200&center=true&vCenter=true&width=980&lines=Instalaci%C3%B3n+primero+%E2%86%92+arranca+en+minutos;Gateway+como+l%C3%ADmite+de+pol%C3%ADtica+y+routing;Chat+directo+%2B+roundtable+multi-agente;Agent+Node+Studio+para+personalizar+agentes;Ritual+de+higiene+GitHub+integrado" alt="ticker funcionalidades" />
 </p>
 
 <p align="center">
@@ -20,8 +20,7 @@
   <img src="https://img.shields.io/badge/gateway-FastAPI-009688" alt="FastAPI">
   <img src="https://img.shields.io/badge/dashboard-Next.js%2015-black" alt="Next.js 15">
   <img src="https://img.shields.io/badge/realtime-SSE-06b6d4" alt="SSE">
-  <img src="https://img.shields.io/github/stars/smouj/alchemical-agent-ecosystem?style=social" alt="Stars">
-  <img src="https://img.shields.io/github/forks/smouj/alchemical-agent-ecosystem?style=social" alt="Forks">
+  <img src="https://img.shields.io/badge/auth-RBAC%20%2B%20API%20Keys-16a34a" alt="RBAC + API keys">
 </p>
 
 <p align="center">
@@ -40,91 +39,169 @@ cd /mnt/d/alchemical-agent-ecosystem
 curl -fsS http://localhost/gateway/health
 ```
 
-URLs runtime:
+Endpoints runtime:
 - `http://localhost` → runtime vía Docker + Caddy
+- `http://localhost/gateway/health` → health del gateway
 - `http://localhost:3000` → dashboard en modo dev (`cd apps/alchemical-dashboard && npm run dev`)
 
 ---
 
 ## ✨ Para qué sirve este proyecto
 
-Usa Alchemical cuando necesitas un **cockpit operativo local** para flujos multiagente:
-- orquestar agentes lógicos sobre servicios reales,
-- gestionar conectores/jobs/eventos/chat desde una sola UI,
-- ejecutar discusiones multiagente y dispatch de acciones,
-- mantener runtime observable, auditable y seguro.
+Úsalo cuando necesites un **cockpit operativo real** para agentes que trabajan dentro de tu sistema:
+
+- 🧠 Orquestar agentes lógicos sobre servicios reales
+- 💬 Chatear con agentes y lanzar roundtables multiagente
+- 🧩 Vincular skills/tools a agentes de forma visual (Agent Node Studio)
+- 📡 Conectar canales (Telegram/Discord ahora, extensible a futuras redes)
+- 🗂️ Observar jobs/eventos/usage/logs en tiempo real
+- 🔐 Operar con guardrails (auth, RBAC, API keys, límites)
+
+Sin comportamiento mock en los flujos core del runtime.
 
 ---
 
-## 🧠 Capacidades clave (implementadas)
-
-| Área | Capacidad actual |
-|---|---|
-| Control de agentes | Start/stop/restart + chequeo dispatch |
-| Personalización de agentes | **Agent Node Studio** (nodos + etiquetas skills/tools) |
-| Chat | Hilo compartido + ask directo + roundtable |
-| Realtime | Streams SSE de chat/eventos/usage/logs |
-| Seguridad operativa | Token auth + RBAC + API keys + secret scan |
-| Datos runtime | Jobs, eventos, usage y chat persistidos |
-
----
-
-## 🏗️ Arquitectura (realidad actual)
+## 🏗️ Arquitectura del sistema (realidad actual)
 
 ```mermaid
 flowchart TB
-  U[Operador] --> D[Dashboard Next.js]
-  D -->|/api/gateway/* + SSE| G[Gateway FastAPI]
-  G -->|dispatch| S[Servicios 7401..7410]
-  G --> DB[(SQLite runtime)]
-  G --> R[(Redis)]
-  G --> C[(ChromaDB)]
-  S --> O[(Ollama)]
-  EDGE[Caddy :80/:443] --> D
-  EDGE --> G
+  subgraph Edge["🌐 Edge"]
+    CADDY[Caddy :80/:443]
+  end
+
+  subgraph UX["🖥️ Control Plane"]
+    OP[Operador]
+    DASH[Dashboard Next.js]
+  end
+
+  subgraph Core["⚙️ Núcleo de Orquestación"]
+    GW[Gateway FastAPI]
+    DB[(SQLite runtime)]
+    EV[(Eventos / Jobs / Chat / Usage)]
+  end
+
+  subgraph Exec["🧪 Capa de Ejecución"]
+    SVC[Servicios objetivo\n7401..7410]
+    OLL[(Ollama)]
+    RED[(Redis)]
+    CHR[(ChromaDB)]
+  end
+
+  OP --> DASH
+  CADDY --> DASH
+  CADDY --> GW
+  DASH -->|/api/gateway/* + SSE| GW
+
+  GW -->|dispatch| SVC
+  GW --> DB
+  GW --> EV
+  GW --> RED
+  GW --> CHR
+  SVC --> OLL
 ```
+
+### 🔁 Funcionamiento del agente de proyecto
 
 ```mermaid
 flowchart LR
-  IN[Mensaje operador] --> GW[Gateway]
-  GW --> REG[Registry de agentes]
-  REG --> MAP[target_service]
-  MAP --> EXEC[Acción del servicio]
-  EXEC --> STORE[Eventos + chat + jobs + usage]
-  STORE --> UI[Dashboard realtime]
+  I[Petición del operador] --> A[Auth + política gateway]
+  A --> B[Lookup en registry de agentes]
+  B --> C[Resolución target_service]
+  C --> D[Ejecución del servicio]
+  D --> E[Persistencia: resultado + uso + evento + chat]
+  E --> F[Actualización SSE en dashboard]
 ```
 
 ---
 
-## 🧩 API destacada
+## 🧠 Modelo de agentes (lo que muestra la UI)
 
-- `POST /gateway/chat/ask`
-- `POST /gateway/chat/roundtable`
-- `GET /gateway/chat/stream`
-- `GET /gateway/usage/summary`
-- `POST /gateway/connectors/webhook/{channel}`
+El dashboard carga **agentes lógicos reales desde gateway** (fuente real), no skills estáticas mostradas como agentes.
 
-Referencia completa: [`docs/API_REFERENCE.md`](./docs/API_REFERENCE.md)
-
----
-
-## 📚 Documentación
-
-- [`docs/README.md`](./docs/README.md)
-- [`docs/INSTALLATION.md`](./docs/INSTALLATION.md)
-- [`docs/CLI_REFERENCE.md`](./docs/CLI_REFERENCE.md)
-- [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md)
-- [`docs/OPERATIONS_RUNBOOK.md`](./docs/OPERATIONS_RUNBOOK.md)
+Cada agente incluye:
+- `name`
+- `role`
+- `model`
+- `target_service`
+- `skills[]`
+- `tools[]`
+- estado runtime/latencia a partir de contenedores + health checks
 
 ---
 
-## 🔄 Ritual del proyecto
+## 🧰 Capacidades implementadas
+
+| Dominio | Implementado ahora |
+|---|---|
+| Control de agentes | Start/stop/restart, ping dispatch, estado runtime |
+| Personalización de agentes | Agent Node Studio (nodos + etiquetas skills/tools) |
+| Chat | Hilo compartido, ask directo, roundtable, metadata thinking/repo/auto-edit |
+| Conectores | Cola saliente + normalización webhook entrante (Telegram/Discord) |
+| Realtime | SSE chat/eventos/usage/logs con streams endurecidos |
+| Seguridad | Token auth, RBAC, API keys, rate/payload limits, secret scan |
+| Higiene operativa | project-tidy + ritual-sync + snapshots automáticos |
+
+---
+
+## 🔌 Conectores: estado y futuro
+
+- ✅ Integración base Telegram (pipeline inbound/outbound)
+- ✅ Integración base Discord (pipeline inbound/outbound)
+- 🧭 Arquitectura preparada para futuras redes sociales con adapters por canal
+
+---
+
+## 📊 Comparativa rápida
+
+| Criterio | Este proyecto | Demos típicas chat-only |
+|---|---|---|
+| Operación local-first | ✅ Diseño core | ⚠️ acoplado a cloud |
+| Frontera de política | ✅ Gateway dedicado | ⚠️ UI mezclada con runtime |
+| Observabilidad real | ✅ jobs/eventos/usage/logs | ⚠️ limitada |
+| Multiagente | ✅ ask + roundtable + dispatch | ⚠️ normalmente hilo único |
+| Higiene GitHub project | ✅ ritual integrado | ❌ manual |
+
+---
+
+## 📁 Estructura del repositorio
+
+```text
+.github/                    workflows CI/CD y project
+apps/alchemical-dashboard/  dashboard Next.js (control plane)
+gateway/                    gateway FastAPI (auth/routing/persistencia)
+services/                   servicios de ejecución (7401..7410)
+infra/caddy/                reverse proxy
+infra/scripts/              implementación del instalador
+ops/                        scripts de operación segura/higiene
+docs/                       documentación técnica y operativa
+scripts/                    CLI helpers
+assets/                     branding y recursos visuales
+```
+
+---
+
+## 📚 Mapa de documentación
+
+- [`docs/README.md`](./docs/README.md) — índice docs
+- [`docs/INSTALLATION.md`](./docs/INSTALLATION.md) — instalación y arranque
+- [`docs/CLI_REFERENCE.md`](./docs/CLI_REFERENCE.md) — catálogo completo de comandos
+- [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) — arquitectura extendida
+- [`docs/API_REFERENCE.md`](./docs/API_REFERENCE.md) — referencia de endpoints
+- [`docs/OPERATIONS_RUNBOOK.md`](./docs/OPERATIONS_RUNBOOK.md) — operación day-2
+- [`docs/PROJECT_STATUS.md`](./docs/PROJECT_STATUS.md) — snapshot autosincronizado
+
+---
+
+## 🔄 Actualización segura para producción
 
 ```bash
-bash ops/ritual-sync.sh
+cd /mnt/d/alchemical-agent-ecosystem
+git pull --rebase origin main
+./scripts/alchemical update-safe
 ```
 
 ---
 
-## License
-MIT © 2026 **by:** [@Smouj013](https://x.com/smouj013)
+## 📄 Licencia
+
+MIT
