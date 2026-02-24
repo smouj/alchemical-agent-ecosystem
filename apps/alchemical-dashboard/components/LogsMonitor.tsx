@@ -2,21 +2,23 @@
 
 import { useEffect, useState } from "react";
 
-export function LogsMonitor() {
-  const [service, setService] = useState("velktharion");
+export function LogsMonitor({ defaultService = "velktharion", pollMs = 5000, linesCount = 50 }: { defaultService?: string; pollMs?: number; linesCount?: number }) {
+  const [service, setService] = useState(defaultService);
   const [lines, setLines] = useState<string[]>([]);
+
+  useEffect(() => setService(defaultService), [defaultService]);
 
   useEffect(() => {
     let stop = false;
     const tick = async () => {
-      const r = await fetch(`/api/logs?service=${service}&lines=50`, { cache: "no-store" });
+      const r = await fetch(`/api/logs?service=${service}&lines=${linesCount}`, { cache: "no-store" });
       const data = await r.json();
       if (!stop) setLines(data.logs ?? []);
     };
     tick();
-    const id = setInterval(tick, 5000);
+    const id = setInterval(tick, pollMs);
     return () => { stop = true; clearInterval(id); };
-  }, [service]);
+  }, [service, pollMs, linesCount]);
 
   return (
     <section className="glass-card" style={{ padding: 14 }}>

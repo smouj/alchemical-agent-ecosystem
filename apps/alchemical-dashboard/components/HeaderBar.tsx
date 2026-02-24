@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Bell, Command, Cpu, MemoryStick, CircleGauge } from "lucide-react";
 
 function Meter({ label, value, color }: { label: string; value: number; color: string }) {
@@ -16,6 +17,20 @@ function Meter({ label, value, color }: { label: string; value: number; color: s
 }
 
 export function HeaderBar() {
+  const [m, setM] = useState({ cpu: 0, ram: 0, gpu: 0 });
+
+  useEffect(() => {
+    let stop = false;
+    const load = async () => {
+      const r = await fetch("/api/metrics", { cache: "no-store" });
+      const j = await r.json();
+      if (!stop) setM(j);
+    };
+    load();
+    const id = setInterval(load, 7000);
+    return () => { stop = true; clearInterval(id); };
+  }, []);
+
   return (
     <header className="glass-card" style={{ margin: "12px 12px 0", padding: "12px 14px", position: "sticky", top: 12, zIndex: 20, display: "flex", justifyContent: "space-between", gap: 12, alignItems: "center" }}>
       <div>
@@ -30,9 +45,9 @@ export function HeaderBar() {
         </div>
 
         <div style={{ display: "flex", gap: 8 }}>
-          <div className="card metric"><Cpu size={14} /> <Meter label="CPU" value={43} color="#22d3ee" /></div>
-          <div className="card metric"><MemoryStick size={14} /> <Meter label="RAM" value={68} color="#a78bfa" /></div>
-          <div className="card metric"><CircleGauge size={14} /> <Meter label="GPU" value={27} color="#fbbf24" /></div>
+          <div className="card metric"><Cpu size={14} /> <Meter label="CPU" value={m.cpu} color="#22d3ee" /></div>
+          <div className="card metric"><MemoryStick size={14} /> <Meter label="RAM" value={m.ram} color="#a78bfa" /></div>
+          <div className="card metric"><CircleGauge size={14} /> <Meter label="GPU" value={m.gpu} color="#fbbf24" /></div>
         </div>
 
         <button className="icon-btn" aria-label="Notificaciones"><Bell size={16} /></button>

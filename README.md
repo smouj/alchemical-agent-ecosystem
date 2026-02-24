@@ -63,12 +63,15 @@ npm run dev
 - `app/layout.tsx` → shell principal (sidebar fija + header sticky)
 - `app/page.tsx` → home del dashboard
 - `app/globals.css` → tokens visuales 2026 + efectos glass/grain
-- `components/Sidebar.tsx` → navegación y estados Ollama/Redis/ChromaDB
+- `components/Sidebar.tsx` → navegación y estados core reales
+- `components/HeaderBar.tsx` → métricas CPU/RAM reales (docker stats)
 - `components/AgentCard.tsx` → tarjeta de agente
 - `components/CreateAgentWizard.tsx` → wizard 4 pasos + CTA "Transmutar Agente"
-- `components/AgentsTable.tsx` → tabla de gestión de agentes
-- `components/LogsMonitor.tsx` → panel terminal-like
-- `lib/mock-data.ts` → datos de ejemplo
+- `components/AgentsTable.tsx` → tabla de gestión + acciones start/stop/restart + dispatch
+- `components/SettingsPanel.tsx` → configuración avanzada persistente
+- `components/LogsMonitor.tsx` → logs reales por servicio
+- `app/api/*` → endpoints runtime (agents, control, logs, system, metrics, config)
+- `lib/agents.ts` y `lib/config.ts` → catálogo de agentes y configuración
 
 ## License
 MIT
