@@ -8,6 +8,7 @@ import { AgentsTable } from "../components/AgentsTable";
 import { LogsMonitor } from "../components/LogsMonitor";
 import { SettingsPanel } from "../components/SettingsPanel";
 import { ChatWorkbench } from "../components/ChatWorkbench";
+import { CanvasLab } from "../components/CanvasLab";
 import type { DashboardPayload } from "../lib/types";
 import type { DashboardConfig } from "../lib/config";
 
@@ -51,8 +52,9 @@ export default function Page() {
         <div className="stack">
           <CreateAgentWizard />
           <ChatWorkbench />
+          <CanvasLab />
           <SettingsPanel onChange={onCfg} />
-          <LogsMonitor defaultService={cfg.defaultLogService} pollMs={cfg.logsPollMs} linesCount={cfg.logsLines} />
+          <LogsMonitor defaultService={cfg.defaultLogService} linesCount={cfg.logsLines} />
         </div>
       </section>
     </div>

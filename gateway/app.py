@@ -1,9 +1,11 @@
 import json
+import asyncio
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import httpx
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
 app = FastAPI(title="alchemical-gateway")
@@ -269,6 +271,24 @@ async def chat_post(payload: ChatMessage):
   return {"ok": True, "item": msg}
 
 
+
+
+
+@app.get('/chat/stream')
+async def chat_stream(limit: int = 120):
+  async def event_gen():
+    last_count = 0
+    lim = max(1, min(limit, 500))
+    while True:
+      items = _load_thread()
+      if len(items) != last_count:
+        payload = json.dumps({"items": items[-lim:], "count": len(items)}, ensure_ascii=False)
+        yield f"data: {payload}\n\n"
+        last_count = len(items)
+      else:
+        yield ": keepalive\n\n"
+      await asyncio.sleep(1)
+  return StreamingResponse(event_gen(), media_type='text/event-stream')
 
 @app.post('/dispatch/{agent}/{action}')
 async def dispatch(agent: str, action: str, payload: Dict[str, Any]):

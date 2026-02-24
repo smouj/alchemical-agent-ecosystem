@@ -2,28 +2,29 @@
 
 import { useEffect, useState } from "react";
 
-export function LogsMonitor({ defaultService = "velktharion", pollMs = 5000, linesCount = 50 }: { defaultService?: string; pollMs?: number; linesCount?: number }) {
+export function LogsMonitor({ defaultService = "velktharion", linesCount = 50 }: { defaultService?: string; linesCount?: number }) {
   const [service, setService] = useState(defaultService);
   const [lines, setLines] = useState<string[]>([]);
 
   useEffect(() => setService(defaultService), [defaultService]);
 
   useEffect(() => {
-    let stop = false;
-    const tick = async () => {
-      const r = await fetch(`/api/logs?service=${service}&lines=${linesCount}`, { cache: "no-store" });
-      const data = await r.json();
-      if (!stop) setLines(data.logs ?? []);
+    const es = new EventSource(`/api/logs/stream?service=${encodeURIComponent(service)}&lines=${linesCount}`);
+    es.onmessage = (ev) => {
+      try {
+        const payload = JSON.parse(ev.data);
+        setLines(payload.logs ?? []);
+      } catch {
+        // ignore
+      }
     };
-    tick();
-    const id = setInterval(tick, pollMs);
-    return () => { stop = true; clearInterval(id); };
-  }, [service, pollMs, linesCount]);
+    return () => es.close();
+  }, [service, linesCount]);
 
   return (
     <section className="glass-card" style={{ padding: 14 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <h3 style={{ marginTop: 0 }}>Logs & Monitoreo</h3>
+        <h3 style={{ marginTop: 0 }}>Logs & Monitoreo (SSE)</h3>
         <input value={service} onChange={(e) => setService(e.target.value)} style={{ borderRadius: 8, border: "1px solid rgba(255,255,255,.15)", background: "rgba(0,0,0,.2)", color: "#f8fafc", padding: "6px 8px" }} />
       </div>
       <div style={{ borderRadius: 12, padding: 12, background: "#020617", border: "1px solid rgba(255,255,255,.1)", fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace", fontSize: 12, maxHeight: 230, overflow: "auto" }}>

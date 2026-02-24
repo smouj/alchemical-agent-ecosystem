@@ -165,7 +165,10 @@ Path: `apps/alchemical-dashboard`
 | `/api/gateway/capabilities` | GET | Skills/tools/connectors catalog from gateway |
 | `/api/gateway/chat-plan` | POST | Chat action plan (goal + skills + tools + subagents + channels) |
 | `/api/gateway/agents` | GET/POST | Agent/subagent registry |
+| `/api/gateway/chat-thread` | GET/POST | Shared chat thread between operator and agents |
+| `/api/gateway/chat-stream` | GET (SSE) | Real-time thread updates over Server-Sent Events |
 | `/api/gateway/connectors` | GET/POST | Connector registry (Telegram/WhatsApp/Discord/...) |
+| `/api/logs/stream` | GET (SSE) | Real-time service logs over Server-Sent Events |
 
 ---
 

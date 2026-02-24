@@ -23,7 +23,7 @@ export function ChatWorkbench() {
   const [tokenRef, setTokenRef] = useState("telegram_bot_token_ref");
   const [msg, setMsg] = useState("");
   const [chatText, setChatText] = useState("Actualizar estado y coordinar agentes");
-  const [thread, setThread] = useState<Array<{sender:string;text:string;ts?:string;kind?:string}>>([]);
+  const [thread, setThread] = useState<Array<{ sender: string; text: string; ts?: string; kind?: string }>>([]);
 
   useEffect(() => {
     fetch("/api/gateway/capabilities", { cache: "no-store" })
@@ -34,6 +34,19 @@ export function ChatWorkbench() {
         connectors: j.connectors ?? [],
         agents: j.agents ?? [],
       }));
+  }, []);
+
+  useEffect(() => {
+    const es = new EventSource("/api/gateway/chat-stream");
+    es.onmessage = (ev) => {
+      try {
+        const payload = JSON.parse(ev.data);
+        setThread(payload.items ?? []);
+      } catch {
+        // ignore invalid frame
+      }
+    };
+    return () => es.close();
   }, []);
 
   const subagentList = useMemo(() => subagents.split(",").map((x) => x.trim()).filter(Boolean), [subagents]);
@@ -74,20 +87,6 @@ export function ChatWorkbench() {
     setMsg(res.ok ? "Conector guardado" : "Error guardando conector");
   };
 
-
-
-  const loadThread = async () => {
-    const r = await fetch("/api/gateway/chat-thread?limit=120", { cache: "no-store" });
-    const j = await r.json();
-    setThread(j.items ?? []);
-  };
-
-  useEffect(() => {
-    loadThread();
-    const id = setInterval(loadThread, 3000);
-    return () => clearInterval(id);
-  }, []);
-
   const postChat = async () => {
     await fetch("/api/gateway/chat-thread", {
       method: "POST",
@@ -95,12 +94,11 @@ export function ChatWorkbench() {
       body: JSON.stringify({ sender: "operator", text: chatText, kind: "human" }),
     });
     setChatText("");
-    loadThread();
   };
 
   return (
     <section className="glass-card" style={{ padding: 14 }}>
-      <h3 style={{ marginTop: 0 }}>Gateway Chat Workbench</h3>
+      <h3 style={{ marginTop: 0 }}>Gateway Chat Workbench (SSE)</h3>
       <p style={{ color: "#94a3b8", marginTop: 0 }}>Define objetivo, activa skills/tools, crea subagentes y conecta canales desde una sola vista.</p>
 
       <label style={lbl}>Objetivo</label>
@@ -154,7 +152,7 @@ export function ChatWorkbench() {
         {thread.length === 0 && <div style={{ color: "#64748b" }}>Sin mensajes todavía.</div>}
         {thread.map((m, i) => (
           <div key={`${i}-${m.ts || "x"}`} style={{ padding: "4px 0", borderBottom: "1px dashed rgba(255,255,255,.06)" }}>
-            <strong style={{ color: m.kind === "agent" ? "#22d3ee" : "#fbbf24" }}>{m.sender}</strong>
+            <strong style={{ color: m.kind === "agent" || m.kind === "dispatch" ? "#22d3ee" : "#fbbf24" }}>{m.sender}</strong>
             <span style={{ color: "#94a3b8", fontSize: 11 }}> {m.ts || ""}</span>
             <div style={{ color: "#e2e8f0" }}>{m.text}</div>
           </div>
