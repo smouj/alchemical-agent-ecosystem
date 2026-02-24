@@ -43,6 +43,11 @@ if [[ $WIZARD -eq 1 ]]; then
   DOMAIN="${input_domain:-$DOMAIN}"
   read -r -p "Perfil (standard|min) [${PROFILE}]: " input_profile || true
   PROFILE="${input_profile:-$PROFILE}"
+
+  if [[ "$PROFILE" == "min" && "$OLLAMA_MODEL" == "phi3:mini" ]]; then
+    OLLAMA_MODEL="tinyllama:1.1b"
+  fi
+
   read -r -p "Modelo Ollama [${OLLAMA_MODEL}]: " input_model || true
   OLLAMA_MODEL="${input_model:-$OLLAMA_MODEL}"
   read -r -p "¿Pull del modelo ahora? (Y/n): " input_pull || true
@@ -68,7 +73,12 @@ ALCHEMICAL_MODEL=${OLLAMA_MODEL}
 ENV
 
 log "[4/6] Building and starting platform"
-docker compose up -d --build
+if [[ "$PROFILE" == "min" ]]; then
+  log "Low-RAM profile activo (2GB target): core + gateway + 2 agentes"
+  docker compose up -d --build caddy redis chromadb ollama alchemical-gateway velktharion synapsara
+else
+  docker compose up -d --build
+fi
 
 log "[5/6] Health check"
 docker compose ps

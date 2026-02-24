@@ -35,12 +35,20 @@ cd /mnt/d/alchemical-agent-ecosystem
 ./scripts/alchemical doctor
 ./scripts/alchemical setup-hooks
 ./scripts/alchemical scan-secrets
-./scripts/alchemical install --domain localhost --model phi3:mini
+./scripts/alchemical install --domain localhost --profile standard --model phi3:mini
 ./scripts/alchemical up
 ./scripts/alchemical status
 ./scripts/alchemical logs velktharion
 ./scripts/alchemical dashboard
 ```
+
+### Perfil 2GB RAM (recomendado en equipos limitados)
+```bash
+./scripts/alchemical install --profile min --domain localhost
+# o levantar rápido en mínimo:
+./scripts/alchemical up-min
+```
+Este perfil arranca core + gateway + 2 agentes (`velktharion`, `synapsara`) para mantener consumo bajo.
 
 ## Planned Remote Install Command
 ```bash

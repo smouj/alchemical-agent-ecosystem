@@ -21,7 +21,8 @@ Usage: ./scripts/alchemical <command> [options]
 Commands:
   wizard                   Wizard premium de instalación (recomendado)
   install [opts]           Instala stack (pasa opciones a infra/scripts/install.sh)
-  up                       Levanta servicios
+  up                       Levanta servicios (perfil standard)
+  up-min                   Levanta perfil mínimo (2GB RAM target)
   down                     Detiene servicios
   restart                  Reinicia servicios
   status                   Estado de servicios
@@ -62,6 +63,7 @@ case "${1:-help}" in
   wizard) shift; wizard "$@" ;;
   install) shift; bash infra/scripts/install.sh "$@" ;;
   up) docker compose up -d --build ;;
+  up-min) docker compose up -d --build caddy redis chromadb ollama alchemical-gateway velktharion synapsara ;;
   down) docker compose down ;;
   restart) docker compose down && docker compose up -d --build ;;
   status) docker compose ps ;;
