@@ -4,10 +4,10 @@ _Auto-generated from repository state. Do not edit manually._
 
 ## Metadata
 
-- Generated: **2026-02-24 19:10:40 UTC**
+- Generated: **2026-02-24 19:15:26 UTC**
 - Branch: **main**
-- HEAD: **a8cb542**
-- Last commit: **a8cb542 docs(readme): keep only essential commands and move full operational command catalog to docs (2026-02-24)**
+- HEAD: **ab1f2bc**
+- Last commit: **ab1f2bc docs(readme): upgrade architecture to centered mermaid maps and real agent-logic diagram (2026-02-24)**
 
 ## Repository Metrics
 
