@@ -94,6 +94,15 @@ services:
     restart: unless-stopped
     environment: [SERVICE_NAME=resonvyr, PORT=7409]
     networks: [alchemical-net]
+
+  alchemical-gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: alchemical-gateway
+    networks: [alchemical-net]
+
   fluxenrath:
     build: ./services/fluxenrath
     restart: unless-stopped

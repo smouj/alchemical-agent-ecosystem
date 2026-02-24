@@ -36,6 +36,10 @@
     reverse_proxy fluxenrath:7410
   }
 
+  handle_path /gateway/* {
+    reverse_proxy alchemical-gateway:7411
+  }
+
   handle {
     respond 200 "Alchemical Agent Ecosystem is running"
   }
