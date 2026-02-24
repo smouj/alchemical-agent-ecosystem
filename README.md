@@ -293,10 +293,12 @@ workspace/skills/            # Skill ecosystem repositories
 
 ---
 
-<p align="center"><strong>Made with ❤️ by smouj — local models, open workflows, real automation.</strong></p>
+## 📜 License
+
+📄 License MIT
 
 ---
 
-## 📜 License
+<p align="center"><strong>Made with ❤️ by smouj — local models, open workflows, real automation.</strong></p>
 
-MIT
+---
