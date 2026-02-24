@@ -29,6 +29,8 @@
 - `POST /gateway/chat/thread`
 - `GET /gateway/chat/stream` (SSE)
 - `GET /gateway/jobs?status=queued`
+- `GET /gateway/usage/summary` — aggregated usage/cost + recent samples
+- `GET /gateway/usage/stream` — SSE stream for usage/cost
 
 ## Dashboard (`/api/*`)
 

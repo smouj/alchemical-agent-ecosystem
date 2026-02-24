@@ -51,3 +51,12 @@ curl -fsS http://localhost/velktharion/health
 
 - Gateway token is loaded from `.env` (`ALCHEMICAL_GATEWAY_TOKEN`).
 - Do not store raw secrets in connector records; use `token_ref` metadata.
+
+
+## Project synchronization
+
+```bash
+bash ops/project-maintenance.sh
+```
+
+If `gh project` returns 401, refresh auth/scopes (`project`) and retry.

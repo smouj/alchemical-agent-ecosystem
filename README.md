@@ -202,6 +202,8 @@ Implemented now:
 | `/gateway/auth/keys` | GET/POST | List/create API keys (admin) |
 | `/gateway/auth/keys/{id}/disable` | POST | Disable API key (admin) |
 | `/gateway/jobs` | GET | Queue/job status |
+| `/gateway/usage/summary` | GET | Usage/cost summary + samples |
+| `/gateway/usage/stream` | GET (SSE) | Realtime usage/cost stream |
 | `/gateway/chat/thread` | GET/POST | Shared thread |
 | `/gateway/chat/stream` | GET (SSE) | Realtime thread stream |
 | `/gateway/chat/actions/plan` | POST | Goal planning |
@@ -264,6 +266,9 @@ cd /mnt/d/alchemical-agent-ecosystem
 
 # project/repo maintenance
 bash ops/project-maintenance.sh
+
+# sync project items with repo issues
+bash ops/sync-project-with-repo.sh
 ```
 
 ---
@@ -333,6 +338,9 @@ Safe flow includes lock, backup, checks, deploy, smoke-tests.
 
 # project/repo maintenance
 bash ops/project-maintenance.sh
+
+# sync project items with repo issues
+bash ops/sync-project-with-repo.sh
 ```
 
 ---

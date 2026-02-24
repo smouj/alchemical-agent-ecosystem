@@ -201,6 +201,8 @@ Implementado actualmente:
 | `/gateway/auth/keys` | GET/POST | Listar/crear API keys (admin) |
 | `/gateway/auth/keys/{id}/disable` | POST | Desactivar API key (admin) |
 | `/gateway/jobs` | GET | Estado de cola/jobs |
+| `/gateway/usage/summary` | GET | Resumen de uso/coste + muestras |
+| `/gateway/usage/stream` | GET (SSE) | Stream en tiempo real de uso/coste |
 | `/gateway/chat/thread` | GET/POST | Hilo compartido |
 | `/gateway/chat/stream` | GET (SSE) | Stream realtime de hilo |
 | `/gateway/chat/actions/plan` | POST | Planificación de objetivo |
@@ -263,6 +265,9 @@ cd /mnt/d/alchemical-agent-ecosystem
 
 # mantenimiento project/repo
 bash ops/project-maintenance.sh
+
+# sincronizar items del project con issues del repo
+bash ops/sync-project-with-repo.sh
 ```
 
 ---
@@ -332,6 +337,9 @@ Incluye lock, backup, checks, deploy y smoke-tests.
 
 # mantenimiento project/repo
 bash ops/project-maintenance.sh
+
+# sincronizar items del project con issues del repo
+bash ops/sync-project-with-repo.sh
 ```
 
 ---
