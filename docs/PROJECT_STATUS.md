@@ -4,10 +4,10 @@ _Auto-generated from repository state. Do not edit manually._
 
 ## Metadata
 
-- Generated: **2026-02-24 17:55:13 UTC**
+- Generated: **2026-02-24 19:01:35 UTC**
 - Branch: **main**
-- HEAD: **0f12588**
-- Last commit: **0f12588 docs(architecture): redesign system map with layered flows, security boundaries, and invariants (2026-02-24)**
+- HEAD: **b32bd4a**
+- Last commit: **b32bd4a fix(caddy): correct root respond directive to avoid HTTP 500 on / (2026-02-24)**
 
 ## Repository Metrics
 
