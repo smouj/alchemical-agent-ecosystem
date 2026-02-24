@@ -4,10 +4,10 @@ _Auto-generated from repository state. Do not edit manually._
 
 ## Metadata
 
-- Generated: **2026-02-24 21:06:22 UTC**
+- Generated: **2026-02-24 21:09:16 UTC**
 - Branch: **main**
-- HEAD: **e0af1e1**
-- Last commit: **e0af1e1 feat(chat+ux): add multi-agent roundtable, advanced chat controls, and alchemical visual effects with compact app-window layout (2026-02-24)**
+- HEAD: **6c33d45**
+- Last commit: **6c33d45 docs(readme): fully refresh EN/ES docs with current architecture, capabilities, badges, and operational links (2026-02-24)**
 
 ## Repository Metrics
 
