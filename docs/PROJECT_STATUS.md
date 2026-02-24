@@ -4,10 +4,10 @@ _Auto-generated from repository state. Do not edit manually._
 
 ## Metadata
 
-- Generated: **2026-02-24 23:32:20 UTC**
+- Generated: **2026-02-24 23:52:32 UTC**
 - Branch: **main**
-- HEAD: **181e9ca**
-- Last commit: **181e9ca docs(readme): professionalize EN/ES with installation-first structure, richer architecture, comparisons, and clearer agent-runtime model (2026-02-25)**
+- HEAD: **0968059**
+- Last commit: **0968059 docs(architecture+ops): deepen real runtime model, failure matrix, and production preflight runbook (2026-02-25)**
 
 ## Repository Metrics
 
