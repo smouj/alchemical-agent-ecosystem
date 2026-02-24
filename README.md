@@ -124,6 +124,17 @@ The gateway seeds 5 editable logical agents:
 
 > Skills/tools are capabilities attached to agents (not fixed agent identities).
 
+
+### Agent → Target service map (default)
+
+| Logical agent | Target service |
+|---|---|
+| Alquimista Mayor | `velktharion` |
+| Investigador/Analista | `synapsara` |
+| Ingeniero/Constructor | `ignivox` |
+| Creador Visual | `auralith` |
+| Redactor/Narrador | `resonvyr` |
+
 ---
 
 ## 🗺️ Runtime Services Map
@@ -147,11 +158,11 @@ The gateway seeds 5 editable logical agents:
 
 | Component | Purpose |
 |---|---|
-| Caddy | Reverse proxy + ingress |
-| alchemical-gateway | Orchestration and control API |
-| Redis | Runtime key-value layer |
-| ChromaDB | Vector storage layer |
-| Ollama | Local model serving |
+| [Caddy](https://caddyserver.com/) | Reverse proxy + ingress |
+| `alchemical-gateway` | Orchestration and control API |
+| [Redis](https://redis.io/) | Runtime key-value layer |
+| [ChromaDB](https://www.trychroma.com/) | Vector storage layer |
+| [Ollama](https://ollama.com/) | Local model serving |
 
 ---
 
@@ -270,23 +281,26 @@ Wizard auto-detects host RAM and suggests profile.
 
 ## 🔒 Security Model
 
-- 🔐 Tokenized gateway auth (`x-alchemy-token`)
-- 👤 Role checks (`viewer`, `operator`, `admin`)
-- 🧹 Secret scanning (`./scripts/alchemical scan-secrets`)
-- 🪝 Pre-commit hook support (`setup-hooks`)
-- 🧾 Connectors store `token_ref` metadata (no raw secret policy)
+| Control | Implementation |
+|---|---|
+| 🔐 Gateway token auth | Header `x-alchemy-token` + `ALCHEMICAL_GATEWAY_TOKEN` |
+| 👤 Access roles | `viewer` / `operator` / `admin` checks |
+| 🔑 API keys | Managed via `/gateway/auth/keys` endpoints |
+| 🧹 Secret scan | `./scripts/alchemical scan-secrets` |
+| 🪝 Pre-commit guard | `./scripts/alchemical setup-hooks` |
+| 🧾 Connector secret policy | Store `token_ref` metadata only (no raw tokens) |
 
 ---
 
 ## 📚 Documentation Map
 
-- `docs/README.md` — docs index and policy
-- `docs/ARCHITECTURE.md` — technical architecture
-- `docs/API_REFERENCE.md` — gateway + dashboard APIs
-- `docs/OPERATIONS_RUNBOOK.md` — update/rollback/runbook
-- `docs/ALCHEMICAL_ECOSYSTEM_ROADMAP.md` — roadmap
-- `docs/INTEGRATION_WORKPLAN.md` — integration plan
-- `docs/RELEASE_PLAN.md` — release strategy and versioning
+- [`docs/README.md`](./docs/README.md) — docs index and policy
+- [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) — technical architecture
+- [`docs/API_REFERENCE.md`](./docs/API_REFERENCE.md) — gateway + dashboard APIs
+- [`docs/OPERATIONS_RUNBOOK.md`](./docs/OPERATIONS_RUNBOOK.md) — update/rollback/runbook
+- [`docs/ALCHEMICAL_ECOSYSTEM_ROADMAP.md`](./docs/ALCHEMICAL_ECOSYSTEM_ROADMAP.md) — roadmap
+- [`docs/INTEGRATION_WORKPLAN.md`](./docs/INTEGRATION_WORKPLAN.md) — integration plan
+- [`docs/RELEASE_PLAN.md`](./docs/RELEASE_PLAN.md) — release strategy and versioning
 
 ---
 
@@ -316,20 +330,20 @@ Safe flow includes lock, backup, checks, deploy, smoke-tests.
 
 ## 📁 Project Structure
 
-```text
-.github/                     # GitHub workflows and templates
-apps/alchemical-dashboard/   # Next.js control plane
-assets/                      # Branding assets
-docs/                        # Technical and operational documentation
-gateway/                     # Orchestration gateway (FastAPI + SQLite queue)
-infra/caddy/                 # Reverse proxy config
-infra/scripts/               # Install/bootstrap scripts
-ops/                         # Safe update and rollback scripts
-scripts/                     # CLI and helper scripts
-services/                    # Execution backends (FastAPI)
-shared/                      # Shared contracts/schemas
-workspace/skills/            # Skill ecosystem repositories
-```
+| Path | Purpose |
+|---|---|
+| `.github/` | GitHub workflows and templates |
+| `apps/alchemical-dashboard/` | Next.js control plane |
+| `assets/` | Branding assets |
+| `docs/` | Technical and operational documentation |
+| `gateway/` | Orchestration gateway (FastAPI + SQLite queue) |
+| `infra/caddy/` | Reverse proxy config |
+| `infra/scripts/` | Install/bootstrap scripts |
+| `ops/` | Safe update and rollback scripts |
+| `scripts/` | CLI and helper scripts |
+| `services/` | Execution backends (FastAPI) |
+| `shared/` | Shared contracts/schemas |
+| `workspace/skills/` | Skill ecosystem repositories |
 
 ---
 
