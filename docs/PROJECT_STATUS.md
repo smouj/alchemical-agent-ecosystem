@@ -4,10 +4,10 @@ _Auto-generated from repository state. Do not edit manually._
 
 ## Metadata
 
-- Generated: **2026-02-24 17:50:09 UTC**
+- Generated: **2026-02-24 17:51:31 UTC**
 - Branch: **main**
-- HEAD: **33c6128**
-- Last commit: **33c6128 docs(status): sync project snapshot after ritual cleanup (2026-02-24)**
+- HEAD: **ff6a65f**
+- Last commit: **ff6a65f ops(ritual): add one-command ritual sync for local+github+project hygiene (2026-02-24)**
 
 ## Repository Metrics
 
