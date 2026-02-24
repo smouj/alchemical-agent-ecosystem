@@ -4,10 +4,10 @@ _Auto-generated from repository state. Do not edit manually._
 
 ## Metadata
 
-- Generated: **2026-02-24 21:30:38 UTC**
+- Generated: **2026-02-24 22:26:11 UTC**
 - Branch: **main**
-- HEAD: **03cb48e**
-- Last commit: **03cb48e feat(agents-ui): add compact interactive node studio and improve README architecture/docs presentation (2026-02-24)**
+- HEAD: **f7478bc**
+- Last commit: **f7478bc docs+installer: prioritize installation-first readme structure and polish wizard UX summary (2026-02-24)**
 
 ## Repository Metrics
 
