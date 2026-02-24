@@ -4,10 +4,10 @@ _Auto-generated from repository state. Do not edit manually._
 
 ## Metadata
 
-- Generated: **2026-02-24 14:44:37 UTC**
-- Branch: ****
-- HEAD: **90b4005**
-- Last commit: **90b4005 docs(status): auto-sync project snapshot (2026-02-24)**
+- Generated: **2026-02-24 14:47:01 UTC**
+- Branch: **main**
+- HEAD: **ff39914**
+- Last commit: **ff39914 docs(sync): update usage/cost API docs, project maintenance runbook, and refresh project status snapshot (2026-02-24)**
 
 ## Repository Metrics
 
