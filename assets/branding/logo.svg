@@ -1,51 +1,64 @@
-<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Alchemical robot stirring a cauldron">
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0B1020"/>
-      <stop offset="100%" stop-color="#1E293B"/>
+    <linearGradient id="bg" x1="80" y1="80" x2="944" y2="944" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#070F2A"/>
+      <stop offset="1" stop-color="#1A2643"/>
     </linearGradient>
-    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#22D3EE"/>
-      <stop offset="100%" stop-color="#A855F7"/>
+    <linearGradient id="stroke" x1="294" y1="206" x2="714" y2="616" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#63B3FF"/>
+      <stop offset="1" stop-color="#7C4DFF"/>
     </linearGradient>
-    <linearGradient id="brew" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#34D399"/>
-      <stop offset="100%" stop-color="#059669"/>
+    <linearGradient id="liquid" x1="270" y1="593" x2="754" y2="593" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1ED6B1"/>
+      <stop offset="1" stop-color="#0DB57F"/>
     </linearGradient>
+    <filter id="shadow" x="0" y="0" width="1024" height="1024" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="20" stdDeviation="20" flood-color="#020617" flood-opacity="0.45"/>
+    </filter>
   </defs>
-  <rect width="512" height="512" rx="48" fill="url(#bg)"/>
 
-  <!-- Cauldron -->
-  <ellipse cx="256" cy="360" rx="130" ry="42" fill="#111827" stroke="#334155" stroke-width="6"/>
-  <rect x="126" y="280" width="260" height="80" rx="36" fill="#0F172A" stroke="#475569" stroke-width="6"/>
-  <ellipse cx="256" cy="280" rx="130" ry="28" fill="#0B1224" stroke="#64748B" stroke-width="6"/>
-  <ellipse cx="256" cy="282" rx="112" ry="20" fill="url(#brew)" opacity="0.95"/>
+  <rect x="0" y="0" width="1024" height="1024" rx="96" fill="url(#bg)"/>
 
-  <!-- Potion bubbles -->
-  <circle cx="220" cy="250" r="8" fill="#6EE7B7"/>
-  <circle cx="264" cy="242" r="6" fill="#A7F3D0"/>
-  <circle cx="296" cy="252" r="7" fill="#6EE7B7"/>
+  <!-- Base rings -->
+  <ellipse cx="512" cy="705" rx="266" ry="58" fill="#0A132E" stroke="#5E7397" stroke-width="12" opacity="0.95"/>
+  <path d="M246 705C246 769.617 365.517 822 512 822C658.483 822 778 769.617 778 705V706C778 770.617 658.483 823 512 823C365.517 823 246 770.617 246 706V705Z" fill="#0A132E" stroke="#4B5F85" stroke-width="10"/>
+  <ellipse cx="512" cy="846" rx="260" ry="52" fill="#0B1632" stroke="#3A4E74" stroke-width="10" opacity="0.9"/>
+
+  <!-- Liquid surface -->
+  <ellipse cx="512" cy="626" rx="244" ry="42" fill="url(#liquid)"/>
+  <ellipse cx="512" cy="626" rx="252" ry="48" fill="none" stroke="#6F87AC" stroke-width="10"/>
 
   <!-- Robot body -->
-  <rect x="188" y="140" width="136" height="114" rx="20" fill="#1F2937" stroke="#60A5FA" stroke-width="6"/>
-  <rect x="208" y="96" width="96" height="70" rx="14" fill="#111827" stroke="#93C5FD" stroke-width="6"/>
-  <circle cx="236" cy="130" r="10" fill="#22D3EE"/>
-  <circle cx="276" cy="130" r="10" fill="#A855F7"/>
-  <rect x="236" y="152" width="40" height="8" rx="4" fill="#38BDF8"/>
+  <g filter="url(#shadow)">
+    <rect x="374" y="278" width="276" height="286" rx="54" fill="#1F2B41" stroke="url(#stroke)" stroke-width="12"/>
 
-  <!-- Antenna -->
-  <line x1="256" y1="96" x2="256" y2="68" stroke="#94A3B8" stroke-width="6"/>
-  <circle cx="256" cy="60" r="10" fill="url(#glow)"/>
+    <!-- Head -->
+    <rect x="420" y="190" width="184" height="132" rx="30" fill="#1D2A3F" stroke="#74B7FF" stroke-width="12"/>
 
-  <!-- Arm + spoon -->
-  <line x1="324" y1="190" x2="392" y2="232" stroke="#94A3B8" stroke-width="12" stroke-linecap="round"/>
-  <line x1="392" y1="232" x2="344" y2="286" stroke="#94A3B8" stroke-width="10" stroke-linecap="round"/>
-  <ellipse cx="334" cy="292" rx="16" ry="10" fill="#CBD5E1"/>
+    <!-- Antenna -->
+    <line x1="512" y1="168" x2="512" y2="126" stroke="#7EBEFF" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="512" cy="112" r="20" fill="url(#stroke)"/>
 
-  <!-- Magical vapors -->
-  <path d="M170 220 C150 190, 190 170, 176 142" stroke="#67E8F9" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.9"/>
-  <path d="M334 224 C360 194, 328 170, 346 142" stroke="#C4B5FD" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.9"/>
+    <!-- Eyes -->
+    <circle cx="470" cy="255" r="20" fill="#38D9F3"/>
+    <circle cx="554" cy="255" r="20" fill="#9555FF"/>
 
-  <!-- Mark -->
-  <text x="256" y="460" text-anchor="middle" fill="#E2E8F0" font-size="30" font-family="Segoe UI, Arial" font-weight="700">ALCHEMICAL ECOSYSTEM</text>
+    <!-- Mouth -->
+    <rect x="472" y="286" width="80" height="14" rx="7" fill="#42D4FF"/>
+  </g>
+
+  <!-- Robotic arm -->
+  <g>
+    <path d="M650 409L784 491" stroke="#90A4C1" stroke-width="20" stroke-linecap="round"/>
+    <path d="M784 491L702 640" stroke="#90A4C1" stroke-width="20" stroke-linecap="round"/>
+    <ellipse cx="660" cy="644" rx="34" ry="24" fill="#CFD8E3"/>
+    <ellipse cx="660" cy="644" rx="34" ry="24" fill="none" stroke="#94A4BE" stroke-width="4"/>
+  </g>
+
+  <!-- Energy wisps -->
+  <path d="M334 282C346 311 346 350 328 385C315 409 317 444 334 468" stroke="#44D8F5" stroke-width="10" stroke-linecap="round" fill="none"/>
+  <path d="M692 280C676 312 676 354 695 388C709 413 706 447 686 469" stroke="#A99BFF" stroke-width="10" stroke-linecap="round" fill="none"/>
+
+  <!-- Title -->
+  <text x="512" y="925" text-anchor="middle" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="62" font-weight="800" letter-spacing="1.2" fill="#D9E2EE">ALCHEMICAL ECOSYSTEM</text>
 </svg>
