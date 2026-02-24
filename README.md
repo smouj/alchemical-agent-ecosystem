@@ -174,20 +174,41 @@ The gateway seeds 5 editable logical agents:
 
 ## 🖥️ Dashboard Capabilities
 
-Path: `apps/alchemical-dashboard`
+<p align="center"><strong>Current dashboard scope (real, implemented)</strong></p>
 
-Implemented now:
+<div align="center">
+<table>
+  <thead><tr><th>Area</th><th>What you can do now</th><th>Realtime</th></tr></thead>
+  <tbody>
+    <tr><td>System overview</td><td>View runtime status, core health, and high-level stats</td><td>✅</td></tr>
+    <tr><td>Agents</td><td>Inspect agents, start/stop/restart, quick dispatch ping</td><td>✅</td></tr>
+    <tr><td>Gateway Chat</td><td>Write to thread or send direct message to selected agent (<code>chat/ask</code>)</td><td>✅</td></tr>
+    <tr><td>Jobs & Events</td><td>Track queue jobs, retries, and operational events</td><td>✅</td></tr>
+    <tr><td>Usage & Cost</td><td>Monitor token/cost samples and usage distribution</td><td>✅</td></tr>
+    <tr><td>Connectors</td><td>Configure connectors and queue outbound messages</td><td>✅</td></tr>
+    <tr><td>Admin Ops</td><td>Create/disable API keys and operational controls</td><td>✅</td></tr>
+    <tr><td>Logs Monitor</td><td>Observe service logs in stream mode</td><td>✅</td></tr>
+  </tbody>
+</table>
+</div>
 
-- ✅ Live health view (services + agents)
-- ✅ Start/Stop/Restart controls
-- ✅ Real logs + SSE logs stream
-- ✅ Shared chat thread + SSE chat stream
-- ✅ Gateway workbench (agents/connectors/planning)
-- ✅ Canvas Lab for visual/web workflows
-- ✅ Connect / Reconnect / Disconnect stream controls
+### UX improvements already integrated
+
+- Left sidebar buttons now navigate to real sections (smooth scroll anchors).
+- Chat panel supports two modes: **thread-only** and **direct send to agent**.
+- SSE stream handlers are hardened against closed-controller crashes.
+- Polling cadence tuned to reduce load while keeping realtime behavior responsive.
+
+### Local run modes (important)
+
+- **Full runtime via Docker/Caddy**: `http://localhost`
+- **Dashboard dev mode (Next.js)**: `http://localhost:3000`
+
+> If you want to test latest UI changes immediately, use dev mode from `apps/alchemical-dashboard`.
 
 ---
 
+## 🔌 API Surface
 ## 🔌 API Surface
 
 ### Gateway core

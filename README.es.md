@@ -173,20 +173,41 @@ El gateway inicializa 5 agentes lógicos editables:
 
 ## 🖥️ Capacidades del dashboard
 
-Ruta: `apps/alchemical-dashboard`
+<p align="center"><strong>Alcance actual del dashboard (real, implementado)</strong></p>
 
-Implementado actualmente:
+<div align="center">
+<table>
+  <thead><tr><th>Área</th><th>Qué puedes hacer ahora</th><th>Realtime</th></tr></thead>
+  <tbody>
+    <tr><td>Vista sistema</td><td>Ver estado runtime, salud core y métricas de alto nivel</td><td>✅</td></tr>
+    <tr><td>Agentes</td><td>Inspeccionar agentes, start/stop/restart y ping de dispatch</td><td>✅</td></tr>
+    <tr><td>Chat Gateway</td><td>Escribir al hilo o enviar directo al agente seleccionado (<code>chat/ask</code>)</td><td>✅</td></tr>
+    <tr><td>Jobs & Events</td><td>Seguir cola de jobs, reintentos y eventos operativos</td><td>✅</td></tr>
+    <tr><td>Uso & Coste</td><td>Monitorizar muestras de tokens/coste y distribución de uso</td><td>✅</td></tr>
+    <tr><td>Conectores</td><td>Configurar conectores y encolar mensajes salientes</td><td>✅</td></tr>
+    <tr><td>Admin Ops</td><td>Crear/desactivar API keys y controles operativos</td><td>✅</td></tr>
+    <tr><td>Logs Monitor</td><td>Observar logs de servicios en modo stream</td><td>✅</td></tr>
+  </tbody>
+</table>
+</div>
 
-- ✅ Vista live de salud (servicios + agentes)
-- ✅ Controles Start/Stop/Restart
-- ✅ Logs reales + stream SSE de logs
-- ✅ Hilo de chat compartido + stream SSE de chat
-- ✅ Gateway workbench (agentes/conectores/planificación)
-- ✅ Canvas Lab para workflows web/visual
-- ✅ Controles Connect / Reconnect / Disconnect del stream
+### Mejoras UX ya integradas
+
+- Botones del sidebar izquierdo navegan a secciones reales (anclas con scroll suave).
+- El chat soporta dos modos: **solo hilo** y **envío directo a agente**.
+- Los streams SSE están reforzados para evitar errores por controller cerrado.
+- Cadencia de polling ajustada para reducir carga sin perder respuesta en tiempo real.
+
+### Modos de ejecución local (importante)
+
+- **Runtime completo vía Docker/Caddy**: `http://localhost`
+- **Dashboard en modo dev (Next.js)**: `http://localhost:3000`
+
+> Si quieres validar cambios de UI al instante, usa modo dev desde `apps/alchemical-dashboard`.
 
 ---
 
+## 🔌 Superficie API
 ## 🔌 Superficie API
 
 ### Gateway core
