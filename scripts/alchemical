@@ -30,6 +30,24 @@ is_http_up(){
   curl -fsS --max-time 2 "$url" >/dev/null 2>&1
 }
 
+port_pid(){
+  local port="$1"
+  if command -v lsof >/dev/null 2>&1; then
+    lsof -tiTCP:"$port" -sTCP:LISTEN 2>/dev/null | head -n1 || true
+    return
+  fi
+  if command -v ss >/dev/null 2>&1; then
+    ss -ltnp "( sport = :$port )" 2>/dev/null | sed -n '2p' | sed -n 's/.*pid=\([0-9]\+\).*/\1/p' || true
+    return
+  fi
+  echo ""
+}
+
+pid_cmd(){
+  local pid="$1"
+  ps -p "$pid" -o args= 2>/dev/null || true
+}
+
 help(){
   cat <<TXT
 Usage: ./scripts/alchemical <command> [options]
@@ -109,11 +127,27 @@ case "${1:-help}" in
     if [[ -f .env ]]; then
       export ALCHEMICAL_GATEWAY_TOKEN="$(grep -E '^ALCHEMICAL_GATEWAY_TOKEN=' .env | head -n1 | cut -d'=' -f2-)"
     fi
+
     if is_http_up "http://localhost:3000"; then
       echo -e "${C_GREEN}✓ dashboard dev ya está activo en http://localhost:3000${C_RESET}"
       open_url "http://localhost:3000"
       exit 0
     fi
+
+    pid="$(port_pid 3000)"
+    if [[ -n "$pid" ]]; then
+      cmd="$(pid_cmd "$pid")"
+      if echo "$cmd" | grep -qiE 'next( |$)'; then
+        echo -e "${C_YELLOW}• puerto 3000 ocupado por proceso Next.js (PID $pid). Reiniciando...${C_RESET}"
+        kill "$pid" >/dev/null 2>&1 || true
+        sleep 1
+      else
+        echo -e "${C_YELLOW}• puerto 3000 ocupado por: ${cmd}${C_RESET}"
+        echo -e "${C_YELLOW}• no se fuerza cierre. Libera :3000 o usa open-dashboard (runtime en :80).${C_RESET}"
+        exit 1
+      fi
+    fi
+
     cd apps/alchemical-dashboard
     if [[ ! -d node_modules ]]; then npm install; fi
     open_url "http://localhost:3000"
