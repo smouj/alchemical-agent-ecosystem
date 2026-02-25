@@ -14,6 +14,22 @@ banner(){
   echo -e "${C_RESET}"
 }
 
+open_url(){
+  local url="$1"
+  if command -v xdg-open >/dev/null 2>&1; then
+    xdg-open "$url" >/dev/null 2>&1 || true
+  elif command -v powershell.exe >/dev/null 2>&1; then
+    powershell.exe /c start "$url" >/dev/null 2>&1 || true
+  elif command -v open >/dev/null 2>&1; then
+    open "$url" >/dev/null 2>&1 || true
+  fi
+}
+
+is_http_up(){
+  local url="$1"
+  curl -fsS --max-time 2 "$url" >/dev/null 2>&1
+}
+
 help(){
   cat <<TXT
 Usage: ./scripts/alchemical <command> [options]
@@ -31,9 +47,10 @@ Commands:
   restart                  Reinicia servicios
   status                   Estado de servicios
   logs [service]           Logs en vivo (opcional: servicio)
-  dashboard                Arranca dashboard (apps/alchemical-dashboard)
-  update                   Actualiza desde origin/main y recompone stack
-  update-fast              Actualiza rápido sin rebuild completo (pull + up -d)
+  dashboard                Arranca dashboard dev fijo en :3000 (o reutiliza si ya está arriba)
+  open-dashboard           Abre dashboard runtime en navegador
+  update                   Actualiza desde origin/main y recompone stack (y abre dashboard)
+  update-fast              Actualiza rápido sin rebuild completo (pull + up -d, y abre dashboard)
   update-safe              Actualización segura con checks + smoke tests + backup
   rollback                 Rollback al último commit bueno desplegado
   doctor                   Chequeo rápido de entorno + secret scan
@@ -92,19 +109,41 @@ case "${1:-help}" in
     if [[ -f .env ]]; then
       export ALCHEMICAL_GATEWAY_TOKEN="$(grep -E '^ALCHEMICAL_GATEWAY_TOKEN=' .env | head -n1 | cut -d'=' -f2-)"
     fi
+    if is_http_up "http://localhost:3000"; then
+      echo -e "${C_GREEN}✓ dashboard dev ya está activo en http://localhost:3000${C_RESET}"
+      open_url "http://localhost:3000"
+      exit 0
+    fi
     cd apps/alchemical-dashboard
     if [[ ! -d node_modules ]]; then npm install; fi
-    npm run dev
+    open_url "http://localhost:3000"
+    npm run dev -- -p 3000
+    ;;
+  open-dashboard)
+    if is_http_up "http://localhost"; then
+      open_url "http://localhost"
+      echo -e "${C_GREEN}✓ abierto runtime dashboard: http://localhost${C_RESET}"
+    elif is_http_up "http://localhost:3000"; then
+      open_url "http://localhost:3000"
+      echo -e "${C_GREEN}✓ abierto dashboard dev: http://localhost:3000${C_RESET}"
+    else
+      echo -e "${C_YELLOW}• dashboard no está arriba. Usa: ./scripts/alchemical up-fast o ./scripts/alchemical dashboard${C_RESET}"
+      exit 1
+    fi
     ;;
   update)
     git fetch origin main
     git pull --rebase origin main
     docker compose up -d --build
+    open_url "http://localhost"
+    echo -e "${C_GREEN}✓ update completo. Dashboard: http://localhost${C_RESET}"
     ;;
   update-fast)
     git fetch origin main
     git pull --rebase origin main
     docker compose up -d
+    open_url "http://localhost"
+    echo -e "${C_GREEN}✓ update rápido. Dashboard: http://localhost${C_RESET}"
     ;;
   update-safe)
     bash ops/update-safe.sh

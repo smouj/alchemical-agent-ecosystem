@@ -12,6 +12,7 @@ This document contains the full command catalog. README keeps only essential com
 ./scripts/alchemical up-8g
 ./scripts/alchemical status
 ./scripts/alchemical dashboard
+./scripts/alchemical open-dashboard
 ./scripts/alchemical logs <service>
 ```
 

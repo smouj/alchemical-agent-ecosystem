@@ -63,7 +63,9 @@ docker compose up -d caddy
 ## 6) Verify dashboard
 
 - Caddy path: `http://localhost`
-- Next dev dashboard (if running `./scripts/alchemical dashboard`): `http://localhost:3000`
+- Next dev dashboard (if running `./scripts/alchemical dashboard`): `http://localhost:3000` (fixed port)
+
+> If you saw auto-increment ports (`3001`, `3002`...), it was from launching multiple `next dev` instances without fixed port. `./scripts/alchemical dashboard` now pins `:3000` and reuses existing instance when already running.
 
 ## 7) Desktop shortcut (Linux/WSL GUI)
 
