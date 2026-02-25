@@ -33,6 +33,7 @@ Commands:
   logs [service]           Logs en vivo (opcional: servicio)
   dashboard                Arranca dashboard (apps/alchemical-dashboard)
   update                   Actualiza desde origin/main y recompone stack
+  update-fast              Actualiza rápido sin rebuild completo (pull + up -d)
   update-safe              Actualización segura con checks + smoke tests + backup
   rollback                 Rollback al último commit bueno desplegado
   doctor                   Chequeo rápido de entorno + secret scan
@@ -71,6 +72,9 @@ wizard(){
   bash infra/scripts/install.sh --wizard
 }
 
+export DOCKER_BUILDKIT="${DOCKER_BUILDKIT:-1}"
+export COMPOSE_DOCKER_CLI_BUILD="${COMPOSE_DOCKER_CLI_BUILD:-1}"
+
 case "${1:-help}" in
   wizard) shift; wizard "$@" ;;
   install) shift; bash infra/scripts/install.sh "$@" ;;
@@ -96,6 +100,11 @@ case "${1:-help}" in
     git fetch origin main
     git pull --rebase origin main
     docker compose up -d --build
+    ;;
+  update-fast)
+    git fetch origin main
+    git pull --rebase origin main
+    docker compose up -d
     ;;
   update-safe)
     bash ops/update-safe.sh
