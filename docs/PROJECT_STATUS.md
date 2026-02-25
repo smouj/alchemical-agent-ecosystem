@@ -4,10 +4,10 @@ _Auto-generated from repository state. Do not edit manually._
 
 ## Metadata
 
-- Generated: **2026-02-25 02:21:57 UTC**
+- Generated: **2026-02-25 03:00:27 UTC**
 - Branch: **main**
-- HEAD: **d0cd62e**
-- Last commit: **d0cd62e style+perf(ui): refine dark alchemical visuals and add fast update path with BuildKit defaults (2026-02-25)**
+- HEAD: **7ced906**
+- Last commit: **7ced906 fix(chat): add safe fallback target routing so agent chat never hard-fails on unmapped logical names (2026-02-25)**
 
 ## Repository Metrics
 
