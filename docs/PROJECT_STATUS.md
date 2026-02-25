@@ -4,10 +4,10 @@ _Auto-generated from repository state. Do not edit manually._
 
 ## Metadata
 
-- Generated: **2026-02-25 00:36:15 UTC**
+- Generated: **2026-02-25 01:00:04 UTC**
 - Branch: **main**
-- HEAD: **69ae86b**
-- Last commit: **69ae86b fix(runtime): remove remaining placeholder paths and expose real GPU metric detection (2026-02-25)**
+- HEAD: **29ed2fc**
+- Last commit: **29ed2fc perf(ui): switch to single-view dashboard sections and cache real agent runtime probes (2026-02-25)**
 
 ## Repository Metrics
 
