@@ -42,13 +42,6 @@ services:
       - chroma_data:/chroma/chroma
     networks: [alchemical-net]
 
-  ollama:
-    image: ollama/ollama:latest
-    restart: unless-stopped
-    volumes:
-      - ollama_data:/root/.ollama
-    networks: [alchemical-net]
-
   velktharion:
     build: ./services/velktharion
     restart: unless-stopped
@@ -103,6 +96,8 @@ services:
     container_name: alchemical-gateway
     environment:
       - ALCHEMICAL_GATEWAY_TOKEN=${ALCHEMICAL_GATEWAY_TOKEN}
+      - KILO_API_KEY=${KILO_API_KEY:-}
+      - KILO_DEFAULT_MODEL=${KILO_DEFAULT_MODEL:-anthropic/claude-sonnet-4.5}
     volumes:
       - ./.runtime:/app/.runtime
     networks: [alchemical-net]
@@ -120,6 +115,5 @@ networks:
 volumes:
   redis_data:
   chroma_data:
-  ollama_data:
   caddy_data:
   caddy_config:

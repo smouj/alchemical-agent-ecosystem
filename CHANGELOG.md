@@ -14,6 +14,8 @@ Every opus has a moment where iteration gives way to transformation — where re
 
 v1.x proved the thesis: that local-first AI orchestration was not only possible but powerful. We forged a working engine, established the patterns, and listened to every practitioner who invoked it. What we heard, consistently, was that the foundation was sound but the edifice needed to match the ambition of the work being done within it.
 
+> **AI inference layer migrated to KiloCode AI Gateway (api.kilo.ai) — free tier available, data remains 100% local**
+
 Magnum Opus is not a patch. It is not a feature release. It is the complete realization of what this project set out to become — from the visual identity that now reflects the gravity of local AI sovereignty, to the stateful orchestration engine that enables agents to form purposeful coalitions, to the hierarchical memory system that gives those agents genuine continuity across sessions. Every layer has been reimagined. Every surface has been reforged.
 
 The name is deliberate. In alchemical tradition, the *Magnum Opus* — the Great Work — was the ultimate pursuit: the transmutation of base matter into something of enduring, transcendent value. We do not use the name lightly. We use it because we believe this release represents a threshold. What comes after v2.0 will be refinement. What came before was preparation. This is the Work itself.
@@ -56,8 +58,8 @@ We extend deep gratitude to every contributor, practitioner, and curious soul wh
 
 #### Multi-modal
 
-- **LLaVA vision support** — fully local image understanding; agents can receive and reason about images via the standard message interface with no external API calls
-- **Whisper audio transcription** — fully local speech-to-text via OpenAI Whisper (local); audio input supported in chat interface and as an agent input type
+- **Vision support** — multi-modal image understanding via KiloCode AI (claude-3-haiku-vision, gemini-flash-vision); agents can receive and reason about images via the standard message interface
+- **Audio transcription** — speech-to-text via KiloCode AI (whisper models via kilo.ai gateway); audio input supported in chat interface and as an agent input type
 
 #### Plugin System
 
@@ -276,7 +278,7 @@ Selected v1.x milestones, for historical reference:
 | `v1.3.0` | — | Final v1.x release; SQLite stability improvements; plugin API v1 finalization |
 | `v1.2.0` | — | Initial plugin/skills system; basic agent memory; multi-model routing |
 | `v1.1.0` | — | Workflow YAML definition format; gateway REST API v1; first dashboard |
-| `v1.0.0` | — | Initial public release; single-agent invocation; local Ollama integration |
+| `v1.0.0` | — | Initial public release; single-agent invocation; local LLM integration |
 
 *Full commit history, including all v1.x changes, is available via `git log`.*
 

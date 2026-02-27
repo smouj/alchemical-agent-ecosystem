@@ -11,4 +11,4 @@ export const AGENTS = [
   { name: "fluxenrath", port: 7410, action: "/", model: "deepseek-r1", description: "Flow diagnostics" },
 ] as const;
 
-export const CORE_SERVICES = ["ollama", "redis", "chromadb", "caddy", "alchemical-gateway"] as const;
+export const CORE_SERVICES = ["kilo-api", "redis", "chromadb", "caddy", "alchemical-gateway"] as const;

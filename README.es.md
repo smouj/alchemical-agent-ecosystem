@@ -13,9 +13,9 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/smouj/alchemical-agent-ecosystem/ci.yml?style=for-the-badge&label=CI&logo=github)](https://github.com/smouj/alchemical-agent-ecosystem/actions/workflows/ci.yml)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-gateway-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
-[![Ollama](https://img.shields.io/badge/Ollama-LLM_local-FF6B35?style=for-the-badge)](https://ollama.ai)
+[![KiloCode AI](https://img.shields.io/badge/KiloCode_AI-4B0082?style=for-the-badge&logoColor=white)](https://kilo.ai)
 [![Auto-alojado](https://img.shields.io/badge/auto--alojado-100%25-8b5cf6?style=for-the-badge&logo=homeassistant&logoColor=white)](https://github.com/smouj/alchemical-agent-ecosystem)
-[![APIs de pago](https://img.shields.io/badge/APIs_de_Pago-CERO-dc2626?style=for-the-badge)](https://github.com/smouj/alchemical-agent-ecosystem)
+[![APIs de pago](https://img.shields.io/badge/Datos_Locales-100%25-dc2626?style=for-the-badge)](https://github.com/smouj/alchemical-agent-ecosystem)
 [![SSE](https://img.shields.io/badge/realtime-SSE-06b6d4?style=for-the-badge)](https://github.com/smouj/alchemical-agent-ecosystem)
 [![RBAC](https://img.shields.io/badge/auth-RBAC_%2B_API_Keys-16a34a?style=for-the-badge)](https://github.com/smouj/alchemical-agent-ecosystem)
 
@@ -27,7 +27,7 @@
 
 ---
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Cinzel&size=21&duration=3000&pause=800&color=D4AF37&center=true&vCenter=true&width=780&lines=Donde+la+Inteligencia+se+Forja%2C+No+se+Compra.;Plataforma+multi-agente+100%25+local+y+soberana.;Siete+servicios.+Una+arquitectura+sin+concesiones.;C%C3%ADrculos+Alqu%C3%ADmicos%3A+agentes+que+se+auto-forman.;Sin+nubes+ajenas.+Sin+facturas+inesperadas.;El+Opus+M%C3%A1ximo+de+la+automatizaci%C3%B3n+propia.)](https://github.com/smouj/alchemical-agent-ecosystem)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Cinzel&size=21&duration=3000&pause=800&color=D4AF37&center=true&vCenter=true&width=780&lines=Donde+la+Inteligencia+se+Forja%2C+No+se+Compra.;Plataforma+multi-agente+local-first+y+soberana.;Siete+servicios.+Una+arquitectura+sin+concesiones.;C%C3%ADrculos+Alqu%C3%ADmicos%3A+agentes+que+se+auto-forman.;Datos+locales.+IA+v%C3%ADa+KiloCode.+Tier+gratuito+disponible.;El+Opus+M%C3%A1ximo+de+la+automatizaci%C3%B3n+propia.)](https://github.com/smouj/alchemical-agent-ecosystem)
 
 </div>
 
@@ -37,7 +37,7 @@
 
 Existe un sueño antiguo en la alquimia: convertir la materia bruta en oro puro mediante el conocimiento, la disciplina y el fuego correcto. El **Alchemical Agent Ecosystem** es ese sueño convertido en software.
 
-No es un envoltorio de ChatGPT. No es una interfaz para la API de otro. Es una **plataforma multi-agente de propósito local**, forjada desde el primer principio: que la inteligencia artificial verdaderamente poderosa no debería depender de un tercero, de una tarjeta de crédito, ni de la benevolencia de ninguna corporación.
+No es un envoltorio de ChatGPT. No es una interfaz para la API de otro. Es una **plataforma multi-agente de filosofía local-first**, forjada desde el primer principio: que la inteligencia artificial verdaderamente poderosa no debería depender de infraestructura ajena para tus datos, ni de costos impredecibles, ni de la benevolencia de ninguna corporación.
 
 Aquí, en tu propia infraestructura, conviven:
 
@@ -45,7 +45,7 @@ Aquí, en tu propia infraestructura, conviven:
 - Un **gateway inteligente** que enruta, autentica, recuerda y orquesta sin descanso, actuando como límite de política entre el mundo exterior y el núcleo de ejecución.
 - **Siete servicios de ejecución** nombrados como fuerzas elementales — `temporaeth`, `resonvyr`, `kryonexus`, `noctumbra-mail`, `fluxenrath`, `auralith`, `synapsara` — cada uno con su dominio, sus capacidades y su lugar en la Gran Obra.
 - **Memoria jerárquica** que no olvida: Redis para el instante, ChromaDB para la semántica, agentes resumen para la continuidad a largo plazo.
-- **Modelos locales** invocados a través de Ollama — LLaMA, Mistral, LLaVA, Whisper — sin enviar ni un solo token a servidores externos.
+- **Modelos invocados a través de KiloCode AI Gateway** — Claude, Gemini, MiniMax, y más — sin almacenar ni un solo dato tuyo en servidores externos.
 - **Círculos Alquímicos**: equipos de agentes que se auto-forman, colaboran en paralelo y producen resultados que ningún agente solitario podría alcanzar.
 
 > *"Solve et Coagula"* — disuelve lo complejo en partes comprensibles, y después coaguélalo en una obra mayor. Eso es exactamente lo que hace este ecosistema con tus tareas de automatización.
@@ -65,7 +65,7 @@ Antes de invocar la Gran Obra, asegúrate de tener los elementos en orden:
 | `Docker` + `Docker Compose` | 24+ | El crisol que contiene todo |
 | `Node.js` | 20 LTS | Alimenta el dashboard |
 | `Python` | 3.11+ | Motor del gateway y los servicios |
-| `Ollama` | última estable | Invoca los modelos de lenguaje locales |
+| `KILO_API_KEY` | — | Clave de [kilo.ai](https://kilo.ai) (tier gratuito disponible) |
 | RAM libre | 8 GB mínimo | Los agentes necesitan espacio para pensar |
 
 ### Paso 1 — Clona el repositorio
@@ -104,9 +104,10 @@ POSTGRES_PASSWORD=gran_obra_secreta
 # ── Redis ─────────────────────────────────────────────────────
 REDIS_URL=redis://redis:6379/0
 
-# ── Ollama ────────────────────────────────────────────────────
-OLLAMA_BASE_URL=http://host.docker.internal:11434
-OLLAMA_DEFAULT_MODEL=llama3.2
+# ── KiloCode AI Gateway ───────────────────────────────────────
+KILO_BASE_URL=https://api.kilo.ai/api/gateway
+KILO_API_KEY=tu-clave-de-kilo-ai
+KILO_DEFAULT_MODEL=anthropic/claude-sonnet-4.5
 
 # ── Conectores (opcionales — déjalos vacíos si no los usas) ───
 TELEGRAM_BOT_TOKEN=
@@ -190,8 +191,8 @@ flowchart TB
     S7["🧠 synapsara :7407\nOrquestación neuronal central"]
   end
 
-  subgraph Modelos["🦙 Capa de Modelos"]
-    OLL["Ollama\nLLaMA · Mistral · LLaVA · Whisper"]
+  subgraph Modelos["🤖 Capa de Modelos"]
+    KILO["KiloCode AI Gateway\nClaude · Gemini · MiniMax · y más\n(api.kilo.ai)"]
   end
 
   subgraph Persistencia["💾 Capa de Persistencia"]
@@ -210,7 +211,7 @@ flowchart TB
   GW --> RED
   GW --> CHR
   GW -->|"dispatch con política"| S1 & S2 & S3 & S4 & S5 & S6 & S7
-  S1 & S2 & S3 & S4 & S5 & S6 & S7 --> OLL
+  S1 & S2 & S3 & S4 & S5 & S6 & S7 --> KILO
   S1 & S2 & S3 & S4 & S5 & S6 & S7 --> RED
   S1 & S2 & S3 & S4 & S5 & S6 & S7 --> CHR
 ```
@@ -225,7 +226,7 @@ sequenceDiagram
   participant GW as Gateway
   participant SY as synapsara (orquestador)
   participant AG as Agentes del Círculo
-  participant OL as Ollama (LLM local)
+  participant KL as KiloCode AI Gateway
   participant MEM as Memoria Jerárquica
 
   U->>UI: Define tarea en el canvas visual
@@ -236,8 +237,8 @@ sequenceDiagram
   MEM-->>SY: Devuelve memoria semántica + resúmenes
   SY->>AG: Distribuye sub-tareas en paralelo
   loop Ejecución del Círculo Alquímico
-    AG->>OL: Solicita inferencia al modelo local
-    OL-->>AG: Respuesta del modelo
+    AG->>KL: Solicita inferencia vía KiloCode AI
+    KL-->>AG: Respuesta del modelo
     AG->>MEM: Actualiza memoria episódica
     AG-->>SY: Entrega resultado parcial vía SSE
     SY-->>UI: Stream de progreso en tiempo real
@@ -292,9 +293,9 @@ flowchart LR
 | **Roundtable multi-agente** | Varios agentes deliberan sobre una misma tarea | ✅ |
 | **Control de agentes** | Start/stop/restart, ping dispatch, estado runtime en tiempo real | ✅ |
 | **Memoria jerárquica** | Redis (instante) + ChromaDB (semántica) + agentes resumen | ✅ |
-| **LLMs 100% local** | Ollama: LLaMA, Mistral, Phi, Gemma, y cualquier modelo compatible | ✅ |
-| **Visión multi-modal** | Análisis de imágenes con LLaVA | ✅ |
-| **Transcripción de audio** | Whisper integrado como capacidad nativa | ✅ |
+| **LLMs vía KiloCode AI** | Claude, Gemini, MiniMax, y más modelos compatibles (tier gratuito disponible) | ✅ |
+| **Visión multi-modal** | Análisis de imágenes vía KiloCode (claude-3-haiku vision, gemini-flash) | ✅ |
+| **Transcripción de audio** | Modelos de audio vía KiloCode (whisper y equivalentes disponibles) | ✅ |
 | **RBAC + API Keys** | Control de acceso por roles y claves programáticas | ✅ |
 | **SSE observabilidad** | Stream en tiempo real de chat, eventos, usage y logs | ✅ |
 | **OpenTelemetry** | Trazas distribuidas, métricas y logs unificados | ✅ |
@@ -303,8 +304,8 @@ flowchart LR
 | **pgvector** | Búsqueda semántica sobre PostgreSQL sin servicios externos | ✅ |
 | **Sistema de plugins** | Extiende cualquier servicio con capacidades propias | ✅ |
 | **Higiene GitHub project** | Ritual integrado de sincronización y snapshots automáticos | ✅ |
-| **Auto-alojado** | Funciona completamente en red local sin conexión a internet | ✅ |
-| **Cero APIs de pago** | Sin OpenAI, sin Anthropic, sin facturas sorpresa | ✅ |
+| **Datos 100% locales** | PostgreSQL, Redis, ChromaDB — todos en tu infraestructura | ✅ |
+| **Tier gratuito de IA** | Modelos gratuitos disponibles vía KiloCode (minimax/minimax-m2.5:free, etc.) | ✅ |
 
 </div>
 
@@ -327,7 +328,7 @@ El dashboard carga **agentes lógicos reales desde el gateway** — no skills es
 │   [Recuperación de Memoria] ←── Redis + ChromaDB + resúmen  │
 │        │                                                    │
 │        ▼                                                    │
-│   [Razonamiento] ←── Ollama LLM local                       │
+│   [Razonamiento] ←── KiloCode AI Gateway                    │
 │        │                                                    │
 │        ▼                                                    │
 │   [Planificación de Acciones]                               │
@@ -349,7 +350,7 @@ Cada agente en el registry expone:
 |---|---|
 | `name` | Nombre único dentro del ecosistema |
 | `role` | Arquetipo funcional (orquestador, ejecutor, sensor, etc.) |
-| `model` | Modelo Ollama asignado (puede diferir por agente) |
+| `model` | Modelo KiloCode AI asignado (puede diferir por agente) |
 | `target_service` | Servicio de ejecución que lo aloja (`synapsara`, `fluxenrath`…) |
 | `skills[]` | Lista de habilidades declaradas |
 | `tools[]` | Herramientas y plugins disponibles |
@@ -366,8 +367,8 @@ role: executor
 target_service: fluxenrath
 
 model:
-  provider: ollama
-  name: llama3.2
+  provider: kilo
+  name: anthropic/claude-sonnet-4.5
   temperature: 0.3
   context_window: 8192
 
@@ -411,7 +412,7 @@ El nombre evoca los círculos de la alquimia medieval — estructuras donde cada
         ║                                   ║
         ║  ┌─────────────────────────────┐  ║
         ║  │    Maestro Orquestador      │  ║  ← synapsara define el plan
-        ║  │  (synapsara + LLaMA 3.2)    │  ║
+        ║  │  (synapsara + Claude)       │  ║
         ║  └─────────────┬───────────────┘  ║
         ║                │                  ║
         ║    ┌───────────┼──────────┐       ║
@@ -461,7 +462,7 @@ async def invocar_circulo():
                     "comunicacion": "noctumbra-mail"
                 },
                 "config": {
-                    "modelo_base": "llama3.2",
+                    "modelo_base": "anthropic/claude-sonnet-4.5",
                     "max_iteraciones": 10,
                     "tiempo_limite_seg": 300
                 }
@@ -672,15 +673,15 @@ El ecosistema soporta futuros adaptadores de canal mediante una arquitectura de 
 
 | Característica | **Magnum Opus** | Plataforma Cloud Típica | Demo Chat-Only |
 |---|:---:|:---:|:---:|
-| Costo mensual | **$0** | $50–$500+ | $0 (limitado) |
-| Modelos propios | ✅ Ollama local | ❌ Solo los suyos | ⚠️ Parcial |
+| Costo mensual | **$0 (tier gratuito)** | $50–$500+ | $0 (limitado) |
+| Modelos de IA | ✅ KiloCode AI (Claude, Gemini, MiniMax) | ❌ Solo los suyos | ⚠️ Parcial |
 | Los datos salen de tu red | **Nunca** | Siempre | Depende |
 | Memoria jerárquica | ✅ 3 capas | ⚠️ Básica | ❌ |
 | Círculos multi-agente | ✅ Auto-formados | ⚠️ Manual | ❌ |
 | Constructor visual | ✅ Node Studio | ✅ | ❌ |
 | Roundtable multi-agente | ✅ | ⚠️ | ❌ |
-| Funciona sin internet | ✅ Completamente | ❌ | ⚠️ |
-| Multi-modal (visión + audio) | ✅ LLaVA + Whisper | ✅ (de pago) | ❌ |
+| Datos 100% locales | ✅ PostgreSQL/Redis/ChromaDB local | ❌ | ⚠️ |
+| Multi-modal (visión + audio) | ✅ vía KiloCode | ✅ (de pago) | ❌ |
 | SSE tiempo real | ✅ Streams endurecidos | ⚠️ Básica | ❌ |
 | Higiene operativa integrada | ✅ | ❌ | ❌ |
 | RBAC granular | ✅ | ✅ | ⚠️ |
@@ -836,8 +837,8 @@ docker compose --profile docs up -d
 ./scripts/alchemical memory backup # Exporta snapshot completo de memoria
 
 # ── Modelos ───────────────────────────────────────────────────
-./scripts/alchemical models list   # Lista modelos disponibles en Ollama
-./scripts/alchemical models pull llama3.2  # Descarga un modelo
+./scripts/alchemical models list   # Lista modelos disponibles en KiloCode
+./scripts/alchemical models pull anthropic/claude-sonnet-4.5  # Configura un modelo
 
 # ── Higiene del proyecto ──────────────────────────────────────
 ./ops/project-tidy.sh              # Limpieza y ordenamiento
@@ -899,7 +900,7 @@ Esta versión lleva ese nombre porque representa un punto de inflexión genuino.
 - Los **streams SSE endurecidos** convierten la observabilidad en algo tangible: ves pensar al agente, en tiempo real.
 - La **arquitectura de siete servicios** refleja una separación de responsabilidades diseñada para crecer sin acoplamiento ni fragilidad.
 
-Y sobre todo: sigue siendo **tuyo**. Cero dependencia de APIs externas. Cero telemetría hacia terceros. Cero sorpresas en la factura al final del mes. Los modelos corren en tu hardware, los datos viven en tu base de datos, el conocimiento que construyes permanece contigo — para siempre.
+Y sobre todo: sigue siendo **tuyo**. Cero dependencia de APIs externas para tus datos. Cero telemetría hacia terceros. Cero sorpresas en la factura al final del mes. La inferencia de IA corre a través de [KiloCode AI Gateway](https://kilo.ai) — con tier gratuito disponible — mientras que todos tus datos viven en tu base de datos local, el conocimiento que construyes permanece contigo para siempre.
 
 > *"El alquimista no busca el oro del mercado. Busca el oro de la comprensión."*
 
@@ -934,7 +935,7 @@ La sabiduría es libre. Úsala bien.
 
 **Alchemical Agent Ecosystem v2.0 — Magnum Opus**
 
-*Forjado con fuego local. Sin nubes ajenas. Sin facturas sorpresa.*
+*Datos forjados en local. IA potenciada por KiloCode. Sin nubes ajenas para tus datos.*
 
 [![GitHub Stars](https://img.shields.io/github/stars/smouj/alchemical-agent-ecosystem?style=social)](https://github.com/smouj/alchemical-agent-ecosystem)
 [![Forks](https://img.shields.io/github/forks/smouj/alchemical-agent-ecosystem?style=social)](https://github.com/smouj/alchemical-agent-ecosystem/fork)

@@ -1,8 +1,10 @@
 import asyncio
 import json
+import logging
 import os
 import secrets
 import sqlite3
+import sys
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
@@ -13,6 +15,38 @@ from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
+
+# ---------------------------------------------------------------------------
+# Shared alchemical_core — make the shared Python package importable whether
+# the gateway runs inside Docker (PYTHONPATH set) or directly from the repo.
+# ---------------------------------------------------------------------------
+_SHARED_PYTHON = Path(__file__).resolve().parent.parent / "shared" / "python"
+if str(_SHARED_PYTHON) not in sys.path:
+    sys.path.insert(0, str(_SHARED_PYTHON))
+
+AlchemicalLLM = None  # type: ignore[assignment,misc]
+KiloHealthCheck = None  # type: ignore[assignment,misc]
+LLMConfig = None  # type: ignore[assignment,misc]
+ModelRegistry = None  # type: ignore[assignment,misc]
+_kilo_available = False
+
+try:
+    from alchemical_core.llm import (  # type: ignore[assignment]
+        AlchemicalLLM,
+        KiloHealthCheck,
+        LLMConfig,
+        ModelRegistry,
+    )
+    _kilo_available = True
+except ImportError:  # openai not installed yet – degrade gracefully
+    pass
+
+logger = logging.getLogger("alchemical.gateway")
+
+# Read KiloCode env vars so the gateway is aware of them at startup
+KILO_API_KEY: str = os.getenv("KILO_API_KEY", "")
+KILO_BASE_URL: str = os.getenv("KILO_BASE_URL", "https://api.kilo.ai/api/gateway")
+KILO_DEFAULT_MODEL: str = os.getenv("KILO_DEFAULT_MODEL", "anthropic/claude-sonnet-4.5")
 
 app = FastAPI(
     title="alchemical-gateway",
@@ -571,6 +605,25 @@ async def startup_event():
   init_db()
   asyncio.create_task(job_worker())
 
+  # ── KiloCode AI engine banner ───────────────────────────────────────────
+  key_status = "API key configured" if KILO_API_KEY else "no API key (free models only)"
+  logger.info(
+      "LLM engine: KiloCode AI Gateway | base_url=%s | model=%s | %s",
+      KILO_BASE_URL,
+      KILO_DEFAULT_MODEL,
+      key_status,
+  )
+  if not _kilo_available:
+      logger.warning(
+          "alchemical_core.llm could not be imported — "
+          "install 'openai>=1.50.0' to enable /gateway/llm/* endpoints"
+      )
+  append_event(
+      "info",
+      "gateway",
+      f"KiloCode AI Gateway configured | model={KILO_DEFAULT_MODEL} | {key_status}",
+  )
+
 
 @app.get('/health')
 async def health():
@@ -1043,3 +1096,86 @@ async def dispatch(agent: str, action: str, payload: Dict[str, Any], request: Re
       append_chat(agent, f"Dispatch error action={action}: {e}", "error")
       append_event("error", "dispatch", f"{agent}/{action} failed: {e}")
       raise HTTPException(502, f"Dispatch error: {e}")
+
+
+# ---------------------------------------------------------------------------
+# KiloCode LLM endpoints
+# ---------------------------------------------------------------------------
+
+@app.get(
+  '/gateway/llm/models',
+  summary="List available KiloCode AI models",
+  tags=["llm"],
+)
+async def llm_models(request: Request):
+  """Proxy ``GET /models`` from the KiloCode AI Gateway and return the list.
+
+  Requires at least viewer-level authentication.
+
+  Returns a JSON object::
+
+      {
+        "engine": "kilocode",
+        "base_url": "https://api.kilo.ai/api/gateway",
+        "model_count": 42,
+        "models": [...]
+      }
+  """
+  _require_auth(request, VIEWER_ROLE)
+
+  if not _kilo_available:
+    raise HTTPException(503, "alchemical_core.llm is not installed (missing openai>=1.50.0)")
+
+  try:
+    _cfg = LLMConfig.from_env()  # type: ignore[union-attr]
+    llm = AlchemicalLLM(_cfg)  # type: ignore[misc]
+    models = await llm.get_available_models()
+    return {
+      "engine": "kilocode",
+      "base_url": KILO_BASE_URL,
+      "model_count": len(models),
+      "models": models,
+    }
+  except Exception as exc:
+    append_event("error", "llm", f"llm_models failed: {exc}")
+    raise HTTPException(502, f"Failed to fetch models from KiloCode: {exc}")
+
+
+@app.get(
+  '/gateway/llm/health',
+  summary="KiloCode AI Gateway health check",
+  tags=["llm"],
+)
+async def llm_health():
+  """Run a lightweight health probe against the KiloCode AI Gateway.
+
+  Does **not** require authentication so that monitoring systems can call it
+  without credentials.
+
+  Returns a JSON object::
+
+      {
+        "engine": "kilocode",
+        "api_key_configured": true,
+        "default_model": "anthropic/claude-sonnet-4.5",
+        "status": "ok",
+        "model_count": 42,
+        "latency_ms": 123.4
+      }
+  """
+  if not _kilo_available:
+    return {
+      "engine": "kilocode",
+      "api_key_configured": bool(KILO_API_KEY),
+      "default_model": KILO_DEFAULT_MODEL,
+      "status": "unavailable",
+      "error": "alchemical_core.llm not importable — install openai>=1.50.0",
+    }
+
+  result = await KiloHealthCheck.check()  # type: ignore[union-attr]
+  return {
+    "engine": "kilocode",
+    "api_key_configured": bool(KILO_API_KEY),
+    "default_model": KILO_DEFAULT_MODEL,
+    **result,
+  }

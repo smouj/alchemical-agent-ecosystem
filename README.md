@@ -7,7 +7,7 @@
 <p align="center"><em>Where Intelligence is Forged, Not Fetched.</em></p>
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=18&duration=3200&pause=900&color=FFD700&center=true&vCenter=true&multiline=false&width=700&lines=The+Magnum+Opus+of+local-first+AI+orchestration;Visual+workflow+builder+%C2%B7+Alchemical+Circles+%C2%B7+LangGraph+engine;Hierarchical+memory+%C2%B7+Plugin+marketplace+%C2%B7+Multi-modal;100%25+local+%C2%B7+100%25+yours+%C2%B7+0+paid+APIs;Forged+in+obsidian+%C2%B7+Powered+by+emerald+fire" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=18&duration=3200&pause=900&color=FFD700&center=true&vCenter=true&multiline=false&width=700&lines=The+Magnum+Opus+of+local-first+AI+orchestration;Visual+workflow+builder+%C2%B7+Alchemical+Circles+%C2%B7+LangGraph+engine;Hierarchical+memory+%C2%B7+Plugin+marketplace+%C2%B7+Multi-modal;Local+data+sovereignty+%C2%B7+KiloCode+AI+%C2%B7+Free+tier+capable;Forged+in+obsidian+%C2%B7+Powered+by+emerald+fire" alt="Typing SVG" />
 </p>
 
 <p align="center">
@@ -22,7 +22,7 @@
   <img src="https://img.shields.io/badge/Next.js%2015-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js 15"/>
   <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI"/>
   <img src="https://img.shields.io/badge/LangGraph-1e6fff?style=for-the-badge&logoColor=white" alt="LangGraph"/>
-  <img src="https://img.shields.io/badge/Ollama-FF6B35?style=for-the-badge&logoColor=white" alt="Ollama"/>
+  <img src="https://img.shields.io/badge/KiloCode_AI-4B0082?style=for-the-badge&logoColor=white" alt="KiloCode AI"/>
 </p>
 
 <p align="center">
@@ -47,13 +47,13 @@
 
 ## ✦ The Grand Transmutation
 
-In the ancient art of alchemy, the *Magnum Opus* — the Great Work — was not merely the pursuit of gold, but the systematic transformation of base matter into something of profound and enduring value through the application of knowledge, discipline, and will. The **Alchemical Agent Ecosystem** applies this same principle to intelligence itself: raw data enters as *prima materia*, passes through a sovereign network of specialized AI agents bound together in dynamically self-forming **Alchemical Circles**, and emerges as coherent action, durable memory, and traceable decision — all orchestrated entirely on your own hardware, across seven named execution services, with zero dependency on paid APIs or external clouds. At the center stands the **Alchemical Gateway**, a FastAPI-powered philosopher's stone that mediates between intent and execution through a LangGraph-style stateful orchestration engine, backed by a three-tier hierarchical memory system spanning Redis, ChromaDB, and LLM-generated summaries. The **Agent Node Studio** makes the Great Work visible in real time — a Next.js 15 visual workflow builder where you watch intelligence transmute, step by step, token by token, streamed over SSE to a dashboard that feels less like a dev tool and more like a command room for a new kind of operation. This is local sovereignty in the age of dependent intelligence: a production-grade operating system for autonomous thought, version 2.0, **Magnum Opus**.
+In the ancient art of alchemy, the *Magnum Opus* — the Great Work — was not merely the pursuit of gold, but the systematic transformation of base matter into something of profound and enduring value through the application of knowledge, discipline, and will. The **Alchemical Agent Ecosystem** applies this same principle to intelligence itself: raw data enters as *prima materia*, passes through a sovereign network of specialized AI agents bound together in dynamically self-forming **Alchemical Circles**, and emerges as coherent action, durable memory, and traceable decision — all orchestrated entirely on your own hardware, across seven named execution services, with zero dependency on costly APIs or external clouds. At the center stands the **Alchemical Gateway**, a FastAPI-powered philosopher's stone that mediates between intent and execution through a LangGraph-style stateful orchestration engine, backed by a three-tier hierarchical memory system spanning Redis, ChromaDB, and LLM-generated summaries. The **Agent Node Studio** makes the Great Work visible in real time — a Next.js 15 visual workflow builder where you watch intelligence transmute, step by step, token by token, streamed over SSE to a dashboard that feels less like a dev tool and more like a command room for a new kind of operation. This is local sovereignty in the age of dependent intelligence: a production-grade operating system for autonomous thought, version 2.0, **Magnum Opus**. AI inference is powered by [KiloCode AI Gateway](https://kilo.ai) — an OpenAI-compatible LLM aggregator with a free tier — while all data (PostgreSQL, Redis, ChromaDB) remains fully local.
 
 ---
 
 ## 🚀 Quickstart — The 5-Minute Ritual
 
-> **Prerequisites:** Docker 24+, Docker Compose v2, Git, `jq` (optional but recommended), 16 GB RAM minimum, 20 GB disk.
+> **Prerequisites:** Docker 24+, Docker Compose v2, Git, `jq` (optional but recommended), 16 GB RAM minimum, 20 GB disk. A `KILO_API_KEY` from [kilo.ai](https://kilo.ai) (free tier available).
 
 ```bash
 # Clone the grimoire
@@ -61,7 +61,7 @@ git clone https://github.com/smouj/alchemical-agent-ecosystem.git
 cd alchemical-agent-ecosystem
 
 # Perform the installation ritual
-# (pulls models, generates .env, validates stack — interactive wizard)
+# (configures KiloCode AI, generates .env, validates stack — interactive wizard)
 ./install.sh --wizard
 
 # Awaken the ecosystem
@@ -78,7 +78,7 @@ Expected response from the health oracle:
   "status": "transmuting",
   "version": "2.0.0-magnum-opus",
   "services": 7,
-  "llm_engine": "ollama:ready",
+  "llm_engine": "kilo-ai:ready",
   "memory": { "redis": "ok", "chroma": "ok", "postgres": "ok" },
   "circles_active": 0
 }
@@ -92,7 +92,7 @@ Expected response from the health oracle:
 | `http://localhost/gateway` | Alchemical Gateway API |
 | `http://localhost/gateway/health` | System health oracle |
 | `http://localhost/gateway/docs` | Interactive OpenAPI grimoire |
-| `http://localhost:11434` | Ollama LLM Engine |
+| `https://api.kilo.ai/api/gateway` | KiloCode AI Engine (configure `KILO_API_KEY`) |
 | `http://localhost:6006` | OpenTelemetry Dashboard (Jaeger) |
 | `http://localhost:9090` | Prometheus metrics forge |
 
@@ -127,7 +127,7 @@ graph TB
     subgraph MEM["💾 Memory Nexus"]
         REDIS["Redis\n(short-term · session)"]
         CHROMA["ChromaDB\n(long-term · semantic)"]
-        SUMM["Summary Agents\n(Ollama compression)"]
+        SUMM["Summary Agents\n(KiloCode compression)"]
         REDIS -->|"flush to long-term"| CHROMA
         CHROMA -->|"request summary"| SUMM
     end
@@ -143,11 +143,11 @@ graph TB
     end
 
     subgraph LLM["🤖 LLM Layer"]
-        OLLAMA["Ollama Engine"]
-        LLAVA["LLaVA\n(vision)"]
-        WHISPER["Whisper\n(speech)"]
-        BASE["Base models\n(Mistral · Llama · Phi)"]
-        OLLAMA --> LLAVA & WHISPER & BASE
+        KILO["KiloCode AI\n(api.kilo.ai)"]
+        KILO_V["Vision Models\n(claude/gemini)"]
+        KILO_A["Audio Models\n(whisper via Kilo)"]
+        BASE["Base models\n(Claude · Gemini · MiniMax)"]
+        KILO --> KILO_V & KILO_A & BASE
     end
 
     subgraph TELEM["📊 Telemetry"]
@@ -166,7 +166,7 @@ graph TB
     CADDY --> DASH & GW
     DASH <-->|"REST · SSE"| GW
     LG -->|"dispatch"| EXEC
-    EXEC <-->|"inference"| OLLAMA
+    EXEC <-->|"inference"| KILO
     EXEC <-->|"read/write"| MEM
     GW -->|"traces · spans"| OTEL
     CONN --> GW
@@ -214,8 +214,8 @@ sequenceDiagram
 | LangGraph Stateful Orchestration | ✅ | Full LangGraph-style directed graph execution with checkpointing, branching, and resumable workflows |
 | Hierarchical Memory (Redis + Chroma + Summary) | ✅ | Three-tier memory: session-hot in Redis, semantic long-term in ChromaDB, compressed summaries via LLM |
 | Plugin Marketplace (Skills hot-reload) | ✅ | Python packages as skills; install, enable, or swap tools without restarting any service |
-| Multi-modal Vision (LLaVA) | ✅ | Image understanding and analysis via locally-run LLaVA — zero image data leaves your machine |
-| Speech Recognition (Whisper local) | ✅ | Audio transcription and command intake via local Whisper model, fully offline |
+| Multi-modal Vision (Vision via KiloCode) | ✅ | Image understanding and analysis via KiloCode (claude-3-haiku vision, gemini-flash) — zero image data leaves your infrastructure |
+| Speech Recognition (Audio via KiloCode) | ✅ | Audio transcription and command intake via KiloCode (whisper models available) |
 | Real-time SSE Observability | ✅ | Every token, every step, every trace pushed over Server-Sent Events to dashboard and API consumers |
 | RBAC + API Key Security | ✅ | Role-based access control with fine-grained policy enforcement and rotating API key management |
 | Telegram / Discord Connectors | ✅ | Production-ready bots that pipe conversations directly into the agent orchestration pipeline |
@@ -241,11 +241,11 @@ Every entity in the ecosystem exists at two distinct layers: a **logical agent**
   "id": "agt_7f3a9c2e",
   "name": "AuralScribe",
   "role": "Transcription Specialist",
-  "model": "whisper:large-v3",
+  "model": "anthropic/claude-sonnet-4.5",
   "target_service": "auralith",
   "target_port": 7406,
   "skills": [
-    "whisper_transcription",
+    "audio_transcription",
     "audio_chunker",
     "language_detector"
   ],
@@ -262,7 +262,7 @@ Every entity in the ecosystem exists at two distinct layers: a **logical agent**
     "short_term_ttl": 3600,
     "long_term_collection": "aural_scribe_episodes",
     "summary_trigger_tokens": 4096,
-    "summary_model": "mistral:7b"
+    "summary_model": "anthropic/claude-sonnet-4.5"
   },
   "created_at": "2025-11-14T00:00:00Z",
   "version": "2.0.0"
@@ -316,17 +316,17 @@ Circles are ephemeral by default but can be **persisted** as named templates for
 
 ## 💾 Memory Architecture
 
-Intelligence without memory is a candle that resets to dark after every conversation. The Alchemical Memory Architecture ensures that every interaction, insight, and decision accumulates into a growing substrate of knowledge — layered, searchable, and self-compressing — without a single byte crossing a network boundary you do not own.
+Intelligence without memory is a candle that resets to dark after every conversation. The Alchemical Memory Architecture ensures that every interaction, insight, and decision accumulates into a growing substrate of knowledge — layered, searchable, and self-compressing — without a single byte of your data crossing a network boundary you do not own.
 
 | Layer | Store | TTL | Purpose |
 |---|---|---|---|
 | **Short-term** | Redis | Session (default: 1h, configurable) | Active context window, in-flight state, tool call buffers, hot circle state |
 | **Episodic (Long-term)** | ChromaDB | Forever (configurable eviction policy) | Semantic vector search over all past interactions, documents, and agent outputs |
-| **Summary** | Ollama (LLM) | On-demand (token threshold trigger) | When session tokens exceed threshold, a summary agent compresses episodic chunks into dense recall nodes |
+| **Summary** | KiloCode AI (LLM) | On-demand (token threshold trigger) | When session tokens exceed threshold, a summary agent compresses episodic chunks into dense recall nodes |
 
 Memory reads during a workflow are **hierarchical and non-blocking**: the orchestrator first checks Redis for live context (microseconds), then issues a cosine similarity query to ChromaDB for relevant episodes (milliseconds), and optionally triggers a summary agent to synthesize across a long interaction history before passing consolidated context to the active circle.
 
-Memory writes follow a **dual-path pattern**: execution services post to Redis synchronously on the hot path, while a background flush worker asynchronously promotes matured session memories to ChromaDB with embeddings generated locally via Ollama's embedding endpoint. No memory ever leaves the machine. No embedding API is ever called.
+Memory writes follow a **dual-path pattern**: execution services post to Redis synchronously on the hot path, while a background flush worker asynchronously promotes matured session memories to ChromaDB with embeddings generated via KiloCode's embedding endpoint. All data stores (PostgreSQL, Redis, ChromaDB) remain fully local — only inference and embedding API calls are sent to KiloCode over HTTPS.
 
 ---
 
@@ -338,7 +338,7 @@ Skills are the vocabulary of your agents — and in the Alchemical Ecosystem, th
 
 ```
 skills/
-├── whisper_transcription/
+├── audio_transcription/
 │   ├── __init__.py          # SkillManifest + entrypoint
 │   ├── skill.py             # Core skill implementation
 │   ├── requirements.txt     # Isolated dependency set
@@ -401,14 +401,14 @@ Not all agent frameworks are created equal. Here is an honest, feature-by-featur
 
 | Criteria | **Alchemical v2.0** | LangChain (demos) | AutoGen | CrewAI |
 |---|:---:|:---:|:---:|:---:|
-| **Local-first (no external API required)** | ✅ | ❌ (OpenAI default) | ⚠️ (configurable) | ⚠️ (configurable) |
+| **Local data sovereignty (all data stays local)** | ✅ | ❌ (OpenAI default) | ⚠️ (configurable) | ⚠️ (configurable) |
 | **Visual Workflow Builder** | ✅ | ❌ | ❌ | ❌ |
 | **Auto-forming Agent Teams** | ✅ | ❌ | ⚠️ (manual) | ✅ |
 | **Stateful LangGraph Orchestration** | ✅ | ⚠️ (LCEL only) | ❌ | ❌ |
 | **Hot-reloadable Plugin System** | ✅ | ❌ | ❌ | ❌ |
 | **Real-time SSE Observability** | ✅ | ❌ | ❌ | ❌ |
 | **Hierarchical Memory (3 tiers)** | ✅ | ⚠️ (1-tier) | ⚠️ (1-tier) | ⚠️ (1-tier) |
-| **Zero Cost (0 paid APIs)** | ✅ | ❌ | ❌ | ❌ |
+| **Free AI inference (KiloCode free tier)** | ✅ | ❌ | ❌ | ❌ |
 | **Production-ready (RBAC, TLS, health checks)** | ✅ | ❌ | ❌ | ⚠️ |
 | **Multi-modal (Vision + Audio)** | ✅ | ⚠️ (API-dependent) | ⚠️ | ❌ |
 | **OpenTelemetry Distributed Tracing** | ✅ | ❌ | ❌ | ❌ |
@@ -448,7 +448,7 @@ alchemical-agent-ecosystem/
 │
 ├── skills/                     # Hot-reloadable skill packages
 │   ├── web_surfer/
-│   ├── whisper_transcription/
+│   ├── audio_transcription/
 │   ├── code_executor/
 │   └── [community skills...]
 │
@@ -614,7 +614,7 @@ The `./scripts/alchemical` CLI is the primary interface to the running ecosystem
 
 ### Local Sovereignty in the Age of Dependent Intelligence
 
-The dominant narrative of AI in 2025 asks you to rent intelligence — to submit your data, your prompts, your workflows, and your users' trust to remote APIs whose terms of service can change overnight, whose costs scale without warning, and whose architectures are fundamentally opaque to inspection or audit. The Alchemical Ecosystem was built on a different premise: that intelligence, like any serious operational capability, must be *owned*. Every model weight, every vector embedding, every logged trace, and every generated token lives on your hardware, subject only to your policies, visible only to your eyes. This is not a philosophical position for its own sake — it is an engineering prerequisite for building systems that are auditable, reproducible, cost-predictable, GDPR-compliant, and genuinely reliable at any scale.
+The dominant narrative of AI in 2025 asks you to rent intelligence — to submit your data, your prompts, your workflows, and your users' trust to remote APIs whose terms of service can change overnight, whose costs scale without warning, and whose architectures are fundamentally opaque to inspection or audit. The Alchemical Ecosystem was built on a different premise: that intelligence, like any serious operational capability, must be *owned*. Every vector embedding, every logged trace, every agent workflow, and all your data lives on your hardware, subject only to your policies, visible only to your eyes. AI inference is handled by [KiloCode AI Gateway](https://kilo.ai) — an OpenAI-compatible LLM aggregator that offers a free tier and access to state-of-the-art models (Claude, Gemini, MiniMax, and more) over HTTPS, without requiring local GPU hardware. This is not a philosophical compromise — it is an engineering pragmatism that preserves the things that matter most: data sovereignty, auditability, cost-predictability, GDPR-compliance, and genuine reliability at any scale. All data stores remain fully local. No embeddings, no agent state, no user data ever leaves your infrastructure.
 
 ### Alchemy as a Genuine Design Principle
 
