@@ -43,7 +43,7 @@ function SidebarSection({
 
   return (
     <div className="mb-1">
-      <button
+      <div role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setIsOpen(!isOpen); }}
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center gap-2 px-3 py-2 hover:bg-[#FFD700]/3 transition-colors group"
       >
@@ -63,7 +63,7 @@ function SidebarSection({
         >
           <ChevronRight size={10} className="text-[#333] group-hover:text-[#555]" />
         </motion.div>
-      </button>
+      </div>
 
       <AnimatePresence>
         {isOpen && (
