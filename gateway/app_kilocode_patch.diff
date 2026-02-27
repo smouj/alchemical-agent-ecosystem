@@ -1,0 +1,42 @@
+--- a/gateway/app.py
++++ b/gateway/app.py
+@@ -14,6 +14,8 @@ Production-quality FastAPI gateway providing:
+ from __future__ import annotations
+ 
+ import asyncio
++# --- KiloCode bridge import ---
++from kilocode_bridge import router as kilo_router, kilocode_health_watcher
+ import hashlib
+ import hmac
+ import json
+@@ -940,6 +942,8 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+ 
+     worker_task = asyncio.create_task(job_worker())
+ 
++    # KiloCode Local Engine background health watcher
++    kilo_watcher_task = asyncio.create_task(kilocode_health_watcher())
++
+     key_status = "API key configured" if KILO_API_KEY else "no API key (free models only)"
+     logger.info(
+         "LLM engine: KiloCode AI Gateway | base_url=%s | model=%s | %s",
+@@ -975,6 +979,9 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+     finally:
+         worker_task.cancel()
+         try:
++            kilo_watcher_task.cancel()
++        except Exception:
++            pass
++        try:
+             await asyncio.wait_for(asyncio.shield(worker_task), timeout=5.0)
+         except (asyncio.CancelledError, asyncio.TimeoutError):
+             pass
+@@ -993,6 +1000,9 @@ app = FastAPI(
+     lifespan=lifespan,
+ )
+ 
++# KiloCode Local Engine router (prefix: /kilo)
++app.include_router(kilo_router)
++
+ app.add_middleware(
+     CORSMiddleware,
+     allow_origins=ALLOWED_ORIGINS if ALLOWED_ORIGINS != ["*"] else ["*"],

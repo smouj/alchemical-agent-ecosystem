@@ -17,8 +17,9 @@ const AdminOpsPanel = dynamic(() => import("../components/AdminOpsPanel").then((
 const UsagePanel = dynamic(() => import("../components/UsagePanel").then((m) => m.UsagePanel), { ssr: false });
 const SettingsPanel = dynamic(() => import("../components/SettingsPanel").then((m) => m.SettingsPanel), { ssr: false });
 const LogsMonitor = dynamic(() => import("../components/LogsMonitor").then((m) => m.LogsMonitor), { ssr: false });
+const KiloCodeForge = dynamic(() => import("../components/KiloCodeForge"), { ssr: false });
 
-type View = "chat" | "nodes" | "agents" | "ops" | "admin" | "logs";
+type View = "chat" | "nodes" | "agents" | "ops" | "admin" | "logs" | "forge";
 
 const defaultCfg: DashboardConfig = {
   agentPollMs: 10000,
@@ -27,7 +28,7 @@ const defaultCfg: DashboardConfig = {
   defaultLogService: "velktharion",
 };
 
-const needsAgentData = new Set<View>(["agents", "nodes", "ops"]);
+const needsAgentData = new Set<View>(["agents", "nodes", "ops", "forge"]);
 
 export default function Page() {
   const [data, setData] = useState<DashboardPayload | null>(null);
@@ -74,6 +75,7 @@ export default function Page() {
     ops: "📊 Operaciones",
     logs: "📜 Logs",
     admin: "🛠️ Administración",
+    forge: "⚗️ Forja Arcana — KiloCode Engine",
   } as const)[view];
 
   return (
@@ -118,6 +120,8 @@ export default function Page() {
             <CreateAgentWizard />
           </div>
         )}
+
+        {view === "forge" && <KiloCodeForge />}
       </section>
     </div>
   );

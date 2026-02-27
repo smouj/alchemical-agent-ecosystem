@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FlaskConical, LayoutDashboard, Bot, WandSparkles, Settings2, Logs, CircleHelp, type LucideIcon } from "lucide-react";
+import { FlaskConical, LayoutDashboard, Bot, WandSparkles, Settings2, Logs, CircleHelp, Zap, type LucideIcon } from "lucide-react";
 
-type View = "chat" | "nodes" | "agents" | "ops" | "admin" | "logs";
+type View = "chat" | "nodes" | "agents" | "ops" | "admin" | "logs" | "forge";
 
 const items: Array<{ label: string; Icon: LucideIcon; view: View }> = [
   { label: "Chat", Icon: WandSparkles, view: "chat" },
@@ -12,6 +12,7 @@ const items: Array<{ label: string; Icon: LucideIcon; view: View }> = [
   { label: "Operaciones", Icon: CircleHelp, view: "ops" },
   { label: "Logs", Icon: Logs, view: "logs" },
   { label: "Admin", Icon: Settings2, view: "admin" },
+  { label: "Forja Arcana", Icon: Zap, view: "forge" },
 ];
 
 type CoreService = { name: string; state: string; status: string; health: "healthy" | "down" | "unknown" };
