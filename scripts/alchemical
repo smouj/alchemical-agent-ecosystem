@@ -83,7 +83,7 @@ Commands:
 
 Examples:
   ./scripts/alchemical wizard
-  ./scripts/alchemical install --domain localhost --profile 4g --model phi3:mini
+  ./scripts/alchemical install --domain localhost --profile 4g --model anthropic/claude-sonnet-4.5
   ./scripts/alchemical install-fast --profile 2g
   ./scripts/alchemical up-2g
   ./scripts/alchemical update
@@ -121,10 +121,10 @@ case "${1:-help}" in
   install) shift; bash infra/scripts/install.sh "$@" ;;
   install-fast) shift; bash infra/scripts/install.sh --fast "$@" ;;
   up) docker compose up -d --build ;;
-  up-2g) docker compose up -d --build caddy redis chromadb ollama alchemical-gateway velktharion synapsara ;;
-  up-4g) docker compose up -d --build caddy redis chromadb ollama alchemical-gateway velktharion synapsara kryonexus ignivox ;;
-  up-8g) docker compose up -d --build caddy redis chromadb ollama alchemical-gateway velktharion synapsara kryonexus ignivox auralith resonvyr ;;
-  up-fast) docker compose up -d caddy redis chromadb ollama alchemical-gateway velktharion synapsara ;;
+  up-2g) docker compose up -d --build caddy redis chromadb alchemical-gateway velktharion synapsara ;;
+  up-4g) docker compose up -d --build caddy redis chromadb alchemical-gateway velktharion synapsara kryonexus ignivox ;;
+  up-8g) docker compose up -d --build caddy redis chromadb alchemical-gateway velktharion synapsara kryonexus ignivox auralith resonvyr ;;
+  up-fast) docker compose up -d caddy redis chromadb alchemical-gateway velktharion synapsara ;;
   down) docker compose down ;;
   restart) docker compose down && docker compose up -d --build ;;
   status) docker compose ps ;;

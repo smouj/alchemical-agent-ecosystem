@@ -3,7 +3,7 @@ set -euo pipefail
 
 DOMAIN="localhost"
 PROFILE="4g"
-OLLAMA_MODEL="phi3:mini"
+KILO_MODEL="anthropic/claude-sonnet-4.5"
 NO_PULL=0
 WIZARD=0
 FAST=0
@@ -23,9 +23,9 @@ banner(){
 
 profile_services() {
   case "$1" in
-    2g)  echo "caddy redis chromadb ollama alchemical-gateway velktharion synapsara" ;;
-    4g)  echo "caddy redis chromadb ollama alchemical-gateway velktharion synapsara kryonexus ignivox" ;;
-    8g)  echo "caddy redis chromadb ollama alchemical-gateway velktharion synapsara kryonexus ignivox auralith resonvyr" ;;
+    2g)  echo "caddy redis chromadb alchemical-gateway velktharion synapsara" ;;
+    4g)  echo "caddy redis chromadb alchemical-gateway velktharion synapsara kryonexus ignivox" ;;
+    8g)  echo "caddy redis chromadb alchemical-gateway velktharion synapsara kryonexus ignivox auralith resonvyr" ;;
     16g|32g) echo "all" ;;
     *) return 1 ;;
   esac
@@ -33,11 +33,11 @@ profile_services() {
 
 default_model_for_profile() {
   case "$1" in
-    2g) echo "tinyllama:1.1b" ;;
-    4g) echo "phi3:mini" ;;
-    8g) echo "qwen2.5:3b" ;;
-    16g|32g) echo "phi3:mini" ;;
-    *) echo "phi3:mini" ;;
+    2g) echo "minimax/minimax-m2.5:free" ;;
+    4g) echo "anthropic/claude-haiku-4.5" ;;
+    8g) echo "anthropic/claude-sonnet-4.5" ;;
+    16g|32g) echo "anthropic/claude-opus-4.6" ;;
+    *) echo "anthropic/claude-sonnet-4.5" ;;
   esac
 }
 
@@ -99,9 +99,11 @@ Usage: bash infra/scripts/install.sh [options]
   --domain <domain>          Domain for reverse proxy (default: localhost)
   --profile <2g|4g|8g|16g|32g>
                              RAM profile (default: 4g)
-  --model <ollama-model>     Ollama model to pull (default: profile-based)
-  --no-pull                  Skip Ollama model pull
-  --fast                     Fast install mode (skip local build + skip model pull by default)
+  --model <kilocode-model>   KiloCode model to use (default: profile-based)
+                             Examples: anthropic/claude-sonnet-4.5, kilo/auto,
+                                       minimax/minimax-m2.5:free (free tier)
+  --no-pull                  Skip KiloCode API connection check
+  --fast                     Fast install mode (skip local build + skip API check)
   --skip-build               Start without --build (faster if images already available)
   --no-image-pull            Skip docker compose pull prefetch
   --wizard                   Interactive wizard mode
@@ -113,7 +115,7 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --domain) DOMAIN="${2:-}"; shift 2 ;;
     --profile) PROFILE="${2:-4g}"; shift 2 ;;
-    --model) OLLAMA_MODEL="${2:-}"; shift 2 ;;
+    --model) KILO_MODEL="${2:-}"; shift 2 ;;
     --no-pull) NO_PULL=1; shift ;;
     --fast) FAST=1; SKIP_BUILD=1; NO_PULL=1; shift ;;
     --skip-build) SKIP_BUILD=1; shift ;;
@@ -131,8 +133,8 @@ if ! validate_profile "$PROFILE"; then
   exit 1
 fi
 
-if [[ -z "$OLLAMA_MODEL" ]]; then
-  OLLAMA_MODEL="$(default_model_for_profile "$PROFILE")"
+if [[ -z "$KILO_MODEL" ]]; then
+  KILO_MODEL="$(default_model_for_profile "$PROFILE")"
 fi
 
 HOST_RAM_GB="$(detect_host_ram_gb)"
@@ -156,27 +158,28 @@ if ! validate_profile "$PROFILE"; then
     PROFILE="$SUGGESTED_PROFILE"
   fi
 
-  if [[ "$OLLAMA_MODEL" == "phi3:mini" || -z "$OLLAMA_MODEL" ]]; then
-    OLLAMA_MODEL="$(default_model_for_profile "$PROFILE")"
+  if [[ "$KILO_MODEL" == "anthropic/claude-sonnet-4.5" || -z "$KILO_MODEL" ]]; then
+    KILO_MODEL="$(default_model_for_profile "$PROFILE")"
   fi
 
-  read -r -p "Modelo Ollama [${OLLAMA_MODEL}]: " input_model || true
-  OLLAMA_MODEL="${input_model:-$OLLAMA_MODEL}"
-  read -r -p "¿Modo rápido (sin build local y sin pull de modelo)? (y/N): " input_fast || true
+  read -r -p "Modelo KiloCode [${KILO_MODEL}]: " input_model || true
+  KILO_MODEL="${input_model:-$KILO_MODEL}"
+  read -r -p "KiloCode API Key (leave blank to set later): " input_kilo_key || true
+  read -r -p "¿Modo rápido (sin build local y sin verificación API)? (y/N): " input_fast || true
   if [[ "${input_fast:-N}" =~ ^[Yy]$ ]]; then FAST=1; SKIP_BUILD=1; NO_PULL=1; fi
   read -r -p "¿Prefetch de imágenes docker antes de arrancar? (Y/n): " input_prefetch || true
   if [[ "${input_prefetch:-Y}" =~ ^[Nn]$ ]]; then PULL_FIRST=0; fi
-  read -r -p "¿Pull del modelo ahora? (Y/n): " input_pull || true
+  read -r -p "¿Verificar conexión KiloCode API ahora? (Y/n): " input_pull || true
   if [[ "${input_pull:-Y}" =~ ^[Nn]$ ]]; then NO_PULL=1; fi
   echo
   echo "Summary (wizard selection):"
   printf "  %-14s %s\n" "Domain" "$DOMAIN"
   printf "  %-14s %s\n" "Profile" "$PROFILE"
-  printf "  %-14s %s\n" "Model" "$OLLAMA_MODEL"
+  printf "  %-14s %s\n" "Model" "$KILO_MODEL"
   printf "  %-14s %s\n" "Fast mode" "$FAST"
   printf "  %-14s %s\n" "Skip build" "$SKIP_BUILD"
   printf "  %-14s %s\n" "Image prefetch" "$PULL_FIRST"
-  printf "  %-14s %s\n" "Pull model" "$((1-NO_PULL))"
+  printf "  %-14s %s\n" "API check" "$((1-NO_PULL))"
 fi
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
@@ -191,11 +194,20 @@ log "[2/6] Preparing runtime directories"
 mkdir -p "$ROOT/.runtime" || true
 
 log "[3/6] Generating .env"
+# Preserve existing KILO_API_KEY if already set in environment or .env
+EXISTING_KILO_KEY="${input_kilo_key:-${KILO_API_KEY:-}}"
+if [[ -z "$EXISTING_KILO_KEY" && -f .env ]]; then
+  EXISTING_KILO_KEY="$(grep -E '^KILO_API_KEY=' .env | head -n1 | cut -d'=' -f2- || true)"
+fi
+
 cat > .env <<ENV
 ALCHEMICAL_DOMAIN=${DOMAIN}
 ALCHEMICAL_PROFILE=${PROFILE}
-ALCHEMICAL_MODEL=${OLLAMA_MODEL}
+ALCHEMICAL_MODEL=${KILO_MODEL}
 ALCHEMICAL_GATEWAY_TOKEN=${GATEWAY_TOKEN}
+KILO_API_KEY=${EXISTING_KILO_KEY}
+KILO_DEFAULT_MODEL=${KILO_MODEL}
+KILO_BASE_URL=https://api.kilo.ai/api/gateway
 ENV
 
 log "[4/6] Building and starting platform"
@@ -228,22 +240,33 @@ fi
 log "[5/6] Health check"
 docker compose ps
 
-log "[6/6] Pull local model (${OLLAMA_MODEL})"
+log "[6/6] Verify KiloCode API connection (model: ${KILO_MODEL})"
 if [[ $NO_PULL -eq 0 ]]; then
-  if docker compose ps ollama >/dev/null 2>&1; then
-    docker compose exec -T ollama ollama pull "$OLLAMA_MODEL" || warn "Model pull failed, continuing"
+  KILO_KEY="${KILO_API_KEY:-$(grep -E '^KILO_API_KEY=' .env 2>/dev/null | head -n1 | cut -d'=' -f2- || true)}"
+  if [[ -n "$KILO_KEY" ]]; then
+    log "Testing KiloCode API connection..."
+    HTTP_STATUS="$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 \
+      -H "Authorization: Bearer ${KILO_KEY}" \
+      "https://api.kilo.ai/api/gateway/models" || echo "000")"
+    if [[ "$HTTP_STATUS" == "200" ]]; then
+      log "KiloCode API connection successful (HTTP ${HTTP_STATUS})"
+    else
+      warn "KiloCode API returned HTTP ${HTTP_STATUS}. Check your KILO_API_KEY in .env"
+    fi
   else
-    warn "Ollama service not detected"
+    warn "KILO_API_KEY is not set. Set it in .env to use KiloCode AI features."
+    warn "Get your API key at: https://app.kilo.ai (Profile → scroll to bottom)"
+    warn "Free models (no key needed): minimax/minimax-m2.1:free, minimax/minimax-m2.5:free"
   fi
 else
-  warn "Skipping model pull (--no-pull)"
+  warn "Skipping KiloCode API check (--no-pull)"
 fi
 
 echo
 echo "✅ Alchemical ecosystem ready"
 echo "Domain: ${DOMAIN}"
 echo "Profile: ${PROFILE}"
-echo "Model: ${OLLAMA_MODEL}"
+echo "Model: ${KILO_MODEL}"
 echo "Gateway token: configured (hidden)"
 echo "Fast mode: ${FAST}"
 echo "Skip build: ${SKIP_BUILD}"

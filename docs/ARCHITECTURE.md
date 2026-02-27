@@ -37,7 +37,7 @@ flowchart TB
 
   subgraph Exec[Execution Layer]
     SVC[Target Services 7401..7410]
-    OLL[(Ollama)]
+    KILO[(KiloCode AI)]
     RED[(Redis)]
     CHR[(ChromaDB)]
   end
@@ -52,7 +52,7 @@ flowchart TB
   GW --> STATE
   GW --> RED
   GW --> CHR
-  SVC --> OLL
+  SVC --> KILO
 ```
 
 ---

@@ -11,6 +11,9 @@ type Capabilities = {
 
 type ChatMsg = { sender: string; text: string; ts?: string; kind?: string };
 
+/** Attachment with name and base64-encoded content. */
+type Attachment = { name: string; sizeKb: number; content: string };
+
 export function ChatWorkbench() {
   const [caps, setCaps] = useState<Capabilities>({ skills: [], tools: [], connectors: [], agents: [] });
   const [thread, setThread] = useState<ChatMsg[]>([]);
@@ -21,10 +24,10 @@ export function ChatWorkbench() {
   const [chatAgent, setChatAgent] = useState("alquimista-mayor");
 
   const [showAdvanced, setShowAdvanced] = useState(false);
-  const [repo, setRepo] = useState("smouj/alchemical-agent-ecosystem");
+  const [repo, setRepo] = useState(process.env.NEXT_PUBLIC_REPO ?? "");
   const [thinking, setThinking] = useState("balanced");
   const [autoEdit, setAutoEdit] = useState(false);
-  const [attachments, setAttachments] = useState<string[]>([]);
+  const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [roundAgents, setRoundAgents] = useState<string>("alquimista-mayor,redactor-narrador,investigador-analista");
   const [rounds, setRounds] = useState(1);
 
@@ -32,12 +35,19 @@ export function ChatWorkbench() {
 
   const esRef = useRef<EventSource | null>(null);
   const listRef = useRef<HTMLDivElement | null>(null);
+  const msgTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const showMsg = (text: string) => {
+    setMsg(text);
+    if (msgTimerRef.current) clearTimeout(msgTimerRef.current);
+    msgTimerRef.current = setTimeout(() => setMsg(""), 5000);
+  };
 
   useEffect(() => {
     fetch("/api/gateway/capabilities", { cache: "no-store" })
       .then((r) => r.json())
-      .then((j) => {
-        const next = {
+      .then((j: Capabilities) => {
+        const next: Capabilities = {
           skills: j.skills ?? [],
           tools: j.tools ?? [],
           connectors: j.connectors ?? [],
@@ -45,7 +55,8 @@ export function ChatWorkbench() {
         };
         setCaps(next);
         if (next.agents?.length) setChatAgent(next.agents[0]);
-      });
+      })
+      .catch(() => undefined);
   }, []);
 
   useEffect(() => {
@@ -53,6 +64,12 @@ export function ChatWorkbench() {
       listRef.current.scrollTop = listRef.current.scrollHeight;
     }
   }, [thread]);
+
+  useEffect(() => {
+    return () => {
+      if (msgTimerRef.current) clearTimeout(msgTimerRef.current);
+    };
+  }, []);
 
   const connectStream = () => {
     if (esRef.current) esRef.current.close();
@@ -63,7 +80,7 @@ export function ChatWorkbench() {
     es.onerror = () => setConn("disconnected");
     es.onmessage = (ev) => {
       try {
-        const payload = JSON.parse(ev.data);
+        const payload = JSON.parse(ev.data as string) as { items?: ChatMsg[] };
         setThread(payload.items ?? []);
       } catch {
         // ignore invalid frame
@@ -80,6 +97,7 @@ export function ChatWorkbench() {
   useEffect(() => {
     connectStream();
     return () => disconnectStream();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const postChat = async () => {
@@ -94,7 +112,7 @@ export function ChatWorkbench() {
 
   const askAgent = async () => {
     if (!chatText.trim()) return;
-    setMsg(`Enviando a ${chatAgent}...`);
+    showMsg(`Enviando a ${chatAgent}...`);
     const res = await fetch("/api/gateway/chat-ask", {
       method: "POST",
       headers: { "content-type": "application/json" },
@@ -105,41 +123,54 @@ export function ChatWorkbench() {
         repo,
         thinking,
         auto_edit: autoEdit,
-        attachments,
+        // Send attachment metadata + content (base64) to the gateway
+        attachments: attachments.map((a) => ({ name: a.name, content: a.content })),
       }),
     });
-    const j = await res.json().catch(() => ({}));
-    setMsg(res.ok ? `Respuesta recibida de ${chatAgent}` : `Error: ${j?.error || "chat ask failed"}`);
+    const j = (await res.json().catch(() => ({}))) as { error?: string };
+    showMsg(res.ok ? `Respuesta recibida de ${chatAgent}` : `Error: ${j?.error ?? "chat ask failed"}`);
     if (res.ok) setChatText("");
   };
 
   const runRoundtable = async () => {
     const agents = roundAgents.split(",").map((x) => x.trim()).filter(Boolean);
     if (!agents.length) return;
-    setMsg("Ejecutando roundtable...");
+    showMsg("Ejecutando roundtable...");
     const res = await fetch("/api/gateway/chat-roundtable", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ topic: chatText || goal, agents, rounds, thinking, action: "query" }),
     });
-    const j = await res.json().catch(() => ({}));
-    setMsg(res.ok ? `Roundtable completado (${j?.items?.length || 0})` : `Error: ${j?.error || "roundtable failed"}`);
+    const j = (await res.json().catch(() => ({}))) as { items?: unknown[]; error?: string };
+    showMsg(res.ok ? `Roundtable completado (${j?.items?.length ?? 0})` : `Error: ${j?.error ?? "roundtable failed"}`);
   };
 
   const createPlan = async () => {
-    setMsg("Generando plan...");
+    showMsg("Generando plan...");
     const res = await fetch("/api/gateway/chat-plan", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ goal, use_skills: [], use_tools: [], create_subagents: [], channels: [] }),
     });
-    setMsg(res.ok ? "Plan generado (revisar hilo)" : "Error generando plan");
+    showMsg(res.ok ? "Plan generado (revisar hilo)" : "Error generando plan");
   };
 
   const onAttach = (files: FileList | null) => {
     if (!files?.length) return;
-    const rows = Array.from(files).map((f) => `${f.name} (${Math.ceil(f.size / 1024)}KB)`);
-    setAttachments((prev) => [...prev, ...rows].slice(0, 8));
+    Array.from(files).forEach((file) => {
+      if (attachments.length >= 8) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const content = (ev.target?.result as string | undefined) ?? "";
+        setAttachments((prev) =>
+          prev.length < 8
+            ? [...prev, { name: file.name, sizeKb: Math.ceil(file.size / 1024), content }]
+            : prev
+        );
+      };
+      // Read as data URL (base64) so binary files are safely transmitted
+      reader.readAsDataURL(file);
+    });
   };
 
   const connColor = useMemo(() => (conn === "connected" ? "#34d399" : conn === "connecting" ? "#fbbf24" : "#fb7185"), [conn]);
@@ -163,10 +194,10 @@ export function ChatWorkbench() {
         {thread.map((m, i) => {
           const fromAgent = m.kind === "agent" || m.kind === "dispatch";
           return (
-            <div key={`${i}-${m.ts || "x"}`} style={{ padding: "7px 8px", marginBottom: 8, borderRadius: 10, background: fromAgent ? "rgba(34,211,238,.08)" : "rgba(124,58,237,.09)", border: "1px solid rgba(255,255,255,.06)" }}>
+            <div key={`${i}-${m.ts ?? "x"}`} style={{ padding: "7px 8px", marginBottom: 8, borderRadius: 10, background: fromAgent ? "rgba(34,211,238,.08)" : "rgba(124,58,237,.09)", border: "1px solid rgba(255,255,255,.06)" }}>
               <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12 }}>
                 <strong style={{ color: fromAgent ? "#67e8f9" : "#c4b5fd" }}>{m.sender}</strong>
-                <span style={{ color: "#94a3b8" }}>{m.ts || ""}</span>
+                <span style={{ color: "#94a3b8" }}>{m.ts ?? ""}</span>
               </div>
               <div style={{ marginTop: 3, color: "#e2e8f0", whiteSpace: "pre-wrap" }}>{m.text}</div>
             </div>
@@ -217,7 +248,11 @@ export function ChatWorkbench() {
         </div>
         {attachments.length > 0 && (
           <div style={{ marginTop: 8, display: "flex", flexWrap: "wrap", gap: 6 }}>
-            {attachments.map((a, i) => <span key={`${a}-${i}`} className="card" style={{ fontSize: 11, padding: "3px 7px" }}>{a}</span>)}
+            {attachments.map((a, i) => (
+              <span key={`${a.name}-${i}`} className="card" style={{ fontSize: 11, padding: "3px 7px" }}>
+                {a.name} ({a.sizeKb}KB)
+              </span>
+            ))}
           </div>
         )}
       </details>

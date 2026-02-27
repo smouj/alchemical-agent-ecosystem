@@ -1,21 +1,38 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { ApiKey } from "../lib/types";
 
 export function AdminOpsPanel() {
-  const [keys, setKeys] = useState<any[]>([]);
+  const [keys, setKeys] = useState<ApiKey[]>([]);
   const [newKey, setNewKey] = useState<{ name: string; role: string }>({ name: "ops-key", role: "operator" });
   const [lastKey, setLastKey] = useState("");
-  const [send, setSend] = useState({ channel: "telegram", target: "-1003822689592", message: "Test Alchemical connector" });
+  const [send, setSend] = useState({
+    channel: "telegram",
+    target: process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID ?? "",
+    message: "Test Alchemical connector",
+  });
   const [msg, setMsg] = useState("");
+  const msgTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const showMsg = (text: string) => {
+    setMsg(text);
+    if (msgTimerRef.current) clearTimeout(msgTimerRef.current);
+    msgTimerRef.current = setTimeout(() => setMsg(""), 5000);
+  };
 
   const load = async () => {
     const r = await fetch("/api/gateway/auth-keys", { cache: "no-store" });
-    const j = await r.json();
+    const j = (await r.json()) as { items?: ApiKey[] };
     setKeys(j.items ?? []);
   };
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    load();
+    return () => {
+      if (msgTimerRef.current) clearTimeout(msgTimerRef.current);
+    };
+  }, []);
 
   const createKey = async () => {
     const r = await fetch("/api/gateway/auth-keys", {
@@ -23,9 +40,10 @@ export function AdminOpsPanel() {
       headers: { "content-type": "application/json" },
       body: JSON.stringify(newKey),
     });
-    const j = await r.json();
-    setLastKey(j.api_key || "");
-    setMsg(r.ok ? "API key creada" : "Error creando key");
+    const j = (await r.json()) as { api_key?: string };
+    const created = j.api_key ?? "";
+    setLastKey(created);
+    showMsg(r.ok ? "API key created — copy it now, it will not be shown again." : "Error creating key");
     load();
   };
 
@@ -35,7 +53,7 @@ export function AdminOpsPanel() {
       headers: { "content-type": "application/json" },
       body: JSON.stringify(send),
     });
-    setMsg(r.ok ? "Mensaje encolado para conector" : "Error en envío a conector");
+    showMsg(r.ok ? "Message queued for connector" : "Error sending to connector");
   };
 
   return (
@@ -54,9 +72,18 @@ export function AdminOpsPanel() {
               </select>
               <button className="card" style={{ padding: "8px 10px" }} onClick={createKey}>Create</button>
             </div>
-            {lastKey && <div style={{ marginTop: 6, color: "#34d399", fontSize: 12 }}>Nueva key (cópiala ahora): {lastKey}</div>}
+            {lastKey && (
+              <div style={{ marginTop: 6, color: "#34d399", fontSize: 12 }}>
+                <strong>Key (shown once — copy now):</strong> {lastKey}
+              </div>
+            )}
             <div style={{ marginTop: 8 }}>
-              {keys.map((k) => <div key={k.id} style={row}>#{k.id} {k.name} ({k.role})</div>)}
+              {keys.map((k) => (
+                <div key={k.id} style={row}>
+                  #{k.id} {k.label} ({k.role})
+                  {k.last_used && <span style={{ color: "#64748b", marginLeft: 6 }}>last used: {k.last_used}</span>}
+                </div>
+              ))}
             </div>
           </div>
         </div>

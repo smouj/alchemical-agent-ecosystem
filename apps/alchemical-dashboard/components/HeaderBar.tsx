@@ -35,7 +35,7 @@ export function HeaderBar() {
     <header className="glass-card gradient-frame" style={{ margin: "12px 12px 0", padding: "12px 14px", position: "sticky", top: 12, zIndex: 20, display: "flex", justifyContent: "space-between", gap: 12, alignItems: "center" }}>
       <div>
         <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: 24 }}>Alchemical Control Panel</div>
-        <small style={{ color: "#9ca3af" }}>Caldero local-first · Ollama + Redis + ChromaDB</small>
+        <small style={{ color: "#9ca3af" }}>Caldero local-first · KiloCode AI + Redis + ChromaDB</small>
       </div>
 
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>

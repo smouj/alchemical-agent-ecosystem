@@ -1,23 +1,38 @@
 import { NextResponse } from "next/server";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
+import path from "node:path";
 
 const execFileAsync = promisify(execFile);
 const CACHE_TTL_MS = 3000;
-let cache: { ts: number; payload: any } | null = null;
 
-const gatewayHeaders = () => {
-  const token = process.env.ALCHEMICAL_GATEWAY_TOKEN || "";
+/**
+ * Fallback gateway URL. Override via GATEWAY_URL env var.
+ * The gateway sits behind Caddy at /gateway, so localhost resolves inside Docker.
+ */
+const GATEWAY_URL = process.env.GATEWAY_URL ?? "http://localhost/gateway";
+
+let cache: { ts: number; payload: unknown } | null = null;
+
+const gatewayHeaders = (): Record<string, string> => {
+  const token = process.env.ALCHEMICAL_GATEWAY_TOKEN ?? "";
   const h: Record<string, string> = {};
   if (token) h["x-alchemy-token"] = token;
   return h;
 };
 
-async function composePs() {
+/**
+ * Runs `docker compose ps` to get container state for each service.
+ * NOTE: Requires Docker socket access (`/var/run/docker.sock` mounted or host Docker).
+ * Falls back to an empty array if Docker is unavailable — health checks via HTTP are
+ * still performed and used as the primary status signal.
+ */
+async function composePs(): Promise<Array<{ Service: string; State: string; Status: string }>> {
   try {
-    const { stdout } = await execFileAsync("docker", ["compose", "ps", "--format", "json"], { cwd: process.cwd() + "/../.." });
+    const cwd = path.resolve(process.cwd(), "..", "..");
+    const { stdout } = await execFileAsync("docker", ["compose", "ps", "--format", "json"], { cwd });
     const lines = stdout.trim().split("\n").filter(Boolean);
-    return lines.map((l) => JSON.parse(l)) as Array<{ Service: string; State: string; Status: string }>;
+    return lines.map((l) => JSON.parse(l) as { Service: string; State: string; Status: string });
   } catch {
     return [];
   }
@@ -37,31 +52,33 @@ async function checkHealth(url: string, timeoutMs = 1500): Promise<{ ok: boolean
   }
 }
 
-export async function GET() {
+export async function GET(): Promise<NextResponse> {
   if (cache && Date.now() - cache.ts < CACHE_TTL_MS) {
     return NextResponse.json(cache.payload);
   }
 
   try {
     const [agentsRes, ps] = await Promise.all([
-      fetch("http://localhost/gateway/agents", { cache: "no-store", headers: gatewayHeaders() }),
+      fetch(`${GATEWAY_URL}/agents`, { cache: "no-store", headers: gatewayHeaders() }),
       composePs(),
     ]);
 
-    const agentsJson = await agentsRes.json();
-    const list = (agentsJson?.items ?? []) as Array<{
-      name: string;
-      role?: string;
-      model?: string;
-      tools?: string[];
-      skills?: string[];
-      enabled?: boolean;
-      target_service?: string;
-    }>;
+    const agentsJson = (await agentsRes.json()) as {
+      items?: Array<{
+        name: string;
+        role?: string;
+        model?: string;
+        tools?: string[];
+        skills?: string[];
+        enabled?: boolean;
+        target_service?: string;
+      }>;
+    };
+    const list = agentsJson?.items ?? [];
 
     const byService = new Map(ps.map((s) => [s.Service, s]));
 
-    const uniqueServices = Array.from(new Set(list.map((a) => a.target_service || a.name)));
+    const uniqueServices = Array.from(new Set(list.map((a) => a.target_service ?? a.name)));
     const healthByService = new Map<string, { ok: boolean; latencyMs: number | null }>();
     await Promise.all(
       uniqueServices.map(async (service) => {
@@ -71,18 +88,18 @@ export async function GET() {
     );
 
     const items = list.map((a) => {
-      const service = a.target_service || a.name;
+      const service = a.target_service ?? a.name;
       const svc = byService.get(service);
-      const healthCheck = healthByService.get(service) || { ok: false, latencyMs: null };
+      const healthCheck = healthByService.get(service) ?? { ok: false, latencyMs: null };
       let health: "Running" | "Error" | "Paused" = "Paused";
       if (healthCheck.ok) health = "Running";
       else health = svc?.State?.toLowerCase().includes("running") ? "Error" : "Paused";
 
       return {
         name: a.name,
-        role: a.role || "logical-agent",
-        model: a.model || "local-default",
-        description: `skills:${(a.skills || []).length} · tools:${(a.tools || []).length}`,
+        role: a.role ?? "logical-agent",
+        model: a.model ?? "local-default",
+        description: `skills:${(a.skills ?? []).length} · tools:${(a.tools ?? []).length}`,
         service,
         enabled: Boolean(a.enabled),
         status: health,
@@ -104,7 +121,15 @@ export async function GET() {
     const payload = { items, stats };
     cache = { ts: Date.now(), payload };
     return NextResponse.json(payload);
-  } catch (e: any) {
-    return NextResponse.json({ items: [], stats: { active: 0, total: 0, tasksToday: null, tokensProcessed: null, uptimeAvg: 0 }, error: e?.message || "agents unavailable" }, { status: 502 });
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : String(e);
+    return NextResponse.json(
+      {
+        items: [],
+        stats: { active: 0, total: 0, tasksToday: null, tokensProcessed: null, uptimeAvg: 0 },
+        error: message,
+      },
+      { status: 502 }
+    );
   }
 }
