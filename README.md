@@ -45,6 +45,35 @@
 
 ---
 
+## 🖼️ Dashboard Screenshots
+
+<p align="center">
+  <strong>💬 Chat del Caldero — Multi-Agent Interaction</strong><br/>
+  <img src="./assets/screenshots/dashboard-chat.png" width="100%" alt="Alchemical Dashboard - Chat View" />
+</p>
+
+<p align="center">
+  <strong>🤖 Runtime de Agentes — Live Agent Status</strong><br/>
+  <img src="./assets/screenshots/dashboard-agents.png" width="100%" alt="Alchemical Dashboard - Agents View" />
+</p>
+
+<p align="center">
+  <strong>🧩 Agent Node Studio — Visual Workflow Builder</strong><br/>
+  <img src="./assets/screenshots/dashboard-nodes.png" width="100%" alt="Alchemical Dashboard - Node Studio" />
+</p>
+
+<p align="center">
+  <strong>📜 Monitor de Logs — Real-time Log Streaming</strong><br/>
+  <img src="./assets/screenshots/dashboard-logs.png" width="100%" alt="Alchemical Dashboard - Logs Monitor" />
+</p>
+
+<p align="center">
+  <strong>🛠️ Administración — Agent Creation & Settings</strong><br/>
+  <img src="./assets/screenshots/dashboard-admin.png" width="100%" alt="Alchemical Dashboard - Admin Panel" />
+</p>
+
+---
+
 ## ✦ The Grand Transmutation
 
 In the ancient art of alchemy, the *Magnum Opus* — the Great Work — was not merely the pursuit of gold, but the systematic transformation of base matter into something of profound and enduring value through the application of knowledge, discipline, and will. The **Alchemical Agent Ecosystem** applies this same principle to intelligence itself: raw data enters as *prima materia*, passes through a sovereign network of specialized AI agents bound together in dynamically self-forming **Alchemical Circles**, and emerges as coherent action, durable memory, and traceable decision — all orchestrated entirely on your own hardware, across ten named execution services, with zero dependency on costly APIs or external clouds. At the center stands the **Alchemical Gateway**, a FastAPI-powered philosopher's stone that mediates between intent and execution through a LangGraph-style stateful orchestration engine, backed by a three-tier hierarchical memory system spanning Redis, ChromaDB, and LLM-generated summaries. The **Agent Node Studio** makes the Great Work visible in real time — a Next.js 15 visual workflow builder where you watch intelligence transmute, step by step, token by token, streamed over SSE to a dashboard that feels less like a dev tool and more like a command room for a new kind of operation. This is local sovereignty in the age of dependent intelligence: a production-grade operating system for autonomous thought, version 2.0, **Magnum Opus**. AI inference is powered by [KiloCode AI Gateway](https://kilo.ai) — an OpenAI-compatible LLM aggregator with a free tier — while all data (PostgreSQL, Redis, ChromaDB) remains fully local.
