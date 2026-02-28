@@ -97,7 +97,6 @@ export function ChatWorkbench() {
   useEffect(() => {
     connectStream();
     return () => disconnectStream();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const postChat = async () => {

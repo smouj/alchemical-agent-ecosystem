@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { FlaskConical, LayoutDashboard, Bot, WandSparkles, Settings2, Logs, CircleHelp, type LucideIcon } from "lucide-react";
 
 type View = "chat" | "nodes" | "agents" | "ops" | "admin" | "logs";
@@ -62,9 +63,11 @@ export function Sidebar() {
           <strong style={{ fontFamily: "ui-sans-serif, system-ui", fontSize: 18 }}>Alchemical Gateway</strong>
         </div>
         {/* Logo with graceful fallback — onerror hides the image if SVG is missing */}
-        <img
+        <Image
           src="/alchemical-logo.svg"
           alt="Alchemical logo"
+          width={120}
+          height={30}
           style={{ width: "100%", height: 30, objectFit: "contain", filter: "drop-shadow(0 2px 14px rgba(34,211,238,.25))" }}
           onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
         />

@@ -28,7 +28,7 @@ export function AdminOpsPanel() {
   };
 
   useEffect(() => {
-    load();
+    void load();
     return () => {
       if (msgTimerRef.current) clearTimeout(msgTimerRef.current);
     };

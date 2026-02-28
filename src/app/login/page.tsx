@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Shield, FlaskConical, Lock } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { cookies } from 'next/headers';
 
 const VALID_USERS = [
   { email: 'hecpoley11@gmail.com', code: '0202', name: 'Alchemist' }

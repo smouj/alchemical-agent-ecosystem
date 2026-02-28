@@ -1,12 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 export function LogsMonitor({ defaultService = "velktharion", linesCount = 50 }: { defaultService?: string; linesCount?: number }) {
   const [service, setService] = useState(defaultService);
   const [lines, setLines] = useState<string[]>([]);
 
-  useEffect(() => setService(defaultService), [defaultService]);
+  // Sync service when defaultService prop changes
+  useMemo(() => {
+    if (service !== defaultService) {
+      setService(defaultService);
+    }
+  }, [defaultService, service]);
 
   useEffect(() => {
     const es = new EventSource(`/api/logs/stream?service=${encodeURIComponent(service)}&lines=${linesCount}`);
