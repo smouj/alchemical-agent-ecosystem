@@ -98,6 +98,7 @@ src/
 
 | Date | Changes |
 |------|---------|
+| 2026-02-28 | **BUILD FIX**: Corrección completa de errores TypeScript y build del Dashboard - Tipos React Flow v12, Tailwind v4 CSS, dependencia minimatch, ESLint warnings |
 | 2026-02-28 | **BUGFIX**: Corregido error de compilación en `src/app/login/page.tsx` - eliminada importación no utilizada `cookies` de `next/headers` en Client Component |
 | 2026-02-27 | Alchemical Dashboard COMPLETED - All components, animations, theming |
 | Initial | Template created with base setup |
