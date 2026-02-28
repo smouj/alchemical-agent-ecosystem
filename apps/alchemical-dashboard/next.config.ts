@@ -1,21 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  typedRoutes: true,
   images: {
     remotePatterns: [
       {
         protocol: "https",
         hostname: "**",
       },
-    ],
-  },
-  experimental: {
-    optimizePackageImports: [
-      "lucide-react",
-      "@xyflow/react",
-      "framer-motion",
-      "recharts",
     ],
   },
   webpack: (config) => {
