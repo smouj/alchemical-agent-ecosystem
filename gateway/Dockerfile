@@ -10,6 +10,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy gateway source
 COPY gateway/app.py .
+COPY gateway/agents_router.py .
 
 # NOTE: The docker-compose build context for this service must be set to the
 # repository root (context: .) so that shared/python is accessible.
