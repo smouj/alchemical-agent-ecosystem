@@ -585,6 +585,51 @@
   }
 }
 
+/* ─── Form Elements - Contrast Fixes ────────────────────────────────────── */
+@layer base {
+  /* Select dropdown styling for dark theme */
+  select {
+    background-color: rgba(10, 14, 26, 0.95) !important;
+    color: #e8eefb !important;
+  }
+  
+  select option {
+    background-color: #0a0e1a !important;
+    color: #e8eefb !important;
+    padding: 8px 12px !important;
+  }
+  
+  select option:hover,
+  select option:focus,
+  select option:checked {
+    background-color: rgba(212, 175, 55, 0.3) !important;
+    color: #f0d070 !important;
+  }
+  
+  /* Ensure inputs have proper contrast */
+  input[type="text"],
+  input[type="search"],
+  input[type="number"],
+  textarea {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    color: #e8eefb !important;
+  }
+  
+  input::placeholder,
+  textarea::placeholder {
+    color: #64748b !important;
+  }
+  
+  /* Focus states for better visibility */
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: rgba(212, 175, 55, 0.5) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2) !important;
+  }
+}
+
 /* ─── Utility Classes ───────────────────────────────────────────────────── */
 @layer utilities {
   .animate-in {

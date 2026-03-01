@@ -134,12 +134,13 @@ export function LogsMonitor() {
             <select
               value={service}
               onChange={(e) => setService(e.target.value)}
-              className="px-3 py-2 rounded-lg bg-white/5 border border-gold/10 text-sm text-foreground focus:outline-none focus:border-gold/30"
+              className="px-3 py-2 rounded-lg bg-void-light border border-gold/20 text-sm text-foreground focus:outline-none focus:border-gold/40 hover:border-gold/30 transition-colors"
+              style={{ backgroundColor: '#0a0e1a' }}
             >
-              <option value="velktharion">velktharion</option>
-              <option value="gateway">gateway</option>
-              <option value="redis">redis</option>
-              <option value="chromadb">chromadb</option>
+              <option value="velktharion" style={{ backgroundColor: '#0a0e1a', color: '#e8eefb' }}>velktharion</option>
+              <option value="gateway" style={{ backgroundColor: '#0a0e1a', color: '#e8eefb' }}>gateway</option>
+              <option value="redis" style={{ backgroundColor: '#0a0e1a', color: '#e8eefb' }}>redis</option>
+              <option value="chromadb" style={{ backgroundColor: '#0a0e1a', color: '#e8eefb' }}>chromadb</option>
             </select>
 
             {/* Search */}

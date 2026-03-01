@@ -94,12 +94,13 @@ export function AgentsTable({ agents }: AgentsTableProps) {
             <select
               value={statusFilter || ""}
               onChange={(e) => setStatusFilter(e.target.value || null)}
-              className="pl-9 pr-8 py-2 rounded-lg bg-white/5 border border-gold/10 text-sm text-foreground focus:outline-none focus:border-gold/30 appearance-none cursor-pointer"
+              className="pl-9 pr-8 py-2 rounded-lg bg-void-light border border-gold/20 text-sm text-foreground focus:outline-none focus:border-gold/40 appearance-none cursor-pointer hover:border-gold/30 transition-colors"
+              style={{ backgroundColor: '#0a0e1a' }}
             >
-              <option value="">Todos</option>
-              <option value="Running">Activos</option>
-              <option value="Paused">Pausados</option>
-              <option value="Error">Con Error</option>
+              <option value="" style={{ backgroundColor: '#0a0e1a', color: '#e8eefb' }}>Todos</option>
+              <option value="Running" style={{ backgroundColor: '#0a0e1a', color: '#e8eefb' }}>Activos</option>
+              <option value="Paused" style={{ backgroundColor: '#0a0e1a', color: '#e8eefb' }}>Pausados</option>
+              <option value="Error" style={{ backgroundColor: '#0a0e1a', color: '#e8eefb' }}>Con Error</option>
             </select>
           </div>
         </div>

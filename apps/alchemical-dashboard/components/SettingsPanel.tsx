@@ -170,10 +170,11 @@ export function SettingsPanel() {
                         onChange={(e) =>
                           updateSetting(currentSection.id, setting.id, e.target.value)
                         }
-                        className="px-3 py-1.5 rounded-lg bg-white/5 border border-gold/10 text-sm text-foreground focus:outline-none focus:border-gold/30"
+                        className="px-3 py-1.5 rounded-lg bg-void-light border border-gold/20 text-sm text-foreground focus:outline-none focus:border-gold/40 hover:border-gold/30 transition-colors"
+                        style={{ backgroundColor: '#0a0e1a' }}
                       >
                         {setting.options?.map((opt) => (
-                          <option key={opt} value={opt}>
+                          <option key={opt} value={opt} style={{ backgroundColor: '#0a0e1a', color: '#e8eefb' }}>
                             {opt === "es" ? "Español" : "English"}
                           </option>
                         ))}
@@ -187,7 +188,8 @@ export function SettingsPanel() {
                         onChange={(e) =>
                           updateSetting(currentSection.id, setting.id, e.target.value)
                         }
-                        className="px-3 py-1.5 rounded-lg bg-white/5 border border-gold/10 text-sm text-foreground focus:outline-none focus:border-gold/30 w-48"
+                        className="px-3 py-1.5 rounded-lg bg-void-light border border-gold/20 text-sm text-foreground focus:outline-none focus:border-gold/40 w-48 hover:border-gold/30 transition-colors"
+                        style={{ backgroundColor: '#0a0e1a' }}
                       />
                     )}
                   </div>

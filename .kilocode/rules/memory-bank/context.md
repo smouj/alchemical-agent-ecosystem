@@ -26,6 +26,10 @@ El proyecto ha sido transformado de un template básico de Next.js a un **Dashbo
 ### Maintenance & Fixes
 - [x] Sincronización de dependencias: Next.js ^16.1.3, React ^19.2.3, Tailwind ^4.1.17
 - [x] Corrección warning ESLint en ChatWorkbench.tsx (línea 88)
+- [x] **Mejora de contraste (WCAG AA)**: Corrección de colores en selects, inputs y form elements para legibilidad
+  - Fondos oscuros (`#0a0e1a`) con texto claro (`#e8eefb`) en selects/options
+  - Estilos globales para form elements en `globals.css`
+  - Correcciones en: AgentsTable, ChatWorkbench, LogsMonitor, SettingsPanel
 
 ## Current Structure
 
@@ -102,6 +106,7 @@ src/
 
 | Date | Changes |
 |------|---------|
+| 2026-03-01 | **fix(ui)**: Mejora de contraste WCAG AA en form elements - selects, inputs, options con fondos oscuros y texto legible |
 | 2026-03-01 | **chore(deps)**: sincronizar versiones entre raíz y dashboard + fix eslint |
 | 2026-02-28 | **BUILD FIX**: Corrección completa de errores TypeScript y build del Dashboard - Tipos React Flow v12, Tailwind v4 CSS, dependencia minimatch, ESLint warnings |
 | 2026-02-28 | **BUGFIX**: Corregido error de compilación en `src/app/login/page.tsx` - eliminada importación no utilizada `cookies` de `next/headers` en Client Component |

@@ -341,10 +341,11 @@ export function ChatWorkbench() {
             <select
               value={selectedAgent}
               onChange={(e) => setSelectedAgent(e.target.value)}
-              className="px-3 py-2.5 rounded-xl bg-white/5 border border-gold/10 text-sm text-foreground focus:outline-none focus:border-gold/30"
+              className="px-3 py-2.5 rounded-xl bg-void-light border border-gold/20 text-sm text-foreground focus:outline-none focus:border-gold/40 hover:border-gold/30 transition-colors"
+              style={{ backgroundColor: '#0a0e1a' }}
             >
               {availableAgents.map((agent) => (
-                <option key={agent} value={agent}>
+                <option key={agent} value={agent} style={{ backgroundColor: '#0a0e1a', color: '#e8eefb' }}>
                   {agent}
                 </option>
               ))}
@@ -435,7 +436,8 @@ export function ChatWorkbench() {
                         value={repo}
                         onChange={(e) => setRepo(e.target.value)}
                         placeholder="owner/repo"
-                        className="w-full mt-1 px-3 py-1.5 rounded-lg bg-white/5 border border-gold/10 text-xs text-foreground focus:outline-none focus:border-gold/30"
+                        className="w-full mt-1 px-3 py-1.5 rounded-lg bg-void-light border border-gold/20 text-xs text-foreground focus:outline-none focus:border-gold/40 hover:border-gold/30 transition-colors placeholder:text-muted-foreground"
+                        style={{ backgroundColor: '#0a0e1a' }}
                       />
                     </div>
 
@@ -449,11 +451,12 @@ export function ChatWorkbench() {
                         onChange={(e) =>
                           setThinkingMode(e.target.value as "low" | "balanced" | "deep")
                         }
-                        className="w-full mt-1 px-3 py-1.5 rounded-lg bg-white/5 border border-gold/10 text-xs text-foreground focus:outline-none focus:border-gold/30"
+                        className="w-full mt-1 px-3 py-1.5 rounded-lg bg-void-light border border-gold/20 text-xs text-foreground focus:outline-none focus:border-gold/40 hover:border-gold/30 transition-colors"
+                        style={{ backgroundColor: '#0a0e1a' }}
                       >
-                        <option value="low">Low</option>
-                        <option value="balanced">Balanced</option>
-                        <option value="deep">Deep</option>
+                        <option value="low" style={{ backgroundColor: '#0a0e1a', color: '#e8eefb' }}>Low</option>
+                        <option value="balanced" style={{ backgroundColor: '#0a0e1a', color: '#e8eefb' }}>Balanced</option>
+                        <option value="deep" style={{ backgroundColor: '#0a0e1a', color: '#e8eefb' }}>Deep</option>
                       </select>
                     </div>
 
@@ -488,7 +491,8 @@ export function ChatWorkbench() {
                         max={5}
                         value={roundtableRounds}
                         onChange={(e) => setRoundtableRounds(parseInt(e.target.value) || 1)}
-                        className="w-full mt-1 px-3 py-1.5 rounded-lg bg-white/5 border border-gold/10 text-xs text-foreground focus:outline-none focus:border-gold/30"
+                        className="w-full mt-1 px-3 py-1.5 rounded-lg bg-void-light border border-gold/20 text-xs text-foreground focus:outline-none focus:border-gold/40 hover:border-gold/30 transition-colors"
+                        style={{ backgroundColor: '#0a0e1a' }}
                       />
                     </div>
                   </div>
@@ -503,7 +507,8 @@ export function ChatWorkbench() {
                       value={roundtableAgents.join(", ")}
                       onChange={(e) => setRoundtableAgents(e.target.value.split(",").map((s) => s.trim()))}
                       placeholder="agent1, agent2, agent3"
-                      className="w-full mt-1 px-3 py-1.5 rounded-lg bg-white/5 border border-gold/10 text-xs text-foreground focus:outline-none focus:border-gold/30"
+                      className="w-full mt-1 px-3 py-1.5 rounded-lg bg-void-light border border-gold/20 text-xs text-foreground focus:outline-none focus:border-gold/40 hover:border-gold/30 transition-colors placeholder:text-muted-foreground"
+                      style={{ backgroundColor: '#0a0e1a' }}
                     />
                   </div>
                 </div>
