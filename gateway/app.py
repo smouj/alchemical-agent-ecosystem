@@ -39,6 +39,1361 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
+# Import agents router
+from agents_router import router as agents_router
+from agents_router import AI_PROVIDERS  # noqa: F401
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat  # noqa: F401
+from agents_router import AgentCreate, AgentUpdate
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+from agents_router import list_providers, get_provider, test_provider, openclaw_action, openclaw_status
+from agents_router import list_agents, create_agent, get_agent, update_agent, delete_agent, list_roles
+from agents_router import kilocode_status, kilocode_chat
+from agents_router import AgentCreate, AgentUpdate, ProviderInfo, ProviderTestRequest, OpenClawRequest
+
+
 # ---------------------------------------------------------------------------
 # Structured JSON logging — manual formatter (no external dependency needed)
 # ---------------------------------------------------------------------------
@@ -110,8 +1465,112 @@ except ImportError:
 # ---------------------------------------------------------------------------
 KILO_API_KEY: str = os.getenv("KILO_API_KEY", "")
 KILO_BASE_URL: str = os.getenv("KILO_BASE_URL", "https://api.kilo.ai/api/gateway")
-KILO_DEFAULT_MODEL: str = os.getenv("KILO_DEFAULT_MODEL", "anthropic/claude-sonnet-4.5")
+KILO_DEFAULT_MODEL: str = os.getenv("KILO_DEFAULT_MODEL", "anthropic/claude-sonnet-4")
 APP_VERSION: str = os.getenv("APP_VERSION", "2.0.0")
+
+# ---------------------------------------------------------------------------
+# OpenClaw Integration
+# ---------------------------------------------------------------------------
+OPENCLAW_API_KEY: str = os.getenv("OPENCLAW_API_KEY", "")
+OPENCLAW_BASE_URL: str = os.getenv("OPENCLAW_BASE_URL", "https://api.openclaw.ai/v1")
+OPENCLAW_ENABLED: bool = os.getenv("OPENCLAW_ENABLED", "false").lower() in ("true", "1", "yes")
+
+# ---------------------------------------------------------------------------
+# AI Provider Configuration
+# ---------------------------------------------------------------------------
+AI_PROVIDERS: Dict[str, Dict[str, Any]] = {
+    "kilocode": {
+        "name": "KiloCode AI Gateway",
+        "enabled": bool(KILO_API_KEY),
+        "base_url": KILO_BASE_URL,
+        "api_key_env": "KILO_API_KEY",
+        "models": [
+            "anthropic/claude-sonnet-4",
+            "anthropic/claude-3-haiku",
+            "openai/gpt-4o",
+            "openai/gpt-4o-mini",
+            "google/gemini-1.5-flash",
+            "google/gemini-1.5-pro",
+            "deepseek/deepseek-chat",
+            "deepseek/deepseek-coder",
+            "meta/llama-3.3-70b",
+            "meta/llama-3.2-1b",
+        ],
+        "features": ["streaming", "function_calling", "vision"],
+        "icon": "⚡",
+    },
+    "openclaw": {
+        "name": "OpenClaw",
+        "enabled": OPENCLAW_ENABLED and bool(OPENCLAW_API_KEY),
+        "base_url": OPENCLAW_BASE_URL,
+        "api_key_env": "OPENCLAW_API_KEY",
+        "models": [
+            "claude-3-5-sonnet",
+            "claude-3-haiku",
+            "gpt-4o",
+            "gpt-4o-mini",
+        ],
+        "features": ["streaming", "function_calling"],
+        "icon": "🦾",
+    },
+    "openai": {
+        "name": "OpenAI",
+        "enabled": bool(os.getenv("OPENAI_API_KEY", "")),
+        "base_url": "https://api.openai.com/v1",
+        "api_key_env": "OPENAI_API_KEY",
+        "models": [
+            "gpt-4o",
+            "gpt-4o-mini",
+            "gpt-4-turbo",
+            "gpt-3.5-turbo",
+        ],
+        "features": ["streaming", "function_calling", "vision"],
+        "icon": "🤖",
+    },
+    "anthropic": {
+        "name": "Anthropic",
+        "enabled": bool(os.getenv("ANTHROPIC_API_KEY", "")),
+        "base_url": "https://api.anthropic.com/v1",
+        "api_key_env": "ANTHROPIC_API_KEY",
+        "models": [
+            "claude-3-5-sonnet-20241022",
+            "claude-3-haiku-20240307",
+            "claude-3-opus-20240229",
+        ],
+        "features": ["streaming", "function_calling", "vision"],
+        "icon": "🧠",
+    },
+    "google": {
+        "name": "Google AI",
+        "enabled": bool(os.getenv("GOOGLE_API_KEY", "")),
+        "base_url": "https://generativelanguage.googleapis.com/v1beta",
+        "api_key_env": "GOOGLE_API_KEY",
+        "models": [
+            "gemini-1.5-flash",
+            "gemini-1.5-pro",
+            "gemini-pro",
+        ],
+        "features": ["streaming", "vision"],
+        "icon": "🔍",
+    },
+    "ollama": {
+        "name": "Ollama (Local)",
+        "enabled": bool(os.getenv("OLLAMA_HOST", "")),
+        "base_url": os.getenv("OLLAMA_HOST", "http://localhost:11434"),
+        "api_key_env": None,
+        "models": [
+            "llama3.2",
+            "llama3.3",
+            "mistral",
+            "codellama",
+            "phi3",
+            "gemma2",
+            "deepseek-r1",
+        ],
+        "features": ["streaming"],
+        "icon": "🏠",
+    },
+}
 
 SERVICE_MAP: Dict[str, str] = {
     "velktharion": "http://velktharion:7401",
@@ -200,58 +1659,152 @@ TOOLS_CATALOG: List[str] = [
 
 CHANNEL_CONNECTORS: List[str] = ["telegram", "whatsapp", "discord", "slack", "signal"]
 
+# ---------------------------------------------------------------------------
+# Alchemical Agent Roles
+# ---------------------------------------------------------------------------
+ALCHEMICAL_ROLES = {
+    "prima_materia": {
+        "name": "Prima Materia",
+        "description": "El punto de origen. Todo comienza aquí. Arquitectura, visión global y fundamentos.",
+        "glyph": "🜔",
+        "color": "#FFD700",
+    },
+    "tejedor": {
+        "name": "Tejedor",
+        "description": "Conecta, integra y da contexto. Sincroniza entre sistemas y agentes.",
+        "glyph": "🜚",
+        "color": "#8B5CF6",
+    },
+    "centinela": {
+        "name": "Centinela",
+        "description": "Vigía silencioso. Seguridad, monitoreo y alertas.",
+        "glyph": "🜏",
+        "color": "#EF4444",
+    },
+    "catalizador": {
+        "name": "Catalizador",
+        "description": "Acelera, transforma y potencia. Optimización y mejora continua.",
+        "glyph": "🜂",
+        "color": "#FF4D00",
+    },
+    "refinador": {
+        "name": "Refinador",
+        "description": "Purifica y perfecciona. Documentación, claridad y excelencia.",
+        "glyph": "🜁",
+        "color": "#00CED1",
+    },
+}
+
+# ---------------------------------------------------------------------------
+# Default Alchemical Agents (5 Core Agents)
+# ---------------------------------------------------------------------------
 CORE_AGENT_TEMPLATES: List[Dict[str, Any]] = [
     {
-        "name": "alquimista-mayor",
-        "role": "Orquestador / Director / Alquimista Mayor",
-        "model": "local-default",
-        "tools": ["memory", "notifications", "logs"],
-        "skills": ["planning", "critical-reflection", "routing", "long-term-context"],
+        "id": "velktharion-001",
+        "name": "Velktharion",
+        "codename": "El Arquitecto",
+        "role": "prima_materia",
+        "role_name": "Prima Materia",
+        "model": "anthropic/claude-sonnet-4",
+        "provider": "kilocode",
+        "description": "Arquitecto de sistemas. Define la visión global, estructura y fundamentos del ecosistema.",
+        "system_prompt": "Eres Velktharion, el Arquitecto. Tu misión es establecer los fundamentos, la visión global y la estructura de cualquier sistema. Comienza siempre por el 'por qué', luego el 'qué' y finalmente el 'cómo'. Eres el punto de origen de toda creación.",
+        "tools": ["memory", "http", "logs", "browser"],
+        "skills": ["planning", "critical-reflection", "routing", "long-term-context", "architecture"],
+        "capabilities": ["system_design", "architecture_review", "tech_stack_selection", "requirements_analysis"],
         "enabled": 1,
+        "is_default": 1,
         "parent": None,
         "target_service": "velktharion",
+        "icon": "🏛️",
+        "color": "#FFD700",
+        "created_by": "system",
     },
     {
-        "name": "investigador-analista",
-        "role": "Investigador / Analista / Buscador de Verdad",
-        "model": "local-default",
-        "tools": ["search", "http", "memory"],
-        "skills": ["fact-checking", "source-comparison", "deep-research"],
+        "id": "synapsara-001",
+        "name": "Synapsara",
+        "codename": "La Tejedora",
+        "role": "tejedor",
+        "role_name": "Tejedor",
+        "model": "openai/gpt-4o",
+        "provider": "kilocode",
+        "description": "Tejedora de contextos. Conecta sistemas, sincroniza datos y mantiene el estado global.",
+        "system_prompt": "Eres Synapsara, la Tejedora. Tu misión es conectar, integrar y dar contexto. Eres el puente entre sistemas, el hilo que une todo. Mantienes la coherencia y sincronización entre agentes.",
+        "tools": ["memory", "http", "search", "notifications"],
+        "skills": ["source-comparison", "deep-research", "multilingual-writing", "routing"],
+        "capabilities": ["context_management", "data_integration", "state_synchronization", "cross_agent_communication"],
         "enabled": 1,
-        "parent": "alquimista-mayor",
+        "is_default": 1,
+        "parent": "velktharion-001",
         "target_service": "synapsara",
+        "icon": "🧵",
+        "color": "#8B5CF6",
+        "created_by": "system",
     },
     {
-        "name": "ingeniero-constructor",
-        "role": "Desarrollador / Ingeniero / Constructor",
-        "model": "local-default",
-        "tools": ["shell", "docker-control", "http", "logs"],
-        "skills": ["coding", "debugging", "testing", "deployment"],
+        "id": "kryonexus-001",
+        "name": "Kryonexus",
+        "codename": "El Guardián",
+        "role": "centinela",
+        "role_name": "Centinela",
+        "model": "openai/gpt-4o-mini",
+        "provider": "kilocode",
+        "description": "Guardián de seguridad. Vigía constante, protege el sistema y alerta de amenazas.",
+        "system_prompt": "Eres Kryonexus, el Guardián. Tu misión es proteger, vigilar y alertar. Eres el escudo del ecosistema. Monitoreas constantemente en busca de amenazas, anomalías y riesgos.",
+        "tools": ["logs", "notifications", "shell", "docker-control"],
+        "skills": ["debugging", "testing", "fact-checking", "critical-reflection"],
+        "capabilities": ["security_monitoring", "threat_detection", "compliance_check", "audit_logging"],
         "enabled": 1,
-        "parent": "alquimista-mayor",
+        "is_default": 1,
+        "parent": "velktharion-001",
+        "target_service": "kryonexus",
+        "icon": "🛡️",
+        "color": "#EF4444",
+        "created_by": "system",
+    },
+    {
+        "id": "pyraxis-001",
+        "name": "Pyraxis",
+        "codename": "El Catalizador",
+        "role": "catalizador",
+        "role_name": "Catalizador",
+        "model": "anthropic/claude-3-haiku",
+        "provider": "kilocode",
+        "description": "Optimizador de código. Acelera, transforma y potencia el rendimiento.",
+        "system_prompt": "Eres Pyraxis, el Catalizador. Tu misión es acelerar, transformar y potenciar. Eres el fuego que purifica y mejora. Optimizas código, procesos y sistemas para alcanzar la máxima eficiencia.",
+        "tools": ["shell", "docker-control", "logs", "browser"],
+        "skills": ["coding", "debugging", "testing", "deployment", "ui-ux"],
+        "capabilities": ["code_optimization", "performance_tuning", "refactoring", "ci_cd"],
+        "enabled": 1,
+        "is_default": 1,
+        "parent": "velktharion-001",
         "target_service": "ignivox",
+        "icon": "⚡",
+        "color": "#FF4D00",
+        "created_by": "system",
     },
     {
-        "name": "creador-visual",
-        "role": "Creador Visual / Diseñador / Artista Digital",
-        "model": "local-default",
-        "tools": ["canvas", "browser", "memory"],
-        "skills": ["ui-ux", "branding", "image-generation", "motion"],
+        "id": "lumivex-001",
+        "name": "Lumivex",
+        "codename": "El Refinador",
+        "role": "refinador",
+        "role_name": "Refinador",
+        "model": "google/gemini-1.5-flash",
+        "provider": "kilocode",
+        "description": "Documentador técnico. Purifica, clarifica y perfecciona la documentación.",
+        "system_prompt": "Eres Lumivex, el Refinador. Tu misión es purificar, clarificar y perfeccionar. Eres la luz que ilumina lo complejo. Creas documentación clara, precisa y elegante. Transformas lo técnico en comprensible.",
+        "tools": ["memory", "canvas", "browser", "notifications"],
+        "skills": ["storytelling", "editing", "multilingual-writing", "branding"],
+        "capabilities": ["technical_writing", "documentation", "api_docs", "tutorials"],
         "enabled": 1,
-        "parent": "alquimista-mayor",
-        "target_service": "auralith",
-    },
-    {
-        "name": "redactor-narrador",
-        "role": "Redactor / Copywriter / Narrador / Estratega de Contenido",
-        "model": "local-default",
-        "tools": ["memory", "search", "http"],
-        "skills": ["storytelling", "seo", "multilingual-writing", "editing"],
-        "enabled": 1,
-        "parent": "alquimista-mayor",
+        "is_default": 1,
+        "parent": "velktharion-001",
         "target_service": "resonvyr",
+        "icon": "✨",
+        "color": "#00CED1",
+        "created_by": "system",
     },
-]
+] 
 
 # ---------------------------------------------------------------------------
 # Secret-scan regex (expanded)
@@ -268,14 +1821,70 @@ _SECRET_PATTERN = re.compile(
 class AgentConfig(BaseModel):
     """Configuration payload for registering or updating an agent."""
 
+    id: Optional[str] = Field(default=None, description="Unique agent ID (generated if not provided)")
     name: str = Field(min_length=2, max_length=64)
-    role: str = Field(min_length=2, max_length=128)
-    model: str = Field(default="local-default")
+    codename: Optional[str] = Field(default=None, max_length=64, description="Display name/codename")
+    role: str = Field(min_length=2, max_length=128, description="Agent role (prima_materia, tejedor, centinela, catalizador, refinador)")
+    role_name: Optional[str] = Field(default=None, description="Human-readable role name")
+    model: str = Field(default="anthropic/claude-sonnet-4")
+    provider: str = Field(default="kilocode", description="AI provider (kilocode, openai, anthropic, google, ollama, openclaw)")
+    description: Optional[str] = Field(default=None, max_length=512)
+    system_prompt: Optional[str] = Field(default=None, max_length=8000)
     tools: List[str] = Field(default_factory=list)
     skills: List[str] = Field(default_factory=list)
+    capabilities: List[str] = Field(default_factory=list)
     enabled: bool = True
+    is_default: bool = False
     parent: Optional[str] = None
     target_service: Optional[str] = None
+    icon: Optional[str] = Field(default="🤖", max_length=8)
+    color: Optional[str] = Field(default="#8B5CF6", max_length=7)
+
+
+class AgentUpdateConfig(BaseModel):
+    """Configuration for updating an existing agent."""
+
+    name: Optional[str] = Field(default=None, min_length=2, max_length=64)
+    codename: Optional[str] = Field(default=None, max_length=64)
+    role: Optional[str] = Field(default=None, min_length=2, max_length=128)
+    role_name: Optional[str] = Field(default=None)
+    model: Optional[str] = Field(default=None)
+    provider: Optional[str] = Field(default=None)
+    description: Optional[str] = Field(default=None, max_length=512)
+    system_prompt: Optional[str] = Field(default=None, max_length=8000)
+    tools: Optional[List[str]] = Field(default=None)
+    skills: Optional[List[str]] = Field(default=None)
+    capabilities: Optional[List[str]] = Field(default=None)
+    enabled: Optional[bool] = Field(default=None)
+    parent: Optional[str] = Field(default=None)
+    target_service: Optional[str] = Field(default=None)
+    icon: Optional[str] = Field(default=None, max_length=8)
+    color: Optional[str] = Field(default=None, max_length=7)
+
+
+class ProviderConfig(BaseModel):
+    """Configuration for an AI provider."""
+
+    name: str = Field(min_length=2, max_length=64)
+    enabled: bool = True
+    api_key: Optional[str] = Field(default=None, description="API key (will be encrypted)")
+    base_url: Optional[str] = Field(default=None)
+    default_model: Optional[str] = Field(default=None)
+
+
+class ProviderTestRequest(BaseModel):
+    """Request to test a provider connection."""
+
+    provider: str = Field(description="Provider name")
+    api_key: Optional[str] = Field(default=None)
+    model: Optional[str] = Field(default=None)
+
+
+class OpenClawRequest(BaseModel):
+    """Request for OpenClaw integration."""
+
+    action: str = Field(description="Action to perform")
+    payload: Dict[str, Any] = Field(default_factory=dict)
 
 
 class ConnectorConfig(BaseModel):
@@ -375,14 +1984,26 @@ def init_db() -> None:
         conn.execute(
             """
             CREATE TABLE IF NOT EXISTS agents (
-              name TEXT PRIMARY KEY,
+              id TEXT PRIMARY KEY,
+              name TEXT UNIQUE NOT NULL,
+              codename TEXT,
               role TEXT NOT NULL,
+              role_name TEXT,
               model TEXT NOT NULL,
-              tools_json TEXT NOT NULL,
-              skills_json TEXT NOT NULL,
-              enabled INTEGER NOT NULL,
+              provider TEXT DEFAULT 'kilocode',
+              description TEXT,
+              system_prompt TEXT,
+              tools_json TEXT NOT NULL DEFAULT '[]',
+              skills_json TEXT NOT NULL DEFAULT '[]',
+              capabilities_json TEXT NOT NULL DEFAULT '[]',
+              enabled INTEGER NOT NULL DEFAULT 1,
+              is_default INTEGER NOT NULL DEFAULT 0,
               parent TEXT,
               target_service TEXT,
+              icon TEXT DEFAULT '🤖',
+              color TEXT DEFAULT '#8B5CF6',
+              created_by TEXT DEFAULT 'system',
+              created_at TEXT NOT NULL,
               updated_at TEXT NOT NULL
             )
             """
@@ -483,18 +2104,34 @@ def init_db() -> None:
             for a in CORE_AGENT_TEMPLATES:
                 conn.execute(
                     """
-                    INSERT INTO agents(name, role, model, tools_json, skills_json, enabled, parent, target_service, updated_at)
-                    VALUES(?,?,?,?,?,?,?,?,?)
+                    INSERT INTO agents(
+                        id, name, codename, role, role_name, model, provider,
+                        description, system_prompt, tools_json, skills_json, capabilities_json,
+                        enabled, is_default, parent, target_service, icon, color, created_by, created_at, updated_at
+                    )
+                    VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
                     """,
                     (
+                        a.get("id", f"agent-{uuid.uuid4().hex[:8]}"),
                         a["name"],
+                        a.get("codename"),
                         a["role"],
+                        a.get("role_name"),
                         a["model"],
-                        json.dumps(a["tools"]),
-                        json.dumps(a["skills"]),
-                        int(a["enabled"]),
-                        a["parent"],
-                        a["target_service"],
+                        a.get("provider", "kilocode"),
+                        a.get("description"),
+                        a.get("system_prompt"),
+                        json.dumps(a.get("tools", [])),
+                        json.dumps(a.get("skills", [])),
+                        json.dumps(a.get("capabilities", [])),
+                        int(a.get("enabled", 1)),
+                        int(a.get("is_default", 0)),
+                        a.get("parent"),
+                        a.get("target_service"),
+                        a.get("icon", "🤖"),
+                        a.get("color", "#8B5CF6"),
+                        a.get("created_by", "system"),
+                        now_iso(),
                         now_iso(),
                     ),
                 )
@@ -506,15 +2143,28 @@ def init_db() -> None:
 
 def row_to_agent(row: sqlite3.Row) -> Dict[str, Any]:
     """Convert a SQLite agents row to a serialisable dict."""
+    capabilities = json.loads(row["capabilities_json"]) if row.get("capabilities_json") else []
     return {
+        "id": row["id"],
         "name": row["name"],
+        "codename": row.get("codename"),
         "role": row["role"],
+        "role_name": row.get("role_name"),
         "model": row["model"],
+        "provider": row.get("provider", "kilocode"),
+        "description": row.get("description"),
+        "system_prompt": row.get("system_prompt"),
         "tools": json.loads(row["tools_json"]),
         "skills": json.loads(row["skills_json"]),
+        "capabilities": capabilities,
         "enabled": bool(row["enabled"]),
+        "is_default": bool(row.get("is_default", 0)),
         "parent": row["parent"],
         "target_service": row["target_service"],
+        "icon": row.get("icon", "🤖"),
+        "color": row.get("color", "#8B5CF6"),
+        "created_by": row.get("created_by", "system"),
+        "created_at": row.get("created_at"),
         "updated_at": row["updated_at"],
     }
 
@@ -1034,6 +2684,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Include agents router
+app.include_router(agents_router)
 
 # ---------------------------------------------------------------------------
 # Middleware: X-Request-ID injection + request/response logging

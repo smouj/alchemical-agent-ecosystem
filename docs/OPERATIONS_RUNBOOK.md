@@ -20,6 +20,22 @@ curl -fsS http://localhost/gateway/events | jq '.count'
 curl -fsS http://localhost/gateway/usage/summary | jq '.summary'
 ```
 
+### Agent & Provider API Checks
+
+```bash
+# List available AI providers
+curl -fsS http://localhost/gateway/api/v1/providers | jq '.providers | keys'
+
+# List default agents
+curl -fsS http://localhost/gateway/api/v1/agents | jq '.agents[].name'
+
+# Check OpenClaw integration status
+curl -fsS http://localhost/gateway/api/v1/openclaw/status | jq
+
+# Check KiloCode integration status
+curl -fsS http://localhost/gateway/api/v1/kilocode/status | jq
+```
+
 ---
 
 ## 2) Safe update (recommended)
@@ -134,3 +150,139 @@ After deployment:
 - [ ] agent list loads real logical agents
 - [ ] chat ask/roundtable functional
 - [ ] project snapshot synced
+
+---
+
+## 9) AI Providers & Integrations API
+
+The Gateway exposes endpoints for managing AI providers and agent integrations.
+
+### Base URL
+```
+http://localhost/gateway/api/v1
+```
+
+### Authentication
+All endpoints require `Authorization: Bearer <ALCHEMICAL_GATEWAY_TOKEN>` header.
+
+### Providers
+
+**List available providers:**
+```bash
+curl -fsS -H "Authorization: Bearer $ALCHEMICAL_GATEWAY_TOKEN" \
+  http://localhost/gateway/api/v1/providers | jq
+```
+
+**Get provider details:**
+```bash
+curl -fsS -H "Authorization: Bearer $ALCHEMICAL_GATEWAY_TOKEN" \
+  http://localhost/gateway/api/v1/providers/kilocode | jq
+```
+
+**Test provider connectivity:**
+```bash
+curl -fsS -X POST \
+  -H "Authorization: Bearer $ALCHEMICAL_GATEWAY_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"model": "anthropic/claude-sonnet-4"}' \
+  http://localhost/gateway/api/v1/providers/kilocode/test | jq
+```
+
+### Agents CRUD
+
+**List all agents:**
+```bash
+curl -fsS -H "Authorization: Bearer $ALCHEMICAL_GATEWAY_TOKEN" \
+  http://localhost/gateway/api/v1/agents | jq
+```
+
+**Create custom agent:**
+```bash
+curl -fsS -X POST \
+  -H "Authorization: Bearer $ALCHEMICAL_GATEWAY_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "My Custom Agent",
+    "role": "catalizador",
+    "model_provider": "kilocode",
+    "model_name": "anthropic/claude-sonnet-4",
+    "system_prompt": "You are a helpful assistant...",
+    "skills": ["code", "analysis"],
+    "description": "My custom agent description"
+  }' \
+  http://localhost/gateway/api/v1/agents | jq
+```
+
+**Update agent:**
+```bash
+curl -fsS -X PUT \
+  -H "Authorization: Bearer $ALCHEMICAL_GATEWAY_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"system_prompt": "Updated prompt..."}' \
+  http://localhost/gateway/api/v1/agents/{agent_id} | jq
+```
+
+**Delete agent:**
+```bash
+curl -fsS -X DELETE \
+  -H "Authorization: Bearer $ALCHEMICAL_GATEWAY_TOKEN" \
+  http://localhost/gateway/api/v1/agents/{agent_id} | jq
+```
+
+### OpenClaw Integration
+
+**Check status:**
+```bash
+curl -fsS -H "Authorization: Bearer $ALCHEMICAL_GATEWAY_TOKEN" \
+  http://localhost/gateway/api/v1/openclaw/status | jq
+```
+
+**Send message:**
+```bash
+curl -fsS -X POST \
+  -H "Authorization: Bearer $ALCHEMICAL_GATEWAY_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"message": "Hello OpenClaw", "context": {}}' \
+  http://localhost/gateway/api/v1/openclaw/message | jq
+```
+
+### KiloCode Integration
+
+**Check status:**
+```bash
+curl -fsS -H "Authorization: Bearer $ALCHEMICAL_GATEWAY_TOKEN" \
+  http://localhost/gateway/api/v1/kilocode/status | jq
+```
+
+**Chat with KiloCode:**
+```bash
+curl -fsS -X POST \
+  -H "Authorization: Bearer $ALCHEMICAL_GATEWAY_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [{"role": "user", "content": "Hello"}],
+    "model": "anthropic/claude-sonnet-4",
+    "stream": false
+  }' \
+  http://localhost/gateway/api/v1/kilocode/chat | jq
+```
+
+### Environment Variables
+
+Required environment variables (see `.env.example`):
+
+```bash
+# KiloCode
+KILO_API_KEY=your_kilo_api_key
+KILO_BASE_URL=https://api.kilo.ai/api/gateway
+
+# OpenClaw
+OPENCLAW_API_KEY=your_openclaw_key
+OPENCLAW_BASE_URL=https://api.openclaw.ai/v1
+
+# Other providers (optional)
+OPENAI_API_KEY=your_openai_key
+ANTHROPIC_API_KEY=your_anthropic_key
+GOOGLE_API_KEY=your_google_key
+OLLAMA_HOST=http://localhost:11434
+```
