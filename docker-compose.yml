@@ -361,7 +361,7 @@ services:
   alchemical-dashboard:
     build:
       context: ./apps/alchemical-dashboard
-      dockerfile: Dockerfile.debian
+      dockerfile: Dockerfile
     restart: unless-stopped
     container_name: alchemical-dashboard
     ports:
