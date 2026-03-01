@@ -5,11 +5,11 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies first (layer-cached independently of source changes)
-COPY requirements.txt .
+COPY gateway/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy gateway source
-COPY app.py .
+COPY gateway/app.py .
 
 # NOTE: The docker-compose build context for this service must be set to the
 # repository root (context: .) so that shared/python is accessible.
