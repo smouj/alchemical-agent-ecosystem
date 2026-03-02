@@ -4,6 +4,53 @@ Canonical day-2 operations for local/prod-like environments.
 
 ---
 
+## 🏛️ Arquitectura v3 (Simplificada — Marzo 2026)
+
+La infraestructura ha sido **simplificada radicalmente** de 15 a 5 servicios:
+
+| Servicio | Puerto | Función |
+|----------|--------|---------|
+| `caddy` | 80/443 | Reverse proxy y TLS |
+| `redis` | 6379 | Cache, pub/sub, colas |
+| `chromadb` | 8000 | Vector store embeddings |
+| `alchemical-gateway` | 7411 | API principal y orquestador |
+| `alchemical-dashboard` | 8080 | UI Next.js |
+
+### Cambios importantes
+
+- **Eliminados**: 10 microservicios stubs de agentes (velktharion, synapsara, kryonexus, etc.)
+- **Motivo**: Eran stubs vacíos sin lógica real. Los agentes ahora se gestionan dinámicamente vía SQLite en el gateway.
+- **Legacy**: Código movido a `services-deprecated/` (solo referencia)
+
+### Diagrama de arquitectura v3
+
+```
+┌─────────────────┐
+│  Caddy Proxy    │ ← Única entrada HTTP (:80/:443)
+└────────┬────────┘
+         │
+    ┌────┴────┐
+    │         │
+┌───▼───┐  ┌──▼────┐
+│Gateway│  │Dashboard│
+│:7411  │  │:3000   │
+└───┬───┘  └───────┘
+    │
+    ├──── Redis (:6379)
+    └──── ChromaDB (:8000)
+```
+
+### Endpoints de health check
+
+```bash
+curl -fsS http://localhost/gateway/health      # Gateway
+curl -fsS http://localhost/gateway/ready       # Ready check
+curl -fsS http://localhost:8080/api/system     # Dashboard
+curl -fsS http://localhost:80/health           # Caddy
+```
+
+---
+
 ## 1) Daily health ritual
 
 ```bash
@@ -76,17 +123,22 @@ After rollback, rerun health checks and validate chat/dispatch paths.
 ## 5) Logs and incident triage
 
 ```bash
+# Logs de servicios activos (arquitectura simplificada v3)
 ./scripts/alchemical logs alchemical-gateway
-./scripts/alchemical logs velktharion
-./scripts/alchemical logs synapsara
+./scripts/alchemical logs alchemical-dashboard
+./scripts/alchemical logs redis
+./scripts/alchemical logs chromadb
+./scripts/alchemical logs caddy
 ```
 
+> **Nota**: Los servicios de agentes individuales (velktharion, synapsara, etc.) fueron eliminados en v3. Los agentes ahora se gestionan dinámicamente vía gateway.
+
 Incident workflow:
-1. confirm failing endpoint,
-2. inspect gateway + target service logs,
+1. confirm failing endpoint (`/gateway/health`),
+2. inspect gateway logs (principal punto de fallo),
 3. verify auth/token/role context,
 4. apply minimal fix,
-5. revalidate health and dispatch.
+5. revalidate health via `/gateway/ready`.
 
 ---
 

@@ -2,9 +2,60 @@
 
 ## Current State
 
-**Project Status**: ✅ Alchemical Dashboard ENHANCED v2 - Production Ready with Screenshots
+**Project Status**: ✅ Alchemical Ecosystem v3 — Arquitectura Simplificada
 
-El proyecto ha sido transformado de un template básico de Next.js a un **Dashboard de Orquestación Multi-Agente** épico con tema alquímico oscuro premium. La interfaz transmite poder, soberanía y misterio.
+El proyecto ha sido transformado de un template básico de Next.js a un **Dashboard de Orquestación Multi-Agente** épico con tema alquímico oscuro premium. **Infraestructura simplificada radicalmente**: de 15 a 5 servicios.
+
+### 🌐 Estado de Despliegue (2026-03-01)
+- **VPS Hostinger**: Ubuntu 24.04, IP `76.13.37.123`
+- **Dashboard**: ✅ Operativo en http://76.13.37.123:8080 (Next.js 16)
+- **Gateway API**: ✅ Operativo en http://76.13.37.123:7411 (FastAPI + SQLite)
+- **Servicios de Infraestructura**:
+  - Redis: ✅ Healthy (puerto 6379)
+  - ChromaDB: ✅ Healthy (puerto 8000)
+- **Docker Compose**: 5 servicios activos (v3 simplificado)
+
+### 🏛️ Arquitectura v3 (Marzo 2026)
+
+**Simplificación radical**: Eliminados 10 microservicios stubs de agentes.
+
+```
+┌─────────────────┐
+│  Caddy Proxy    │ ← Única entrada HTTP (:80/:443)
+└────────┬────────┘
+         │
+    ┌────┴────┐
+    │         │
+┌───▼───┐  ┌──▼────────┐
+│Gateway│  │ Dashboard │
+│:7411  │  │ :3000     │
+└───┬───┘  └───────────┘
+    │
+    ├──── Redis (:6379)
+    └──── ChromaDB (:8000)
+```
+
+**Servicios activos (5)**:
+| Servicio | Puerto | Función |
+|----------|--------|---------|
+| `caddy` | 80/443 | Reverse proxy TLS |
+| `redis` | 6379 | Cache, pub/sub, colas |
+| `chromadb` | 8000 | Vector store embeddings |
+| `alchemical-gateway` | 7411 | API principal + orquestador |
+| `alchemical-dashboard` | 8080 | UI Next.js |
+
+**Eliminados (10 stubs)**:
+- velktharion, synapsara, kryonexus (no hacían nada útil)
+- noctumbra-mail, temporaeth, vaeloryn-conclave
+- ignivox, auralith, resonvyr, fluxenrath
+
+**Motivo**: Eran stubs vacíos. Los agentes ahora se gestionan dinámicamente vía SQLite en el gateway (CRUD completo).
+
+### ✅ Fixes Aplicados Hoy
+- Fixed build context en `gateway/Dockerfile` (COPY con prefijo `gateway/`)
+- Agregado `curl` para healthchecks en contenedor gateway
+- Corregido puerto healthcheck de 8000 → 7411 en `docker-compose.yml`
+- Gateway reiniciado exitosamente con imagen actualizada
 
 ## Recently Completed
 
@@ -106,6 +157,8 @@ src/
 
 | Date | Changes |
 |------|---------|
+| 2026-03-01 | **infra(simplificación)**: Arquitectura v3 - Eliminados 10 microservicios stubs, reducción de 15 a 5 contenedores, docker-compose.yml simplificado, Caddyfile actualizado, services/ → services-deprecated/ |
+| 2026-03-01 | **feat(gateway)**: OpenClaw/KiloCode integrations + AI providers system - CRUD agents, 6 AI providers, SQLite persistence, documented endpoints |
 | 2026-03-01 | **fix(ui)**: Mejora de contraste WCAG AA en form elements - selects, inputs, options con fondos oscuros y texto legible |
 | 2026-03-01 | **chore(deps)**: sincronizar versiones entre raíz y dashboard + fix eslint |
 | 2026-02-28 | **BUILD FIX**: Corrección completa de errores TypeScript y build del Dashboard - Tipos React Flow v12, Tailwind v4 CSS, dependencia minimatch, ESLint warnings |
