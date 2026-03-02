@@ -226,7 +226,7 @@ AI_PROVIDERS: Dict[str, Dict[str, Any]] = {
 def row_to_agent(row: sqlite3.Row) -> Dict[str, Any]:
     """Convert a database row to an agent dictionary."""
     return {
-        "id": row["id"],
+        "id": row["name"],
         "name": row["name"],
         "codename": row["codename"],
         "role": row["role"],
@@ -663,7 +663,7 @@ async def kilocode_status() -> Dict[str, Any]:
     kilo_key = os.getenv("KILO_API_KEY", "")
     kilo_base = os.getenv("KILO_BASE_URL", "https://api.kilo.ai/api/gateway")
     
-    if not kilo_key:
+    if not kilo_key and request.get("model", "").find(":free") == -1:
         return {
             "enabled": False,
             "message": "KiloCode API key not configured",
@@ -682,7 +682,7 @@ async def kilocode_chat(request: Dict[str, Any]) -> Dict[str, Any]:
     kilo_key = os.getenv("KILO_API_KEY", "")
     kilo_base = os.getenv("KILO_BASE_URL", "https://api.kilo.ai/api/gateway")
     
-    if not kilo_key:
+    if not kilo_key and request.get("model", "").find(":free") == -1:
         raise HTTPException(status_code=503, detail="KiloCode not configured")
     
     try:
@@ -691,7 +691,7 @@ async def kilocode_chat(request: Dict[str, Any]) -> Dict[str, Any]:
                 f"{kilo_base}/chat/completions",
                 json=request,
                 headers={
-                    "Authorization": f"Bearer {kilo_key}",
+                    "Authorization": f"Bearer {kilo_key}" if kilo_key else "",
                     "Content-Type": "application/json",
                 },
             )
@@ -710,3 +710,49 @@ async def kilocode_chat(request: Dict[str, Any]) -> Dict[str, Any]:
                 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"KiloCode request failed: {str(e)}")
+
+# ── Sincentes OpenClawronización de Ag/KiloCode ─────────────────
+import os
+import glob
+
+@router.post("/sync/openclaw-agents")
+async def sync_openclaw_agents():
+    """Sincroniza agentes de OpenClaw con Alchemical."""
+    openclaw_agents_dir = os.getenv("OPENCLAW_AGENTS_DIR", "/openclaw-agents")
+    
+    if not os.path.exists(openclaw_agents_dir):
+        return {"success": False, "error": "OpenClaw agents directory not found"}
+    
+    agents_dir = glob.glob(os.path.join(openclaw_agents_dir, "*/"))
+    synced = []
+    
+    with db_conn() as conn:
+        for agent_dir in agents_dir:
+            agent_name = os.path.basename(os.path.dirname(agent_dir))
+            
+            role = "openclaw"
+            model = "minimax/minimax-m2.5:free"
+            
+            existing = conn.execute(
+                "SELECT name FROM agents WHERE name = ?", [agent_name]
+            ).fetchone()
+            
+            if not existing:
+                conn.execute(
+                    """INSERT INTO agents (name, role, model, tools_json, skills_json, enabled, parent, target_service, updated_at)
+                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                    [agent_name, role, model, "[]", "[]", 1, None, None, "2026-03-02"]
+                )
+                synced.append(agent_name)
+    
+    return {"success": True, "synced": synced, "total": len(synced)}
+
+@router.get("/providers")
+async def list_providers():
+    """Lista proveedores LLM disponibles."""
+    return {
+        "providers": [
+            {"id": "kilocode", "name": "KiloCode AI", "status": "active", "models": ["minimax/minimax-m2.5:free", "anthropic/claude-sonnet-4.5:free"]},
+            {"id": "openclaude", "name": "OpenClaw", "status": "active", "agents": ["vps-ops", "rpgclaw-ops", "flickclaw-ops", "img-ops", "main"]},
+        ]
+    }

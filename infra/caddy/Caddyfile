@@ -2,25 +2,12 @@
   auto_https off
 }
 
-# 🌐 Alchemical Ecosystem — Caddy Reverse Proxy (Simplificado v3)
-# Rutas antiguas de agentes stubs eliminadas
-# Todos los agentes ahora gestionados dinámicamente por gateway
-
 :80 {
   encode gzip
 
-  # Gateway API — única entrada al ecosistema
-  handle_path /gateway/* {
-    reverse_proxy alchemical-gateway:7411
-  }
+  # Gateway API
+  reverse_proxy /gateway/* alchemical-gateway:7411
 
-  # Health check básico
-  handle /health {
-    respond "Alchemical Ecosystem v3 — OK" 200
-  }
-
-  # Default
-  handle {
-    respond "Alchemical Agent Ecosystem is running" 200
-  }
+  # Dashboard
+  reverse_proxy /* alchemical-dashboard:3000
 }
